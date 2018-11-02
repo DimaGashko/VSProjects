@@ -5,15 +5,52 @@
 
 using namespace std;
 
-void events(), fpsTest(), sprites(), views(), sounds();
+void events(), fpsTest(), sprites(), views(), sounds(), recording();
 
 int main() {
-	sounds();
+	recording();
 
 	//system("pause");
 	return 0;
 }
 
+void recording() {
+	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
+	window.setFramerateLimit(350);
+
+	sf::Texture texture;
+	if (!texture.loadFromFile("img/beach.jpg")) {
+		cout << "Cannot load" << endl;
+	}
+
+	sf::Sprite sprite(texture);
+
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) window.close();
+			else if (event.type == sf::Event::Resized) {
+				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
+				window.setView(sf::View(visible));
+			}
+			else if (event.type == sf::Event::KeyReleased) {
+				if (event.key.code == sf::Keyboard::R) {
+					cout << "Recording" << endl;
+				}
+				else if (event.key.code == sf::Keyboard::S) {
+					cout << "Your record saved";
+				} 
+				else if (event.key.code == sf::Keyboard::P) {
+					cout << "Playing" << endl;
+				}
+			}
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
+}
 
 void sounds() {
 	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
