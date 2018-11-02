@@ -76,20 +76,34 @@ void fpsTest() {
 
 
 void sprites() {
-	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
 	
 	sf::Texture texture;
-	if (!texture.loadFromFile("img/sprite.png", sf::IntRect(16,16,16,16))) {
+	if (!texture.loadFromFile("img/sprite.png")) {
 		cout << "Cannot load" << endl;
 	}
 
+	double r = 255;
+	double g = 255;
+	double b = 255;
+
 	sf::Sprite sprite(texture);
+	sprite.setTextureRect(sf::IntRect(16, 16, 160, 320));
 
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) window.close();
 		}
+		if (r < 0) r = 255;
+		if (g > 255) g = 0;
+		if (b > 255) b = 0;
+
+		r -= 0.1;
+		g += 0.2;
+		b += 0.3;
+
+		sprite.setColor(sf::Color(r, g, b));
 
 		window.clear();
 		window.draw(sprite);
