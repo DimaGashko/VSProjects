@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -18,6 +19,13 @@ void sounds() {
 	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
 	window.setFramerateLimit(350);
 
+	sf::Music music;
+	if (!music.openFromFile("sounds/maker.ogg")) {
+		cout << "Cannot load" << endl;
+	}
+
+	music.play();
+
 	sf::Texture texture;
 	if (!texture.loadFromFile("img/beach.jpg")) {
 		cout << "Cannot load" << endl;
@@ -32,6 +40,14 @@ void sounds() {
 			else if (event.type == sf::Event::Resized) {
 				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
 				window.setView(sf::View(visible));
+			}
+			else if (event.type == sf::Event::KeyReleased) {
+				if (event.key.code == sf::Keyboard::P) {
+					music.play();
+				} 
+				else if (event.key.code == sf::Keyboard::S) {
+					music.pause();
+				}
 			}
 		}
 
