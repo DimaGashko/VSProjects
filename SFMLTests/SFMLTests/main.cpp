@@ -3,10 +3,11 @@
 
 using namespace std;
 
-void events();
+void events(), fpsTest();
 
 int main() {
-	events();
+	//events();
+	fpsTest();
 
 	return 0;
 }
@@ -15,7 +16,7 @@ void events() {
 	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
 	sf::CircleShape shape(100);
 	shape.setFillColor(sf::Color(255, 255, 0));
-
+	
 	while (window.isOpen()) {
 		sf::Event event;
 
@@ -38,3 +39,31 @@ void events() {
 		window.display();
 	}
 }
+
+void fpsTest() {
+	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
+	sf::CircleShape shape(100);
+	shape.setFillColor(sf::Color(255, 255, 0));
+
+	sf::Clock clock;
+	float lastTime = 0;
+	int fps = 0;
+
+	while (window.isOpen()) {
+		sf::Event event;
+		
+		cout << clock.restart().asMicroseconds() << endl;
+
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				window.close();
+			}
+
+		}
+
+		window.clear();
+		window.draw(shape);
+		window.display();
+	}
+}
+
