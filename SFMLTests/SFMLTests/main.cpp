@@ -18,12 +18,21 @@ void recording() {
 	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
 	window.setFramerateLimit(350);
 
+	if (!sf::SoundBufferRecorder::isAvailable()) {
+		cout << "Recording not supported" << endl;
+	}
+
 	sf::Texture texture;
 	if (!texture.loadFromFile("img/beach.jpg")) {
 		cout << "Cannot load" << endl;
 	}
 
 	sf::Sprite sprite(texture);
+
+	sf::SoundBufferRecorder recorder;
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -35,13 +44,16 @@ void recording() {
 			}
 			else if (event.type == sf::Event::KeyReleased) {
 				if (event.key.code == sf::Keyboard::R) {
-					cout << "Recording" << endl;
+					cout << "Recording..." << endl;
+					recorder.start();
 				}
-				else if (event.key.code == sf::Keyboard::S) {
-					cout << "Your record saved";
-				} 
 				else if (event.key.code == sf::Keyboard::P) {
+					cout << "Your record saved";
+					recorder.stop();
 					cout << "Playing" << endl;
+					buffer = recorder.getBuffer();
+					sound.setBuffer(buffer);
+					sound.play();
 				}
 			}
 		}
