@@ -79,7 +79,7 @@ void sprites() {
 	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
 	
 	sf::Texture texture;
-	if (!texture.loadFromFile("img/sprite.png")) {
+	if (!texture.loadFromFile("img/sprite.png", sf::IntRect(16,16,16,16))) {
 		cout << "Cannot load" << endl;
 	}
 
