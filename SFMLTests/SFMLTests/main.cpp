@@ -4,20 +4,45 @@
 
 using namespace std;
 
-void events(), fpsTest(), sprites();
+void events(), fpsTest(), sprites(), views();
 
 int main() {
-	//events();
-	//fpsTest();
-	sprites();
+	views();
 
-	system("pause");
+	//system("pause");
 	return 0;
+}
+
+
+void views() {
+	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
+
+	sf::Texture texture;
+	if (!texture.loadFromFile("img/beach.jpg")) {
+		cout << "Cannot load" << endl;
+	}
+
+	sf::Sprite sprite(texture);
+
+	sf::View view(sf::FloatRect(0, 0, 300, 300));
+	window.setView(view);
+
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) window.close();
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
 }
 
 void events() {
 	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
 	sf::CircleShape shape(100);
+
 	shape.setFillColor(sf::Color(255, 255, 0));
 	
 	while (window.isOpen()) {
@@ -89,7 +114,7 @@ void sprites() {
 
 	sf::Sprite sprite(texture);
 	sprite.setTextureRect(sf::IntRect(16, 16, 160, 320));
-
+	
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
