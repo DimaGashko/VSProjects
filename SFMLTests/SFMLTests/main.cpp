@@ -25,19 +25,15 @@ void views() {
 
 	sf::Sprite sprite(texture);
 
-	sf::Vector2f center(window.getSize().x / 2, window.getSize().y / 2);
-	sf::View view(center, center);
-	window.setView(view);
-
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) window.close();
+			else if (event.type == sf::Event::Resized) {
+				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
+				window.setView(sf::View(visible));
+			}
 		}
-
-		sf::Vector2f center(window.getSize().x / 2, window.getSize().y / 2);
-		sf::View view(center, center);
-		window.setView(view);
 
 		window.clear();
 		window.draw(sprite);
