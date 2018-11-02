@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -80,7 +79,7 @@ void sprites() {
 	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
 	
 	sf::Texture texture;
-	if (!texture.loadFromFile("icon.jpg")) {
+	if (!texture.loadFromFile("img/sprite.png")) {
 		cout << "Cannot load" << endl;
 	}
 
