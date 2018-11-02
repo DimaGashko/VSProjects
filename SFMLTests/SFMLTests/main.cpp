@@ -1,14 +1,18 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <SFML/Graphics.hpp>
 
 using namespace std;
 
-void events(), fpsTest();
+void events(), fpsTest(), sprites();
 
 int main() {
 	//events();
-	fpsTest();
+	//fpsTest();
+	sprites();
 
+	system("pause");
 	return 0;
 }
 
@@ -32,6 +36,10 @@ void events() {
 				cout << endl << "Released" << endl;
 			}
 
+			else if (event.type == sf::Event::Resized) {
+				cout << endl << "Resized " << endl;
+			}
+
 		}
 
 		window.clear();
@@ -53,7 +61,7 @@ void fpsTest() {
 		sf::Event event;
 		
 		cout << clock.restart().asMicroseconds() << endl;
-
+		
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
 				window.close();
@@ -67,3 +75,25 @@ void fpsTest() {
 	}
 }
 
+
+void sprites() {
+	sf::RenderWindow window(sf::VideoMode(500, 500), "SFML works!");
+	
+	sf::Texture texture;
+	if (!texture.loadFromFile("icon.jpg")) {
+		cout << "Cannot load" << endl;
+	}
+
+	sf::Sprite sprite(texture);
+
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) window.close();
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
+}
