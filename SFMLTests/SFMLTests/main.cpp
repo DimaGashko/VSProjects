@@ -16,6 +16,7 @@ int main() {
 
 void views() {
 	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!");
+	window.setFramerateLimit(350);
 
 	sf::Texture texture;
 	if (!texture.loadFromFile("img/beach.jpg")) {
@@ -24,7 +25,8 @@ void views() {
 
 	sf::Sprite sprite(texture);
 
-	sf::View view(sf::FloatRect(0, 0, 300, 300));
+	sf::Vector2f center(window.getSize().x / 2, window.getSize().y / 2);
+	sf::View view(center, center);
 	window.setView(view);
 
 	while (window.isOpen()) {
@@ -32,6 +34,10 @@ void views() {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) window.close();
 		}
+
+		sf::Vector2f center(window.getSize().x / 2, window.getSize().y / 2);
+		sf::View view(center, center);
+		window.setView(view);
 
 		window.clear();
 		window.draw(sprite);
