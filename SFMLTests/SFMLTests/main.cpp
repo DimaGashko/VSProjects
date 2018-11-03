@@ -3,8 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-using namespace std;
+#include <windows.h>
 
+using namespace std;
 void events(), fpsTest(), sprites(), views(), sounds(), recording(), preventResizing();
 
 int main() {
