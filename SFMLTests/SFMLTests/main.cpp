@@ -5,13 +5,40 @@
 
 using namespace std;
 
-void events(), fpsTest(), sprites(), views(), sounds(), recording();
+void events(), fpsTest(), sprites(), views(), sounds(), recording(), preventResizing();
 
 int main() {
-	recording();
+	preventResizing();
 
 	//system("pause");
 	return 0;
+}
+
+void preventResizing() {
+	sf::RenderWindow window(sf::VideoMode(800, 500), "SFML works!", sf::Style::Close | sf::Style::Titlebar);
+	window.setFramerateLimit(350);
+
+	sf::Texture texture;
+	if (!texture.loadFromFile("img/beach.jpg")) {
+		cout << "Cannot load" << endl;
+	}
+
+	sf::Sprite sprite(texture);
+
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) window.close();
+			else if (event.type == sf::Event::Resized) {
+				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
+				window.setView(sf::View(visible));
+			}
+		}
+
+		window.clear();
+		window.draw(sprite);
+		window.display();
+	}
 }
 
 void recording() {
