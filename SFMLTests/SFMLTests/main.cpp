@@ -6,25 +6,6 @@
 using namespace std;
 void events(), fpsTest(), sprites(), views(), sounds(), recording(), preventResizing();
 
-class Test {
-private:
-	int a = 10;
-	int b = 20;
-
-public:
-	Test(int _a, int _b): a(_a), b(_a) {
-		
-	}
-
-	void setA(int a = 10) {
-		this->a = a;
-	}
-
-	void setB(int b) {
-		this->b = b;
-	}
-};
-
 
 int main() {
 	preventResizing();
@@ -275,3 +256,23 @@ void sprites() {
 		window.display();
 	}
 }
+
+
+class Test {
+private:
+	int a = 10;
+	int b = 20;
+
+public:
+	Test(int _a, int _b) : a(_a), b(_a) {
+
+	}
+
+	void setA(int a = 10) {
+		this->a = a;
+	}
+
+	void setB(int b) {
+		this->b = b;
+	}
+};
