@@ -14,8 +14,15 @@ public:
 	Big(): arr(unique_ptr<ld>(new ld[10000000])) { }
 };
 
-int main() {
+void ptrs();
 
+int main() {
+	ptrs();
+	
+	return 0;
+}
+
+void ptrs() {
 	{
 		shared_ptr<Big> b1(new Big);
 		{
@@ -40,10 +47,9 @@ int main() {
 		for (int i = 0; i < 10000000; i++) {
 			arr.push_back(unique_ptr<long double>(new long double(i)));
 		}
-		
+
 		system("pause");
 	}*/
 
 	system("pause");
-	return 0;
 }
