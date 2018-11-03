@@ -2,10 +2,36 @@
 #include <vector>
 #include <memory>
 
+typedef long double ld;
+
 using namespace std;
 
+class Big {
+private:
+	unique_ptr<ld> arr;
+
+public:
+	Big(): arr(unique_ptr<ld>(new ld[10000000])) { }
+};
+
 int main() {
-	
+
+	{
+		shared_ptr<Big> b1(new Big);
+		{
+			shared_ptr<Big> b2 = b1;
+			system("pause");
+		}
+		system("pause");
+	}
+
+	/*{
+		system("pause");
+		unique_ptr<Big> ptrB(new Big);
+		system("pause");
+	};*/
+
+	/*
 	system("pause");
 
 	{
@@ -16,7 +42,7 @@ int main() {
 		}
 		
 		system("pause");
-	}
+	}*/
 
 	system("pause");
 	return 0;
