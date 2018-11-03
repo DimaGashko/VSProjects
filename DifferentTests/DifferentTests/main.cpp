@@ -8,10 +8,18 @@ using namespace std;
 
 class Big {
 private:
-	unique_ptr<ld> arr;
+	unique_ptr<ld[]> arr;
 
 public:
-	Big(): arr(unique_ptr<ld>(new ld[10000000])) { }
+	Big(): arr(unique_ptr<ld[]>(new ld[10000000])) { 
+
+		for (int i = 0; i < 100; i++) {
+			cout << arr[100000 + i] << " ";
+		}
+
+		cout << endl;
+
+	}
 };
 
 void ptrs();
