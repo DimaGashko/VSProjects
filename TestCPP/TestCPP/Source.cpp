@@ -2,6 +2,8 @@
 #include "Point.h"
 #include "Line.h"
 
+#include <vector>
+
 using namespace std;
 
 int main() {
@@ -13,11 +15,11 @@ int main() {
 
 	cout << "- - - - -" << endl;
 
-	l1.move(10, 10, 20, 20);
-	l1.move(10, 10, 20, 20);
+	l1.move(10, 10);
+	l2.move(20, 20);
 
 	l1.show();
-	l2.show();
+	l2.show(); 
 
 	system("pause");
 	return 0;
