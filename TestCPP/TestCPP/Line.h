@@ -11,6 +11,8 @@ public:
 	void scale(int scaleX, int scaleY);
 	void rotate(double angle);
 	double squereLen();
+	Point* getP1();
+	Point* getP2();
 	~Line();
 private: 
 	Point *p1;

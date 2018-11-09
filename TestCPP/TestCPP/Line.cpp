@@ -47,6 +47,14 @@ double Line::squereLen() {
 	return dx * dx + dy * dy;
 }
 
+Point* Line::getP1() {
+	return p1;
+}
+
+Point* Line::getP2() {
+	return p2;
+}
+
 Line::~Line() {
 	if (this->p1) delete this->p1;
 	if (this->p2) delete this->p2;
