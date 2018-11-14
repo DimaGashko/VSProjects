@@ -11,21 +11,7 @@
 /// \param count	    оличество точек из которых будет состо€ть крива€
 ///
 ////////////////////////////////////////////////////////////
-sf::VertexArray getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 30) {
-	if (count < 3) count = 3;
-
-	sf::VertexArray vertices(sf::LineStrip, count);
-
-	for (int i = 0; i < count; i++) {
-		float t = float(i) / (count - 1);
-		std::cout << t << std::endl;
-		vertices[i].position = ((1.f - t) * (1.f - t)) * p1
-			+ (2.f * (1.f - t) * t) * p2
-			+ (t * t) * p3;
-	}
-
-	return vertices;
-}
+sf::VertexArray getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 3);
 
 int main() {
 	sf::ContextSettings settings;
@@ -64,4 +50,20 @@ int main() {
 	}
 	
 	return 0;
+}
+
+sf::VertexArray getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count) {
+	if (count < 3) count = 3;
+
+	sf::VertexArray vertices(sf::LineStrip, count);
+
+	for (int i = 0; i < count; i++) {
+		float t = float(i) / (count - 1);
+
+		vertices[i].position = ((1.f - t) * (1.f - t)) * p1
+			+ (2.f * (1.f - t) * t) * p2
+			+ (t * t) * p3;
+	}
+
+	return vertices;
 }
