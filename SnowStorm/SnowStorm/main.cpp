@@ -3,16 +3,9 @@
 
 #include "Snowflake.h"
 
-////////////////////////////////////////////////////////////
-/// \brief Возвращает массив точек кривой Безье для 3 контрольных точек
-///
-/// \param p1, p2, p3  Соответственно 1, 2, 3 контрольные точки   
-/// \param count	   Количество точек из которых будет состоять кривая
-////////////////////////////////////////////////////////////
-
 int main() {
 	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
+	settings.antialiasingLevel = 4;
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, settings);
 
@@ -21,8 +14,13 @@ int main() {
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
+			if (event.type == sf::Event::Closed) {
 				window.close();
+			}
+			else if (event.type == sf::Event::Resized) {
+				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
+				window.setView(sf::View(visible));
+			}
 		}
 
 		window.clear();

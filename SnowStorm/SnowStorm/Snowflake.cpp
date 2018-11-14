@@ -6,6 +6,12 @@
 namespace snow {
 	const double PI = 3.14159265358979323846;
 
+	////////////////////////////////////////////////////////////
+	/// \brief Возвращает массив точек кривой Безье для 3 контрольных точек
+	///
+	/// \param p1, p2, p3  Соответственно 1, 2, 3 контрольные точки   
+	/// \param count	   Количество точек из которых будет состоять кривая
+	////////////////////////////////////////////////////////////
 	sf::VertexArray getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 30) {
 		if (count < 3) count = 3;
 
@@ -74,8 +80,8 @@ namespace snow {
 		sf::Vertex part2[] = { _coords, p4 };
 		sf::Vertex part3[] = { p5, p6, p7 };
 
-		auto arc1 = getBezierCoords(_coords, p8, p4);
-		auto arc2 = getBezierCoords(_coords, p9, p4);
+		auto arc1 = getBezierCoords(_coords, p8, p4, 10);
+		auto arc2 = getBezierCoords(_coords, p9, p4, 10);
 
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
