@@ -25,10 +25,11 @@ namespace snow {
 		sf::Vector2f _coords;
 		float _angle;
 
-		static const double _angleB1;
-		static const double _angleB2;
-		static const double _d02;
-		static const double _d08;
+		static const double _BETA1;
+		static const double _BETA2;
+		static const double _D02;
+		static const double _D08;
 	};
 
 } //namespace snow
+
