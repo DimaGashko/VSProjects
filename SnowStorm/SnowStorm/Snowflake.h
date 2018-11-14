@@ -19,22 +19,11 @@ namespace snow {
 		~Snowflake() {};
 
 	private:
-		void updateConfig(float a);
+		void drawFragment(sf::RenderWindow &window, float fragmentAngle);
 
 		float _size;
 		sf::Vector2f _coords;
 		float _angle;
-
-		sf::Vector2f _p1 = sf::Vector2f(0, 0);
-		sf::Vector2f _p2 = sf::Vector2f(0, 0);
-		sf::Vector2f _p3 = sf::Vector2f(0, 0);
-		sf::Vector2f _p4 = sf::Vector2f(0, 0);
-		sf::Vector2f _p5 = sf::Vector2f(0, 0);
-		sf::Vector2f _p6 = sf::Vector2f(0, 0);
-		sf::Vector2f _p7 = sf::Vector2f(0, 0);
-		sf::Vector2f _p8 = sf::Vector2f(0, 0);
-		sf::Vector2f _p9 = sf::Vector2f(0, 0);
-
 
 		static const double _angleB1;
 		static const double _angleB2;
