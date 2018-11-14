@@ -19,7 +19,7 @@ namespace snow {
 		~Snowflake() {};
 
 	private:
-		void updateConfig();
+		void updateConfig(float a);
 
 		float _size;
 		sf::Vector2f _coords;
@@ -38,7 +38,8 @@ namespace snow {
 
 		static const double _angleB1;
 		static const double _angleB2;
-		static const double _b;
+		static const double _d02;
+		static const double _d08;
 	};
 
 } //namespace snow
