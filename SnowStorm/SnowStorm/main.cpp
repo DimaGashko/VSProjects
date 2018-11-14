@@ -1,8 +1,7 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "Point.h"
-#include "Line.h"
+#include "Snowflake.h"
 
 ////////////////////////////////////////////////////////////
 /// \brief Возвращает массив точек кривой Безье для 3 контрольных точек
@@ -17,6 +16,8 @@ int main() {
 	settings.antialiasingLevel = 8;
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, settings);
+
+	snow::Snowflake f1;
 
 	sf::Vector2f p1(50, 50);
 	sf::Vector2f p2(500, 50);
@@ -45,6 +46,7 @@ int main() {
 		window.draw(c1);
 		window.draw(c2);
 		window.draw(c3);
+		f1.draw(window);
 		window.display();
 	}
 

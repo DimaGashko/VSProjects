@@ -24,12 +24,18 @@
     <ClCompile Include="Line.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Snowflake1.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Line.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Snowflake1.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
