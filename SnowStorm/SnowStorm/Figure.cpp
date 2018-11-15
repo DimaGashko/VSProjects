@@ -49,6 +49,7 @@ namespace snow {
 		const float startAngle = _angle;
 
 		for (int i = 0; i < 4; i++) {
+			updatePoints();
 			drawFragment(window);
 			rotate(angle);
 		}
@@ -113,8 +114,6 @@ namespace snow {
 	void Figure::setPosition(sf::Vector2f coords) {
 		_coords.x = coords.x;
 		_coords.y = coords.y;
-
-		updatePoints();
 	}
 
 	sf::Vector2f Figure::getPosition() {
@@ -127,7 +126,6 @@ namespace snow {
 
 	void Figure::setAngle(float angle) {
 		_angle = angle;
-		updatePoints();
 	}
 
 	float Figure::getAngle() {
@@ -139,10 +137,8 @@ namespace snow {
 	}
 
 	void Figure::setSize(float size) {
-		if (size < 1) return;
+		if (size < 1) size = 1;
 		_size = size;
-
-		updatePoints();
 	}
 
 	float Figure::getSize() {
