@@ -9,10 +9,10 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, settings);
 
-	snow::Snowflake f1(sf::Vector2f(400, 400), 50, 0.3);
-	snow::Snowflake f2(sf::Vector2f(200, 100), 20, 1.6);
-	snow::Snowflake f3(sf::Vector2f(500, 100), 30, 0.6);
-
+	snow::Snowflake f1(sf::Vector2f(400, 400), 50, 0.3f);
+	snow::Snowflake f2(sf::Vector2f(200, 100), 20, 1.6f);
+	snow::Snowflake f3(sf::Vector2f(500, 100), 30, 0.6f);
+	
 	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -20,7 +20,7 @@ int main() {
 				window.close();
 			}
 			else if (event.type == sf::Event::Resized) {
-				sf::FloatRect visible(0, 0, event.size.width, event.size.height);
+				sf::FloatRect visible(0, 0, float(event.size.width), float(event.size.height));
 				window.setView(sf::View(visible));
 			}
 		}

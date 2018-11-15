@@ -48,40 +48,40 @@ namespace snow {
 		float angle = _angle + fragmentAngle;
 
 		sf::Vector2f p1(
-			_coords.x + _size * cos(angle + PI / 2) * 8 / 3,
-			_coords.y + _size * sin(angle + PI / 2) * 8 / 3
+			float(_coords.x + _size * cos(angle + PI / 2) * 8 / 3),
+			float(_coords.y + _size * sin(angle + PI / 2) * 8 / 3)
 		);
 		sf::Vector2f p2(
-			_coords.x + _P0P2 * _size * cos(angle + _BETA1),
-			_coords.y + _P0P2 * _size * sin(angle + _BETA1)
+			float(_coords.x + _P0P2 * _size * cos(angle + _BETA1)),
+			float(_coords.y + _P0P2 * _size * sin(angle + _BETA1))
 		);
 		sf::Vector2f p3(
-			_coords.x + 2 * _size * cos(angle + PI / 2),
-			_coords.y + 2 * _size * sin(angle + PI / 2)
+			float(_coords.x + 2 * _size * cos(angle + PI / 2)),
+			float(_coords.y + 2 * _size * sin(angle + PI / 2))
 		);
 		sf::Vector2f p4(
-			_coords.x + 2 * _size * cos(angle + PI / 4),
-			_coords.y + 2 * _size * sin(angle + PI / 4)
+			float(_coords.x + 2 * _size * cos(angle + PI / 4)),
+			float(_coords.y + 2 * _size * sin(angle + PI / 4))
 		);
 		sf::Vector2f p5(
-			_coords.x + 2 * _size * cos(angle),
-			_coords.y + 2 * _size * sin(angle)
+			float(_coords.x + 2 * _size * cos(angle)),
+			float(_coords.y + 2 * _size * sin(angle))
 		);
 		sf::Vector2f p6(
-			_coords.x + _P0P2 * _size * cos(angle + _BETA2),
-			_coords.y + _P0P2 * _size * sin(angle + _BETA2)
+			float(_coords.x + _P0P2 * _size * cos(angle + _BETA2)),
+			float(_coords.y + _P0P2 * _size * sin(angle + _BETA2))
 		);
 		sf::Vector2f p7(
-			_coords.x + _size * cos(angle) * 8 / 3,
-			_coords.y + _size * sin(angle) * 8 / 3
+			float(_coords.x + _size * cos(angle) * 8 / 3),
+			float(_coords.y + _size * sin(angle) * 8 / 3)
 		);
 		sf::Vector2f p8(
-			_coords.x + _P0P8 * _size * cos(angle + PI / 2),
-			_coords.y + _P0P8 * _size * sin(angle + PI / 2)
+			float(_coords.x + _P0P8 * _size * cos(angle + PI / 2)),
+			float(_coords.y + _P0P8 * _size * sin(angle + PI / 2))
 		);
 		sf::Vector2f p9(
-			_coords.x + _P0P8 * _size * cos(angle),
-			_coords.y + _P0P8 * _size * sin(angle)
+			float(_coords.x + _P0P8 * _size * cos(angle)),
+			float(_coords.y + _P0P8 * _size * sin(angle))
 		);
 
 		sf::Vertex part1[] = { p1, p2, p3, _coords };
@@ -100,9 +100,9 @@ namespace snow {
 
 	void Snowflake::draw(sf::RenderWindow &window) {
 		drawFragment(window, 0);
-		drawFragment(window, PI / 2);
-		drawFragment(window, PI);
-		drawFragment(window, -PI / 2);
+		drawFragment(window, float(PI / 2));
+		drawFragment(window, float(PI));
+		drawFragment(window, float(-PI / 2));
 		
 	}
 
