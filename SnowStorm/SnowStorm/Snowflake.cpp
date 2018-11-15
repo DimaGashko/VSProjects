@@ -111,6 +111,10 @@ namespace snow {
 		_coords.y = coords.y;
 	}
 
+	sf::Vector2f Snowflake::getPosition() {
+		return sf::Vector2f(_coords);
+	}
+
 	const double Snowflake::_BETA1 = atan(7);
 	const double Snowflake::_BETA2 = PI / 2 - Snowflake::_BETA1;
 	const double Snowflake::_D02 = 1.f / 3.f * sqrt(50);

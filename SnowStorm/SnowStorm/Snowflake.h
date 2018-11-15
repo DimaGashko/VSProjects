@@ -11,8 +11,8 @@ namespace snow {
 		Snowflake();
 		Snowflake(sf::Vector2f coords, float angle = 0, float size = 20);
 		void draw(sf::RenderWindow &window);
-		//void setPosition();
-		//void getPosition();
+		void setPosition(sf::Vector2f coords);
+		sf::Vector2f getPosition();
 		//void move();
 		//void setAngle();
 		//void getAngle();
