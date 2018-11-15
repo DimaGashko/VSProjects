@@ -12,7 +12,7 @@ namespace snow {
 		void draw(sf::RenderWindow &window);
 		~Snowflake() {};
 	private:
-		std::unique_ptr<Figure> _figure;
+		Figure _figure;
 	};
 
 } // namespace snow

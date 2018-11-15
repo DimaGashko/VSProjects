@@ -15,9 +15,9 @@ namespace snow {
 	}
 
 	void SnowstormDemo::start() {
-		snow::Figure f1(sf::Vector2f(650,300),100,0.4);
-		snow::Figure f2(sf::Vector2f(250, 200), 80, 1.1);
-		snow::Figure f3(sf::Vector2f(400, 500), 40, -0.2);
+		snow::Figure f1(sf::Vector2f(650,300),100,0.4f);
+		snow::Figure f2(sf::Vector2f(250, 200), 80, 1.1f);
+		snow::Figure f3(sf::Vector2f(400, 500), 40, -0.2f);
 
 		while (_window.isOpen()) {
 			sf::Event event;
@@ -35,14 +35,14 @@ namespace snow {
 			f1.draw(_window);
 			f2.draw(_window);
 			f3.draw(_window);
-			//update();
+			update();
 			_window.display();
 		}
 
 	}
 
 	void SnowstormDemo::init() {
-		std::shared_ptr<Snowflake> a(new Snowflake());
+		Snowflake *a = new Snowflake();
 		_snowstorm.addSnowflake(a);
 	}
 

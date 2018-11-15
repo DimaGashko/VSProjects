@@ -10,12 +10,12 @@ namespace snow {
 	class Snowstorm {
 	public:
 		Snowstorm();
-		void addSnowflake(std::shared_ptr<Snowflake> snowflake);
+		void addSnowflake(Snowflake* snowflake);
 		//void update();
 		void draw(sf::RenderWindow &window);
 		~Snowstorm() {};
 	private: 
-		std::vector<std::shared_ptr<Snowflake>> _snowflakes;
+		std::vector<Snowflake*> _snowflakes;
 	};
 
 } // namespace snow

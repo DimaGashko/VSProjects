@@ -8,12 +8,12 @@ namespace snow {
 	}
 
 	void Snowstorm::draw(sf::RenderWindow &window) {		
-		for (std::shared_ptr<Snowflake> item : _snowflakes) {
+		for (Snowflake *item : _snowflakes) {
 			item->draw(window);
 		}
 	}
 
-	void Snowstorm::addSnowflake(std::shared_ptr<Snowflake> snowflake) {
+	void Snowstorm::addSnowflake(Snowflake *snowflake) {
 		_snowflakes.push_back(snowflake);
 	}
 

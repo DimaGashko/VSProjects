@@ -8,7 +8,7 @@ namespace snow {
 	}
 
 	void Snowflake::draw(sf::RenderWindow &window) {
-		_figure->draw(window);
+		_figure.draw(window);
 	}
 
 } // namespace snow
