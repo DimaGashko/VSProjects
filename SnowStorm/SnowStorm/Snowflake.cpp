@@ -29,11 +29,19 @@ namespace snow {
 	}
 
 	Snowflake::Snowflake(): 
-		_coords(sf::Vector2f(200, 200)),
-		_angle(0.3),
-		_size(50)
+		_coords(sf::Vector2f(0, 0)),
+		_size(20),
+		_angle(0)
 	{
 		
+	}
+
+	Snowflake::Snowflake(sf::Vector2f coords, float size, float angle) :
+		_coords(coords),
+		_size(size),
+		_angle(angle)
+	{
+
 	}
 
 	void Snowflake::drawFragment(sf::RenderWindow &window, float fragmentAngle) {
@@ -80,8 +88,8 @@ namespace snow {
 		sf::Vertex part2[] = { _coords, p4 };
 		sf::Vertex part3[] = { p5, p6, p7 };
 
-		auto arc1 = getBezierCoords(_coords, p8, p4, 10);
-		auto arc2 = getBezierCoords(_coords, p9, p4, 10);
+		auto arc1 = getBezierCoords(_coords, p8, p4, 15);
+		auto arc2 = getBezierCoords(_coords, p9, p4, 15);
 
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
@@ -96,6 +104,11 @@ namespace snow {
 		drawFragment(window, PI);
 		drawFragment(window, -PI / 2);
 		
+	}
+
+	void Snowflake::setPosition(sf::Vector2f coords) {
+		_coords.x = coords.x;
+		_coords.y = coords.y;
 	}
 
 	const double Snowflake::_BETA1 = atan(7);

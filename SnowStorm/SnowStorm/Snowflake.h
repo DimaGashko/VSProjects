@@ -9,6 +9,7 @@ namespace snow {
 	class Snowflake {
 	public:
 		Snowflake();
+		Snowflake(sf::Vector2f coords, float angle = 0, float size = 20);
 		void draw(sf::RenderWindow &window);
 		//void setPosition();
 		//void getPosition();
