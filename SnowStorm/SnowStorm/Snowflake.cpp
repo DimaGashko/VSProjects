@@ -120,6 +120,18 @@ namespace snow {
 		_coords.y += offset.y;
 	}
 
+	void Snowflake::setAngle(float angle) {
+		_angle = angle;
+	}
+
+	float Snowflake::getAngle() {
+		return _angle;
+	}
+
+	void Snowflake::rotate(float angle)	{
+		_angle += angle;
+	}
+
 	const double Snowflake::_BETA1 = atan(7);
 	const double Snowflake::_BETA2 = PI / 2 - Snowflake::_BETA1;
 	const double Snowflake::_D02 = 1.f / 3.f * sqrt(50);

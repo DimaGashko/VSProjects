@@ -13,10 +13,10 @@ namespace snow {
 		void draw(sf::RenderWindow &window);
 		void setPosition(sf::Vector2f coords);
 		sf::Vector2f getPosition();
-		//void move();
-		//void setAngle();
-		//void getAngle();
-		//void rotate();
+		void move(sf::Vector2f offset);
+		void setAngle(float angle);
+		float getAngle();
+		void rotate(float angle);
 		~Snowflake() {};
 
 	private:
