@@ -24,6 +24,9 @@ namespace snow {
 	private:
 		void drawFragment(sf::RenderWindow &window);
 
+		//Рисует общие части фигуры
+		void drawGeneralParts(sf::RenderWindow &window);
+
 		float _size;
 		sf::Vector2f _coords;
 		float _angle;

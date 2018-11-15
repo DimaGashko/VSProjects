@@ -55,6 +55,8 @@ namespace snow {
 		}
 
 		setAngle(startAngle);
+
+		drawGeneralParts(window);
 	}
 
 	void Figure::drawFragment(sf::RenderWindow &window) {
@@ -70,8 +72,9 @@ namespace snow {
 		window.draw(part3, 3, sf::LineStrip);
 		window.draw(arc1);
 		window.draw(arc2);
+	}
 
-		/*
+	void Figure::drawGeneralParts(sf::RenderWindow &window) {
 		sf::CircleShape circle(_size);
 		circle.setOrigin(_size, _size);
 		circle.setPosition(_coords);
@@ -79,7 +82,6 @@ namespace snow {
 		circle.setOutlineThickness(1);
 
 		window.draw(circle);
-		*/
 	}
 
 	void Figure::updatePoints() {
