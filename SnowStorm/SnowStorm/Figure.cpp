@@ -64,12 +64,11 @@ namespace snow {
 		auto arc1 = getBezierCoords(_coords, _p8, _p4, 15);
 		auto arc2 = getBezierCoords(_coords, _p9, _p4, 15);
 
-		sf::CircleShape circle(_size * 2);
+		sf::CircleShape circle(_size);
+		circle.setOrigin(_size, _size);
 		circle.setPosition(_coords);
-		circle.setOrigin(_size * 2, _size * 2);
 		circle.setFillColor(sf::Color::Transparent);
-		circle.setOutlineColor(sf::Color::White);
-		circle.setOutlineThickness(1);
+		circle.setOutlineThickness(2);
 
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
