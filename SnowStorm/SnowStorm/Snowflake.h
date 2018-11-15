@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <SFML/Graphics.hpp>
 #include "Figure.h"
 
@@ -11,8 +10,9 @@ namespace snow {
 		Snowflake();
 		void draw(sf::RenderWindow &window);
 		~Snowflake() {};
-	private:
 		Figure _figure;
+	private:
+		
 	};
 
 } // namespace snow

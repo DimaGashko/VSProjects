@@ -42,8 +42,13 @@ namespace snow {
 	}
 
 	void SnowstormDemo::init() {
-		Snowflake *a = new Snowflake();
-		_snowstorm.addSnowflake(a);
+		for (int i = 0; i < 100; i++) {
+			Snowflake *flake = new Snowflake();
+			flake->_figure.setPosition(sf::Vector2f(rand() % 1000, rand() % 600));
+			flake->_figure.setAngle(rand() % 100 / 100);
+
+			_snowstorm.addSnowflake(flake);
+		}
 	}
 
 	void SnowstormDemo::update() {
