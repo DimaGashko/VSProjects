@@ -64,18 +64,21 @@ namespace snow {
 		auto arc1 = getBezierCoords(_coords, _p8, _p4, 15);
 		auto arc2 = getBezierCoords(_coords, _p9, _p4, 15);
 
-		sf::CircleShape circle(_size);
-		circle.setOrigin(_size, _size);
-		circle.setPosition(_coords);
-		circle.setFillColor(sf::Color::Transparent);
-		circle.setOutlineThickness(2);
-
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
 		window.draw(part3, 3, sf::LineStrip);
 		window.draw(arc1);
 		window.draw(arc2);
+
+		/*
+		sf::CircleShape circle(_size);
+		circle.setOrigin(_size, _size);
+		circle.setPosition(_coords);
+		circle.setFillColor(sf::Color::Transparent);
+		circle.setOutlineThickness(1);
+
 		window.draw(circle);
+		*/
 	}
 
 	void Figure::updatePoints() {
