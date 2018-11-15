@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-#include "Snowflake.h"
+#include "Figure.h"
 
 namespace snow {
 	const double PI = 3.14159265358979323846;
@@ -28,7 +28,7 @@ namespace snow {
 		return vertices;
 	}
 
-	Snowflake::Snowflake(): 
+	Figure::Figure(): 
 		_coords(sf::Vector2f(0, 0)),
 		_size(20),
 		_angle(0)
@@ -36,7 +36,7 @@ namespace snow {
 		
 	}
 
-	Snowflake::Snowflake(sf::Vector2f coords, float size, float angle) :
+	Figure::Figure(sf::Vector2f coords, float size, float angle) :
 		_coords(coords),
 		_size(size),
 		_angle(angle)
@@ -44,7 +44,7 @@ namespace snow {
 
 	}
 
-	void Snowflake::drawFragment(sf::RenderWindow &window, float fragmentAngle) {
+	void Figure::drawFragment(sf::RenderWindow &window, float fragmentAngle) {
 		float angle = _angle + fragmentAngle;
 
 		sf::Vector2f p1(
@@ -98,7 +98,7 @@ namespace snow {
 		window.draw(arc2);
 	}
 
-	void Snowflake::draw(sf::RenderWindow &window) {
+	void Figure::draw(sf::RenderWindow &window) {
 		drawFragment(window, 0);
 		drawFragment(window, float(PI / 2));
 		drawFragment(window, float(PI));
@@ -106,36 +106,36 @@ namespace snow {
 		
 	}
 
-	void Snowflake::setPosition(sf::Vector2f coords) {
+	void Figure::setPosition(sf::Vector2f coords) {
 		_coords.x = coords.x;
 		_coords.y = coords.y;
 	}
 
-	sf::Vector2f Snowflake::getPosition() {
+	sf::Vector2f Figure::getPosition() {
 		return sf::Vector2f(_coords);
 	}
 
-	void Snowflake::move(sf::Vector2f offset) {
+	void Figure::move(sf::Vector2f offset) {
 		_coords.x += offset.x;
 		_coords.y += offset.y;
 	}
 
-	void Snowflake::setAngle(float angle) {
+	void Figure::setAngle(float angle) {
 		_angle = angle;
 	}
 
-	float Snowflake::getAngle() {
+	float Figure::getAngle() {
 		return _angle;
 	}
 
-	void Snowflake::rotate(float angle)	{
+	void Figure::rotate(float angle)	{
 		_angle += angle;
 	}
 
-	const double Snowflake::_BETA1 = atan(7);
-	const double Snowflake::_BETA2 = PI / 2 - Snowflake::_BETA1;
-	const double Snowflake::_P0P2 = 1.f / 3.f * sqrt(50);
-	const double Snowflake::_P0P8 = sqrt(2);
+	const double Figure::_BETA1 = atan(7);
+	const double Figure::_BETA2 = PI / 2 - Figure::_BETA1;
+	const double Figure::_P0P2 = 1.f / 3.f * sqrt(50);
+	const double Figure::_P0P8 = sqrt(2);
 
 } // namespace snow
 

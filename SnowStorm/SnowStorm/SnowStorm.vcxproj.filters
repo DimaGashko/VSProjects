@@ -18,12 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Snowflake.cpp">
+    <ClCompile Include="Figure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Snowflake.h">
+    <ClInclude Include="Figure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

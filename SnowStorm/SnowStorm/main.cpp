@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "Snowflake.h"
+#include "Figure.h"
 
 int main() {
 	sf::ContextSettings settings;
@@ -9,9 +9,9 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, settings);
 
-	snow::Snowflake f1(sf::Vector2f(400, 400), 50, 0.3f);
-	snow::Snowflake f2(sf::Vector2f(200, 100), 20, 1.6f);
-	snow::Snowflake f3(sf::Vector2f(500, 100), 30, 0.6f);
+	snow::Figure f1(sf::Vector2f(400, 400), 50, 0.3f);
+	snow::Figure f2(sf::Vector2f(200, 100), 20, 1.6f);
+	snow::Figure f3(sf::Vector2f(500, 100), 30, 0.6f);
 	
 	while (window.isOpen()) {
 		sf::Event event;
