@@ -28,7 +28,7 @@ namespace snow {
 		sf::Vector2f _coords;
 		float _angle;
 
-		sf::Vector2f p1, p2, p3, p4, p5, p6, p7, p8, p9;
+		sf::Vector2f _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, _p9;
 
 		// ”гол создаваемый точками p2, p0, p6
 		static const double _BETA1;

@@ -57,47 +57,55 @@ namespace snow {
 	}
 
 	void Figure::drawFragment(sf::RenderWindow &window) {
-		sf::Vertex part1[] = { p1, p2, p3, _coords };
-		sf::Vertex part2[] = { _coords, p4 };
-		sf::Vertex part3[] = { p5, p6, p7 };
+		sf::Vertex part1[] = { _p1, _p2, _p3, _coords };
+		sf::Vertex part2[] = { _coords, _p4 };
+		sf::Vertex part3[] = { _p5, _p6, _p7 };
 
-		auto arc1 = getBezierCoords(_coords, p8, p4, 15);
-		auto arc2 = getBezierCoords(_coords, p9, p4, 15);
+		auto arc1 = getBezierCoords(_coords, _p8, _p4, 15);
+		auto arc2 = getBezierCoords(_coords, _p9, _p4, 15);
+
+		sf::CircleShape circle(_size * 2);
+		circle.setPosition(_coords);
+		circle.setOrigin(_size * 2, _size * 2);
+		circle.setFillColor(sf::Color::Transparent);
+		circle.setOutlineColor(sf::Color::White);
+		circle.setOutlineThickness(1);
 
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
 		window.draw(part3, 3, sf::LineStrip);
 		window.draw(arc1);
 		window.draw(arc2);
+		window.draw(circle);
 	}
 
 	void Figure::updatePoints() {
-		p1.x = float(_coords.x + _size * cos(_angle + PI / 2) * 8 / 3);
-		p1.y = float(_coords.y + _size * sin(_angle + PI / 2) * 8 / 3);
+		_p1.x = float(_coords.x + _size * cos(_angle + PI / 2) * 8 / 3);
+		_p1.y = float(_coords.y + _size * sin(_angle + PI / 2) * 8 / 3);
 		
-		p2.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA1));
-		p2.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA1));
+		_p2.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA1));
+		_p2.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA1));
 		
-		p3.x = float(_coords.x + 2 * _size * cos(_angle + PI / 2)),
-		p3.y = float(_coords.y + 2 * _size * sin(_angle + PI / 2));
+		_p3.x = float(_coords.x + 2 * _size * cos(_angle + PI / 2)),
+		_p3.y = float(_coords.y + 2 * _size * sin(_angle + PI / 2));
 
-		p4.x = float(_coords.x + 2 * _size * cos(_angle + PI / 4));
-		p4.y = float(_coords.y + 2 * _size * sin(_angle + PI / 4));
+		_p4.x = float(_coords.x + 2 * _size * cos(_angle + PI / 4));
+		_p4.y = float(_coords.y + 2 * _size * sin(_angle + PI / 4));
 
-		p5.x = float(_coords.x + 2 * _size * cos(_angle));
-		p5.y = float(_coords.y + 2 * _size * sin(_angle));
+		_p5.x = float(_coords.x + 2 * _size * cos(_angle));
+		_p5.y = float(_coords.y + 2 * _size * sin(_angle));
 		
-		p6.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA2));
-		p6.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA2));
+		_p6.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA2));
+		_p6.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA2));
 
-		p7.x = float(_coords.x + _size * cos(_angle) * 8 / 3);
-		p7.y = float(_coords.y + _size * sin(_angle) * 8 / 3);
+		_p7.x = float(_coords.x + _size * cos(_angle) * 8 / 3);
+		_p7.y = float(_coords.y + _size * sin(_angle) * 8 / 3);
 
-		p8.x = float(_coords.x + _P0P8 * _size * cos(_angle + PI / 2));
-		p8.y = float(_coords.y + _P0P8 * _size * sin(_angle + PI / 2));
+		_p8.x = float(_coords.x + _P0P8 * _size * cos(_angle + PI / 2));
+		_p8.y = float(_coords.y + _P0P8 * _size * sin(_angle + PI / 2));
 
-		p9.x = float(_coords.x + _P0P8 * _size * cos(_angle));
-		p9.y = float(_coords.y + _P0P8 * _size * sin(_angle));
+		_p9.x = float(_coords.x + _P0P8 * _size * cos(_angle));
+		_p9.y = float(_coords.y + _P0P8 * _size * sin(_angle));
 	}
 
 	void Figure::setPosition(sf::Vector2f coords) {
