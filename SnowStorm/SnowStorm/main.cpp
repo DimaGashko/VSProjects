@@ -1,13 +1,11 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "SnowStorm.h"
+#include "SnowStormDemo.h"
 
 int main() {
-	snow::Snowstorm snowstorm;
+	snow::SnowstormDemo snowstorm;
 	snowstorm.start();
 
-	snow::Snowstorm snowstorm1;
-	snowstorm1.start();
 	return 0;
 }

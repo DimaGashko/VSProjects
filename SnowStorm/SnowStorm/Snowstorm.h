@@ -1,18 +1,22 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <vector>
 #include <memory>
+#include <SFML/Graphics.hpp>
+#include "Snowflake.h"
 
 namespace snow {
 
 	class Snowstorm {
 	public:
 		Snowstorm();
-		void initWindow();
-		void start();
+		void addSnowflake(std::shared_ptr<Snowflake> snowflake);
+		//void update();
+		void draw(sf::RenderWindow &window);
 		~Snowstorm() {};
-	private:
-		sf::RenderWindow _window;
+	private: 
+		std::vector<std::shared_ptr<Snowflake>> _snowflakes;
 	};
 
 } // namespace snow
+

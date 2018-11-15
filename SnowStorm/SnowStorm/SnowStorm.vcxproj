@@ -137,11 +137,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Figure.cpp" />
+    <ClCompile Include="Snowflake.cpp" />
     <ClCompile Include="Snowstorm.cpp" />
+    <ClCompile Include="SnowstormDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Figure.h" />
+    <ClInclude Include="Snowflake.h" />
     <ClInclude Include="Snowstorm.h" />
+    <ClInclude Include="SnowstormDemo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

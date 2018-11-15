@@ -21,7 +21,13 @@
     <ClCompile Include="Figure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SnowstormDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Snowstorm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Snowflake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +35,13 @@
     <ClInclude Include="Figure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SnowstormDemo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Snowstorm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Snowflake.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
