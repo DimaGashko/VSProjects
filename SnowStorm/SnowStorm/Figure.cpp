@@ -30,7 +30,7 @@ namespace snow {
 
 	Figure::Figure(): 
 		_coords(sf::Vector2f(0, 0)),
-		_size(20),
+		_size(10),
 		_angle(0)
 	{
 		
