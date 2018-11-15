@@ -41,49 +41,22 @@ namespace snow {
 		_size(size),
 		_angle(angle)
 	{
-
+		
 	}
 
-	void Figure::drawFragment(sf::RenderWindow &window, float fragmentAngle) {
-		float angle = _angle + fragmentAngle;
+	void Figure::draw(sf::RenderWindow &window) {
+		const float angle = float(PI / 2);
+		const float startAngle = _angle;
 
-		sf::Vector2f p1(
-			float(_coords.x + _size * cos(angle + PI / 2) * 8 / 3),
-			float(_coords.y + _size * sin(angle + PI / 2) * 8 / 3)
-		);
-		sf::Vector2f p2(
-			float(_coords.x + _P0P2 * _size * cos(angle + _BETA1)),
-			float(_coords.y + _P0P2 * _size * sin(angle + _BETA1))
-		);
-		sf::Vector2f p3(
-			float(_coords.x + 2 * _size * cos(angle + PI / 2)),
-			float(_coords.y + 2 * _size * sin(angle + PI / 2))
-		);
-		sf::Vector2f p4(
-			float(_coords.x + 2 * _size * cos(angle + PI / 4)),
-			float(_coords.y + 2 * _size * sin(angle + PI / 4))
-		);
-		sf::Vector2f p5(
-			float(_coords.x + 2 * _size * cos(angle)),
-			float(_coords.y + 2 * _size * sin(angle))
-		);
-		sf::Vector2f p6(
-			float(_coords.x + _P0P2 * _size * cos(angle + _BETA2)),
-			float(_coords.y + _P0P2 * _size * sin(angle + _BETA2))
-		);
-		sf::Vector2f p7(
-			float(_coords.x + _size * cos(angle) * 8 / 3),
-			float(_coords.y + _size * sin(angle) * 8 / 3)
-		);
-		sf::Vector2f p8(
-			float(_coords.x + _P0P8 * _size * cos(angle + PI / 2)),
-			float(_coords.y + _P0P8 * _size * sin(angle + PI / 2))
-		);
-		sf::Vector2f p9(
-			float(_coords.x + _P0P8 * _size * cos(angle)),
-			float(_coords.y + _P0P8 * _size * sin(angle))
-		);
+		for (int i = 0; i < 4; i++) {
+			drawFragment(window);
+			rotate(angle);
+		}
 
+		setAngle(startAngle);
+	}
+
+	void Figure::drawFragment(sf::RenderWindow &window) {
 		sf::Vertex part1[] = { p1, p2, p3, _coords };
 		sf::Vertex part2[] = { _coords, p4 };
 		sf::Vertex part3[] = { p5, p6, p7 };
@@ -98,17 +71,40 @@ namespace snow {
 		window.draw(arc2);
 	}
 
-	void Figure::draw(sf::RenderWindow &window) {
-		drawFragment(window, 0);
-		drawFragment(window, float(PI / 2));
-		drawFragment(window, float(PI));
-		drawFragment(window, float(-PI / 2));
+	void Figure::updatePoints() {
+		p1.x = float(_coords.x + _size * cos(_angle + PI / 2) * 8 / 3);
+		p1.y = float(_coords.y + _size * sin(_angle + PI / 2) * 8 / 3);
 		
+		p2.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA1));
+		p2.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA1));
+		
+		p3.x = float(_coords.x + 2 * _size * cos(_angle + PI / 2)),
+		p3.y = float(_coords.y + 2 * _size * sin(_angle + PI / 2));
+
+		p4.x = float(_coords.x + 2 * _size * cos(_angle + PI / 4));
+		p4.y = float(_coords.y + 2 * _size * sin(_angle + PI / 4));
+
+		p5.x = float(_coords.x + 2 * _size * cos(_angle));
+		p5.y = float(_coords.y + 2 * _size * sin(_angle));
+		
+		p6.x = float(_coords.x + _P0P2 * _size * cos(_angle + _BETA2));
+		p6.y = float(_coords.y + _P0P2 * _size * sin(_angle + _BETA2));
+
+		p7.x = float(_coords.x + _size * cos(_angle) * 8 / 3);
+		p7.y = float(_coords.y + _size * sin(_angle) * 8 / 3);
+
+		p8.x = float(_coords.x + _P0P8 * _size * cos(_angle + PI / 2));
+		p8.y = float(_coords.y + _P0P8 * _size * sin(_angle + PI / 2));
+
+		p9.x = float(_coords.x + _P0P8 * _size * cos(_angle));
+		p9.y = float(_coords.y + _P0P8 * _size * sin(_angle));
 	}
 
 	void Figure::setPosition(sf::Vector2f coords) {
 		_coords.x = coords.x;
 		_coords.y = coords.y;
+
+		updatePoints();
 	}
 
 	sf::Vector2f Figure::getPosition() {
@@ -116,20 +112,31 @@ namespace snow {
 	}
 
 	void Figure::move(sf::Vector2f offset) {
-		_coords.x += offset.x;
-		_coords.y += offset.y;
+		setPosition(_coords + offset);
 	}
 
 	void Figure::setAngle(float angle) {
 		_angle = angle;
+		updatePoints();
 	}
 
 	float Figure::getAngle() {
 		return _angle;
 	}
 
-	void Figure::rotate(float angle)	{
-		_angle += angle;
+	void Figure::rotate(float angle) {
+		setAngle(_angle + angle);
+	}
+
+	void Figure::setSize(float size) {
+		if (size < 1) return;
+		_size = size;
+
+		updatePoints();
+	}
+
+	float Figure::getSize() {
+		return _size;
 	}
 
 	const double Figure::_BETA1 = atan(7);

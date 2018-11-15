@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 namespace snow {
@@ -17,14 +16,19 @@ namespace snow {
 		void setAngle(float angle);
 		float getAngle();
 		void rotate(float angle);
-		~Figure() {};
+		void setSize(float size);
+		float getSize();
+		void updatePoints(); 
+		~Figure() {}
 
 	private:
-		void drawFragment(sf::RenderWindow &window, float fragmentAngle);
+		void drawFragment(sf::RenderWindow &window);
 
 		float _size;
 		sf::Vector2f _coords;
 		float _angle;
+
+		sf::Vector2f p1, p2, p3, p4, p5, p6, p7, p8, p9;
 
 		// ”гол создаваемый точками p2, p0, p6
 		static const double _BETA1;

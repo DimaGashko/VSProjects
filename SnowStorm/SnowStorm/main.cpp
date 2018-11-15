@@ -8,10 +8,13 @@ int main() {
 	settings.antialiasingLevel = 4;
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!", sf::Style::Default, settings);
+	window.setFramerateLimit(10);
 
-	snow::Figure f1(sf::Vector2f(400, 400), 50, 0.3f);
-	snow::Figure f2(sf::Vector2f(200, 100), 20, 1.6f);
-	snow::Figure f3(sf::Vector2f(500, 100), 30, 0.6f);
+	snow::Figure f1(sf::Vector2f(250, 250), 50, 0.f);
+	snow::Figure f2(sf::Vector2f(50, 250), 20, 0.f);
+	snow::Figure f3(sf::Vector2f(600, 350), 20, 0.f);
+
+	float step = 5;
 	
 	while (window.isOpen()) {
 		sf::Event event;
@@ -22,6 +25,32 @@ int main() {
 			else if (event.type == sf::Event::Resized) {
 				sf::FloatRect visible(0, 0, float(event.size.width), float(event.size.height));
 				window.setView(sf::View(visible));
+			}
+			else if (event.type == sf::Event::KeyPressed) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+					f1.rotate(0.1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+					f1.rotate(-0.1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+					f1.move(sf::Vector2f(0, -step));
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+					f1.move(sf::Vector2f(0, step));
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					f1.move(sf::Vector2f(-step, 0));
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+					f1.move(sf::Vector2f(step, 0));
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+					f1.setSize(f1.getSize() + 1);
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+					f1.setSize(f1.getSize() - 1);
+				}
 			}
 		}
 
