@@ -56,7 +56,7 @@ namespace snow {
 
 		setAngle(startAngle);
 
-		//drawGeneralParts(window);
+		drawGeneralParts(window);
 	}
 
 	void Figure::drawFragment(sf::RenderWindow &window) {

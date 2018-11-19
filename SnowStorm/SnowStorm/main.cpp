@@ -32,7 +32,7 @@ int main() {
 
 	while (window.isOpen()) {
 		frameTime = clock.restart().asMilliseconds();
-		std::cout << frameTime << std::endl;
+
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
@@ -44,7 +44,7 @@ int main() {
 			}
 		}
 
-		controlFigure(f2, frameTime);
+		controlFigure(f1, frameTime);
 
 		window.clear();
 		f1.draw(window);
