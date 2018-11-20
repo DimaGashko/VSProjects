@@ -6,13 +6,12 @@ typedef long double ld;
 
 using namespace std;
 
-void ptrs(), classes(), шкафонер();
+void ptrs(), classes();
 
 int main() {
 	//ptrs();
-	//шкафонер();
 	classes();
-	
+
 	return 0;
 }
 
@@ -24,29 +23,29 @@ public:
 	virtual ~BasePerson() { cout << "~BasePerson -> "; };
 };
 
-class Person: public BasePerson {
+class Person : public BasePerson {
 public:
 	Person() { cout << "___PersonConstructor -> "; };
 	void a() { cout << "a from Person"; };
-	Person(int a): BasePerson(a) { cout << "PersonConstructor -> "; };
+	Person(int a) : BasePerson(a) { cout << "PersonConstructor -> "; };
 	~Person() { cout << "~Person -> "; };
-}; 
+};
 
-class Student: public Person {
+class Student : public Person {
 public:
 	Student() { cout << "___StudentConstructor -> "; };
-	Student(int a): Person(a) { cout << "StudentConstructor -> "; };
+	Student(int a) : Person(a) { cout << "StudentConstructor -> "; };
 	void a() override { cout << "a from Student"; }
 	~Student() { cout << "~Student -> "; };
 };
 
-class Сlassleader: public Student {
+class Nlassleader : public Student {
 public:
-	Сlassleader() { cout << "___CalssLeaderConstructor -> "; };
+	Nlassleader() { cout << "___CalssLeaderConstructor -> "; };
 	void a() override { cout << "a form CLeader"; };
-	Сlassleader(int a): Student(a) { cout << "ClassleaderConstructor -> "; };
-	~Сlassleader() { cout << "~Classleader -> "; };
-}; 
+	Nlassleader(int a) : Student(a) { cout << "ClassleaderConstructor -> "; };
+	~Nlassleader() { cout << "~Classleader -> "; };
+};
 
 void classes() {
 	{
@@ -62,37 +61,6 @@ void classes() {
 	}
 
 	cout << endl;
-	system("pause");
-}
-
-class Шкаф {
-public:
-	double width;
-	double height;
-	double deep;
-};
-
-class Шифонер {
-public:
-	double height;
-	double deep;
-};
-
-class Шкафонер : public Шкаф, public Шифонер {
-public:
-	Шкафонер() {
-		cout << "Шкафонер" << endl;
-	}
-
-};
-
-void шкафонер() {
-	setlocale(0, "Russian");
-
-	Шкафонер шкафонер1;
-	шкафонер1.width = 50;
-
-	cout << шкафонер1.width << endl;
 	system("pause");
 }
 
@@ -130,14 +98,11 @@ void ptrs() {
 
 	/*
 	system("pause");
-
 	{
 		vector<unique_ptr<long double>> arr;
-
 		for (int i = 0; i < 10000000; i++) {
 			arr.push_back(unique_ptr<long double>(new long double(i)));
 		}
-
 		system("pause");
 	}*/
 
