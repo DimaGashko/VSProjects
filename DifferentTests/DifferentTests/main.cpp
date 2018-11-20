@@ -19,7 +19,7 @@ int main() {
 class BasePerson {
 public:
 	BasePerson() { cout << "___BasePersonConstructor -> "; };
-	virtual void a() { cout << "virtual a" << endl; };
+	virtual void a() = 0;
 	BasePerson(int a) { cout << "BasePersonConstructor -> "; };
 	virtual ~BasePerson() { cout << "~BasePerson -> "; };
 };
@@ -27,7 +27,7 @@ public:
 class Person: public BasePerson {
 public:
 	Person() { cout << "___PersonConstructor -> "; };
-	void a() override { cout << "a from Person"; };
+	void a() { cout << "a from Person"; };
 	Person(int a): BasePerson(a) { cout << "PersonConstructor -> "; };
 	~Person() { cout << "~Person -> "; };
 }; 
@@ -50,7 +50,7 @@ public:
 
 void classes() {
 	{
-		Student * p1 = new Ñlassleader(5);
+		Person *p1 = new Person(5);
 
 		cout << endl;
 		p1->a();
