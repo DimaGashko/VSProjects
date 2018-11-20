@@ -19,7 +19,7 @@ int main() {
 class BasePerson {
 public:
 	BasePerson() { cout << "___BasePersonConstructor -> "; };
-	virtual void a() {};
+	virtual void a() { cout << "virtual a" << endl; };
 	BasePerson(int a) { cout << "BasePersonConstructor -> "; };
 	virtual ~BasePerson() { cout << "~BasePerson -> "; };
 };
@@ -27,6 +27,7 @@ public:
 class Person: public BasePerson {
 public:
 	Person() { cout << "___PersonConstructor -> "; };
+	void a() { cout << "a from Person"; };
 	Person(int a): BasePerson(a) { cout << "PersonConstructor -> "; };
 	~Person() { cout << "~Person -> "; };
 };
@@ -35,13 +36,14 @@ class Student: public Person {
 public:
 	Student() { cout << "___StudentConstructor -> "; };
 	Student(int a): Person(a) { cout << "StudentConstructor -> "; };
+	void a() { cout << "a from Student"; }
 	~Student() { cout << "~Student -> "; };
 };
 
 class Ñlassleader: public Student {
 public:
 	Ñlassleader() { cout << "___CalssLeaderConstructor -> "; };
-	void a() {}
+	void a() { cout << "a form CLeader"; };
 	Ñlassleader(int a): Student(a) { cout << "ClassleaderConstructor -> "; };
 	~Ñlassleader() { cout << "~Classleader -> "; };
 }; 
@@ -49,6 +51,9 @@ public:
 void classes() {
 	{
 		Student * p1 = new Ñlassleader(5);
+
+		cout << endl;
+		p1->a();
 
 		cout << endl;
 		system("pause");
