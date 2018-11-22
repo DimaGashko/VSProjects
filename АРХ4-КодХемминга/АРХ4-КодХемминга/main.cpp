@@ -28,21 +28,26 @@ int main() {
 		cout << "Input: " << input << endl;
 		cout << "Output: " << output << endl << endl;
 
-		system("pause");
+		cout << "Again? (1 - yes): ";
+		string again; cin >> again;
+		if (again != "1") break;
+
 		cout << "- - - - - -" << endl << endl;
 	}
 
-	string input = "111000000100"; //"0010011101";
+	/*string input = "111000000100"; //"0010011101";
 	auto output = decodeHamming(toWord(input));
 
 	cout << input << endl;
 	cout << toStrWord(output) << endl;
 
-	system("pause");
+	system("pause");*/
 	return 0;
 }
 
 string decodeStr(string str, int wordSize) {
+	
+
 	return str;
 }
 
