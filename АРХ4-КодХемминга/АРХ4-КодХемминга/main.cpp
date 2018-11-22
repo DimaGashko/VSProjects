@@ -1,26 +1,23 @@
 ﻿#include <iostream>
 #include <windows.h>
+
+#include <string>
 #include <vector>
 
 using namespace std;
 
 vector<bool> decodeHamming(vector<bool> word);
-void printWord(vector<bool> word);
+
+vector<bool> toWord(string strWord);
+string toStrWord(vector<bool> word);
 
 int main() {
-	SetConsoleCP(866);
-	SetConsoleOutputCP(866);
-		
-	cout << '|' << char(14) << char(4) << '|' << endl;
-	cout << '|' << char(14) << char(0) << '|' << endl;
+	string input = "0010111101";
+	auto output = decodeHamming(toWord(input));
 
-	vector<bool> input = { 0,0,1,0,1,1,1,1,0,1 };
-	auto output = decodeHamming(input);
+	cout << input << endl;
+	cout << toStrWord(output) << endl;
 
-	printWord(input);
-	printWord(output);
-
-	cout << endl;
 	system("pause");
 	return 0;
 }
@@ -59,12 +56,24 @@ vector<bool> decodeHamming(vector<bool> word) {
 	return word;
 }
 
-void printWord(vector<bool> word) {
-	for (int i = 0; i < word.size(); i++) {
-		cout << (int)word[i];
-	}
+vector<bool> toWord(string strWord) {
+	vector<bool> word;
 
-	cout << endl;
+	for (char strBit : strWord) {
+		word.push_back(strBit == '1' ? 1 : 0);
+	};
+
+	return word;
+}
+
+string toStrWord(vector<bool> word) {
+	string strWord;
+
+	for (bool bit : word) {
+		strWord += (bit == 1) ? "1" : "0";
+	};
+
+	return strWord;
 }
 
 
