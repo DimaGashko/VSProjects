@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include <windows.h>
-
 #include <string>
 #include <vector>
 
@@ -12,7 +11,7 @@ vector<bool> toWord(string strWord);
 string toStrWord(vector<bool> word);
 
 int main() {
-	string input = "0010111101";
+	string input = "0011011101";
 	auto output = decodeHamming(toWord(input));
 
 	cout << input << endl;
@@ -33,11 +32,16 @@ vector<bool> decodeHamming(vector<bool> word) {
 	short errors = 0; //Количество несовпавших проверочных битов
 	int errIndex = -1; //Индекс бита с ошибкой
 
-	/*for (int r = 1; r <= size; r *= 2) {
+	for (int r = 1; r <= size; r *= 2) {
 		int res = 0;
 
-		for (int i = r; r <= size;) {
-			
+		for (int i = r; i <= size; i += 2 * r) {
+			for (int j = 0; j < r; j++) {
+				int index = i + j - 1;
+				if (index >= size) break;
+
+				res ^= word[i + j - 1];
+			}
 		}
 
 		if (res != 0) {
@@ -48,10 +52,13 @@ vector<bool> decodeHamming(vector<bool> word) {
 
 	if (errors >= 2) {
 		word[errIndex] = !word[errIndex];
+		cout << "Error in a bit by index: " << errIndex << endl;
 	}
 	else if (errors == 1) {
-		//Error in parity bit
-	}*/
+		cout << "Error in parity bit by index: " << errIndex << endl;
+	}
+
+
 
 	return word;
 }
