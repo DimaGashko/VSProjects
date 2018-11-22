@@ -11,7 +11,7 @@ vector<bool> toWord(string strWord);
 string toStrWord(vector<bool> word);
 
 int main() {
-	string input = "111000000100"; //"0010011101";
+	string input = "11100011111010101010101010101010101010101010101010101010101010101010101000100"; //"0010011101";
 	auto output = decodeHamming(toWord(input));
 
 	cout << input << endl;
@@ -51,6 +51,11 @@ vector<bool> decodeHamming(vector<bool> word) {
 	}
 
 	if (errors >= 2) {
+		if (errIndex >= size) { 
+			cout << "Code word has more then 1 errors" << endl;
+			return word;
+		};
+
 		word[errIndex] = !word[errIndex];
 		cout << "Error in a bit by index: " << errIndex << endl;
 	}
