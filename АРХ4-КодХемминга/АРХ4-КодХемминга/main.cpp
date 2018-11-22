@@ -7,6 +7,7 @@ using namespace std;
 
 vector<bool> decodeHamming(vector<bool> word);
 string decodeStr(string str, int wordSize = 12);
+vector<bool> getCodeWord(string str);
 
 vector<bool> toWord(string strWord);
 vector<bool> toWord(int val, int size = 32);
@@ -17,10 +18,6 @@ int toNumFromWord(vector<bool> word);
 void printHello();
 
 int main() {
-	for (int i = 0; i < 10000; i++) {
-		cout << toNumFromWord(toWord(i)) << " ";
-	}
-	
 	printHello();
 
 	while (true) {
@@ -53,14 +50,28 @@ int main() {
 }
 
 string decodeStr(string str, int wordSize) {
+	auto code = getCodeWord(str);
+	cout << toStrWord(code) << endl;
+
+	return str;
+}
+
+vector<bool> getCodeWord(string str) {
 	const short BITS_IN_CHAR = 8;
 	const int len = str.length();
 	const int size = len * BITS_IN_CHAR;
-
+	
 	vector<bool> code(size);
 
+	for (int i = 0; i < len; i++) {
+		auto word = toWord(int(str[i]), BITS_IN_CHAR);
 
-	return str;
+		for (int j = 0; j < BITS_IN_CHAR; j++) {
+			code[i + j] = word[j];
+		}
+	}
+
+	return code;
 }
 
 //Возвращает вектор битов числа
