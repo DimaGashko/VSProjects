@@ -25,7 +25,7 @@ vector<bool> decodeHamming(vector<bool> word) {
 	int size = word.size();
 
 	if (size < 3) {
-		cerr << "Code word have to have leat 3 bits" << endl;
+		cerr << "Code word have to have least 3 bits" << endl;
 		return word;
 	}
 	
@@ -40,7 +40,7 @@ vector<bool> decodeHamming(vector<bool> word) {
 				int index = i + j - 1;
 				if (index >= size) break;
 
-				res ^= (int)word[i + j - 1];
+				res ^= (int)word[index];
 			}
 		}
 
@@ -86,5 +86,3 @@ string toStrWord(vector<bool> word) {
 
 	return strWord;
 }
-
-
