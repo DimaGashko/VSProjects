@@ -9,11 +9,18 @@ vector<bool> decodeHamming(vector<bool> word);
 string decodeStr(string str, int wordSize = 12);
 
 vector<bool> toWord(string strWord);
+vector<bool> toWord(int val, int size = 32);
+
 string toStrWord(vector<bool> word);
+int toNumFromWord(vector<bool> word);
 
 void printHello();
 
 int main() {
+	for (int i = 0; i < 10000; i++) {
+		cout << toNumFromWord(toWord(i)) << " ";
+	}
+	
 	printHello();
 
 	while (true) {
@@ -46,10 +53,38 @@ int main() {
 }
 
 string decodeStr(string str, int wordSize) {
-	
+	const short BITS_IN_CHAR = 8;
+	const int len = str.length();
+	const int size = len * BITS_IN_CHAR;
+
+	vector<bool> code(size);
+
 
 	return str;
 }
+
+//Возвращает вектор битов числа
+//val - число, bits - требуемое количество битов
+vector<bool> toWord(int val, int size) {
+	vector<bool> word(size, 0);
+
+	for (int bit = 0; bit < size; bit++) {
+		word[size - bit - 1] = val & (1 << bit);
+	}
+
+	return word;
+};
+
+int toNumFromWord(vector<bool> word) {
+	int size = word.size();
+	int res = 0;
+
+	for (int bit = size - 1; bit >= 0; bit--) {
+		res = res * 2 + word[size - bit - 1];
+	}
+
+	return res;
+};
 
 vector<bool> decodeHamming(vector<bool> word) {
 	int size = word.size();
@@ -62,7 +97,7 @@ vector<bool> decodeHamming(vector<bool> word) {
 	short errors = 0; // Количество несовпавших проверочных битов
 	int errIndex = -1; // Индекс бита с ошибкой
 
-	for (int r = 1; r <= size; r *= 2) {
+	for (int r = 1; r <= size; r <<= 1) {
 		int res = 0;
 
 		for (int i = r; i <= size; i += 2 * r) {
