@@ -86,10 +86,9 @@ vector<bool> decode(vector<bool> code, int wordSize) {
 		vector<bool> word(code.begin() + i - wordSize, code.begin() + i);
 		vector<bool> wordDecode = decodeHamming(word);
 
-		decode.insert(decode.end(), wordDecode.begin(), wordDecode.end());
+		decode.insert(decode.begin(), wordDecode.begin(), wordDecode.end());
 	}
 
-	//reverse(decode.begin(), decode.end());
 	return decode;
 }
 
