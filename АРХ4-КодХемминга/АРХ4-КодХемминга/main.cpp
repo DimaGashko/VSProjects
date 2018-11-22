@@ -5,31 +5,36 @@
 
 using namespace std;
 
-//Получает строку данных. Возвращает строку с исправленными ошибками
-//wordSize - размер кодовых слов
+// Получает строку данных. Возвращает строку с исправленными ошибками
+// wordSize - размер кодовых слов
 string decode(string str, int wordSize = 12);
 
-//Преобразует переданную строку в массив битов
+// Получает вектор закодированных битов и возвращает
+// Массив исправленных информационых битов
+// wordSize - размер кодовых слов
+vector<bool> decode(vector<bool> code, int wordSize = 12);
+
+// Преобразует переданную строку в массив битов
 vector<bool> getCode(string str);
 
-//Преобразует массив битов в строку
+// Преобразует массив битов в строку
 string getStrOfCode(vector<bool> code);
 
-//Получает кодовое слово и возвращает разшифрованное
+// Получает кодовое слово и возвращает разшифрованное
 vector<bool> decodeHamming(vector<bool> word);
 
-//Преобразует массив битов в число
+// Преобразует массив битов в число
 int toNumFromWord(vector<bool> word);
 
-//Преобразует переданное число в вектор битов
-//size - разрядность числа
-//(то есть переводит число из 10 СЧ в 2
+// Преобразует переданное число в вектор битов
+// size - разрядность числа
+// (то есть переводит число из 10 СЧ в 2
 vector<bool> toWord(int val, int size = 32);
 
-//Преобразует слово в виде строки в слово в виде битов
+// Преобразует слово в виде строки в слово в виде битов
 vector<bool> toWord(string strWord);
 
-//Преобразует слово в виде битов в слово в виде строки
+// Преобразует слово в виде битов в слово в виде строки
 string toStrWord(vector<bool> word);
 
 /**
@@ -54,7 +59,7 @@ int main() {
 		string input = prompt<string>("Enter the Message: ");
 		cout << endl;
 
-		string output = decodeStr(input, wordSize);
+		string output = decode(input, wordSize);
 
 		cout << " Input: " << input << endl;
 		cout << "Output: " << output << endl << endl;
@@ -68,6 +73,10 @@ int main() {
 
 string decode(string str, int wordSize) {
 	vector<bool> code = getCode(str);
+	return getStrOfCode(decode(code, wordSize));
+}
+
+vector<bool> decode(vector<bool> code, int wordSize) {
 	vector<bool> decode;
 
 	for (int i = code.size(); i >= wordSize; i -= wordSize) {
@@ -77,21 +86,7 @@ string decode(string str, int wordSize) {
 		decode.insert(decode.begin(), wordDecode.begin(), wordDecode.end());
 	}
 
-	return getStrOfCode(decode);
-}
-
-string getStrOfCode(vector<bool> code) {
-	const short BITS_IN_CHAR = 8;
-	const int size = code.size();
-
-	string str;
-
-	for (int i = 0; i <= size - BITS_IN_CHAR; i += BITS_IN_CHAR) {
-		vector<bool> charWord(code.begin() + i, code.begin() + i + BITS_IN_CHAR);
-		str += (char)toNumFromWord(charWord);
-	}
-
-	return str;
+	return decode;
 }
 
 vector<bool> getCode(string str) {
@@ -112,8 +107,6 @@ vector<bool> getCode(string str) {
 	return code;
 }
 
-//Возвращает вектор битов числа
-//val - число, bits - требуемое количество битов
 vector<bool> toWord(int val, int size) {
 	vector<bool> word(size, 0);
 
