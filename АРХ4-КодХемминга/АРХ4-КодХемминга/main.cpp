@@ -16,6 +16,9 @@ vector<bool> toWord(int val, int size = 32);
 string toStrWord(vector<bool> word);
 int toNumFromWord(vector<bool> word);
 
+template <typename T>
+T prompt(const char label[]);
+
 void printHello();
 
 int main() {
@@ -24,29 +27,18 @@ int main() {
 	while (true) {
 		string input, output;
 
-		cout << "Input the Message: ";
-		cin >> input;
+		input = prompt<string>("Input the Message: ");
 		cout << endl;
 
-		output = decodeStr(input);
+		output = decodeStr(input, 7);
 
-		cout << "Input: " << input << endl;
+		cout << " Input: " << input << endl;
 		cout << "Output: " << output << endl << endl;
 
-		cout << "Again? (1 - yes): ";
-		string again; cin >> again;
-		if (again != "1") break;
-
+		if (prompt<string>("Again? (1 - yes): ") != "1") break;
 		cout << "- - - - - -" << endl << endl;
 	}
 
-	/*string input = "111000000100"; //"0010011101";
-	auto output = decodeHamming(toWord(input));
-
-	cout << input << endl;
-	cout << toStrWord(output) << endl;
-
-	system("pause");*/
 	return 0;
 }
 
@@ -58,10 +50,10 @@ string decodeStr(string str, int wordSize) {
 		vector<bool> word(code.begin() + i - wordSize, code.begin() + i);
 		vector<bool> wordDecode = decodeHamming(word);
 
-		decode.insert(decode.end(), wordDecode.begin(), wordDecode.end());
+		decode.insert(decode.begin(), wordDecode.begin(), wordDecode.end());
 	}
 
-	return getStrOfCode(code);
+	return getStrOfCode(decode);
 }
 
 string getStrOfCode(vector<bool> code) {
@@ -72,7 +64,6 @@ string getStrOfCode(vector<bool> code) {
 
 	for (int i = 0; i <= size - BITS_IN_CHAR; i += BITS_IN_CHAR) {
 		vector<bool> charWord(code.begin() + i, code.begin() + i + BITS_IN_CHAR);
-		cout << toNumFromWord(charWord) << endl;
 		str += (char)toNumFromWord(charWord);
 	}
 
@@ -188,4 +179,35 @@ string toStrWord(vector<bool> word) {
 
 void printHello() {
 	cout << "* * * Hamming decode * * *" << endl << endl;
+}
+
+/**
+* Запрашивает от пользователя значение нужного типа
+* @param{char[]} label - текст, предложенный пользователю
+*
+* Пример работы:
+* prompt<int>("Введите целое число: ");
+* prompt<char>("Введите символ: ");
+* prompt<string>("Введите строку: ");
+*/
+template <typename T>
+T prompt(const char label[]) {
+	cout << label;
+
+	while (true) {
+		T val;
+		cin >> val;
+
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+			cout << "Произошла ошибка. Введите еще раз: ";
+		}
+		else {
+			cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
 }
