@@ -7,7 +7,8 @@ using namespace std;
 
 vector<bool> decodeHamming(vector<bool> word);
 string decodeStr(string str, int wordSize = 12);
-vector<bool> getCodeWord(string str);
+vector<bool> getCode(string str);
+string getStrOfCode(vector<bool> code);
 
 vector<bool> toWord(string strWord);
 vector<bool> toWord(int val, int size = 32);
@@ -50,13 +51,35 @@ int main() {
 }
 
 string decodeStr(string str, int wordSize) {
-	auto code = getCodeWord(str);
-	cout << toStrWord(code) << endl;
+	vector<bool> code = getCode(str);
+	vector<bool> decode;
+
+	for (int i = code.size(); i >= wordSize; i -= wordSize) {
+		vector<bool> word(code.begin() + i - wordSize, code.begin() + i);
+		vector<bool> wordDecode = decodeHamming(word);
+
+		decode.insert(decode.end(), wordDecode.begin(), wordDecode.end());
+	}
+
+	return getStrOfCode(code);
+}
+
+string getStrOfCode(vector<bool> code) {
+	const short BITS_IN_CHAR = 8;
+	const int size = code.size();
+
+	string str;
+
+	for (int i = 0; i <= size - BITS_IN_CHAR; i += BITS_IN_CHAR) {
+		vector<bool> charWord(code.begin() + i, code.begin() + i + BITS_IN_CHAR);
+		cout << toNumFromWord(charWord) << endl;
+		str += (char)toNumFromWord(charWord);
+	}
 
 	return str;
 }
 
-vector<bool> getCodeWord(string str) {
+vector<bool> getCode(string str) {
 	const short BITS_IN_CHAR = 8;
 	const int len = str.length();
 	const int size = len * BITS_IN_CHAR;
@@ -70,7 +93,7 @@ vector<bool> getCodeWord(string str) {
 			code[i * BITS_IN_CHAR + j] = word[j];
 		}
 	}
-	cout << "\a\a\a\a\a";
+
 	return code;
 }
 
