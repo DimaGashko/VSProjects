@@ -25,12 +25,11 @@ int main() {
 	printHello();
 
 	while (true) {
-		string input, output;
-
-		input = prompt<string>("Input the Message: ");
+		int wordSize = prompt<int>("Enter the size of the code word: ");
+		string input = prompt<string>("Enter the Message: ");
 		cout << endl;
 
-		output = decodeStr(input, 7);
+		string output = decodeStr(input, wordSize);
 
 		cout << " Input: " << input << endl;
 		cout << "Output: " << output << endl << endl;
