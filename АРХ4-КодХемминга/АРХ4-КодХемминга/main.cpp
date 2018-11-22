@@ -67,10 +67,10 @@ vector<bool> getCodeWord(string str) {
 		auto word = toWord(int(str[i]), BITS_IN_CHAR);
 
 		for (int j = 0; j < BITS_IN_CHAR; j++) {
-			code[i + j] = word[j];
+			code[i * BITS_IN_CHAR + j] = word[j];
 		}
 	}
-
+	cout << "\a\a\a\a\a";
 	return code;
 }
 
