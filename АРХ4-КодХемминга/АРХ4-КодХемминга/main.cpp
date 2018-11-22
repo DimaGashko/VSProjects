@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -77,15 +78,18 @@ string decode(string str, int wordSize) {
 }
 
 vector<bool> decode(vector<bool> code, int wordSize) {
+	if (wordSize < 3) wordSize = 3;
+
 	vector<bool> decode;
 
 	for (int i = code.size(); i >= wordSize; i -= wordSize) {
 		vector<bool> word(code.begin() + i - wordSize, code.begin() + i);
 		vector<bool> wordDecode = decodeHamming(word);
 
-		decode.insert(decode.begin(), wordDecode.begin(), wordDecode.end());
+		decode.insert(decode.end(), wordDecode.begin(), wordDecode.end());
 	}
 
+	reverse(decode.begin(), decode.end());
 	return decode;
 }
 
@@ -105,6 +109,20 @@ vector<bool> getCode(string str) {
 	}
 
 	return code;
+}
+
+string getStrOfCode(vector<bool> code) {
+	const short BITS_IN_CHAR = 8;
+	const int size = code.size();
+
+	string str;
+
+	for (int i = 0; i <= size - BITS_IN_CHAR; i += BITS_IN_CHAR) {
+		vector<bool> charWord(code.begin() + i, code.begin() + i + BITS_IN_CHAR);
+		str += (char)toNumFromWord(charWord);
+	}
+
+	return str;
 }
 
 vector<bool> toWord(int val, int size) {
@@ -209,7 +227,7 @@ T prompt(const char label[]) {
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(32767, '\n');
-			cout << "Произошла ошибка. Введите еще раз: ";
+			cout << "Wrong. Try again: ";
 		}
 		else {
 			cin.ignore(32767, '\n');
