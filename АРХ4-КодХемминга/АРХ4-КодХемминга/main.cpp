@@ -6,12 +6,33 @@
 using namespace std;
 
 vector<bool> decodeHamming(vector<bool> word);
+string decodeStr(string str, int wordSize = 12);
 
 vector<bool> toWord(string strWord);
 string toStrWord(vector<bool> word);
 
+void printHello();
+
 int main() {
-	string input = "11100011111010101010101010101010101010101010101010101010101010101010101000100"; //"0010011101";
+	printHello();
+
+	while (true) {
+		string input, output;
+
+		cout << "Input the Message: ";
+		cin >> input;
+		cout << endl;
+
+		output = decodeStr(input);
+
+		cout << "Input: " << input << endl;
+		cout << "Output: " << output << endl << endl;
+
+		system("pause");
+		cout << "- - - - - -" << endl << endl;
+	}
+
+	string input = "111000000100"; //"0010011101";
 	auto output = decodeHamming(toWord(input));
 
 	cout << input << endl;
@@ -19,6 +40,10 @@ int main() {
 
 	system("pause");
 	return 0;
+}
+
+string decodeStr(string str, int wordSize) {
+	return str;
 }
 
 vector<bool> decodeHamming(vector<bool> word) {
@@ -51,17 +76,11 @@ vector<bool> decodeHamming(vector<bool> word) {
 	}
 
 	if (errors >= 2) {
-		if (errIndex >= size) { 
-			cout << "Code word has more then 1 errors" << endl;
-			return word;
-		};
-
+		if (errIndex >= size) return word; //Code word has more then 1 errors
 		word[errIndex] = !word[errIndex];
-		cout << "Error in a bit by index: " << errIndex << endl;
 	}
-	else if (errors == 1) {
-		cout << "Error in parity bit by index: " << errIndex << endl;
-	}
+	
+	//else if (errors == 1) cout << "Error in parity bit by index";
 
 	vector<bool> res;
 	for (int i = 1; i <= size; i++) {
@@ -75,7 +94,7 @@ vector<bool> decodeHamming(vector<bool> word) {
 vector<bool> toWord(string strWord) {
 	vector<bool> word;
 
-	for (char strBit : strWord) {
+	for (char strBit: strWord) {
 		word.push_back(strBit == '1' ? 1 : 0);
 	};
 
@@ -85,9 +104,14 @@ vector<bool> toWord(string strWord) {
 string toStrWord(vector<bool> word) {
 	string strWord;
 
-	for (bool bit : word) {
+	for (bool bit: word) {
 		strWord += (bit == 1) ? "1" : "0";
 	};
 
 	return strWord;
+}
+
+
+void printHello() {
+	cout << "* * * Hamming decode * * *" << endl << endl;
 }
