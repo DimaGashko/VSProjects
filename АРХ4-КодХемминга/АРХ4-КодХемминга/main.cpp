@@ -5,17 +5,42 @@
 
 using namespace std;
 
-vector<bool> decodeHamming(vector<bool> word);
-string decodeStr(string str, int wordSize = 12);
+//Получает строку данных. Возвращает строку с исправленными ошибками
+//wordSize - размер кодовых слов
+string decode(string str, int wordSize = 12);
+
+//Преобразует переданную строку в массив битов
 vector<bool> getCode(string str);
+
+//Преобразует массив битов в строку
 string getStrOfCode(vector<bool> code);
 
-vector<bool> toWord(string strWord);
-vector<bool> toWord(int val, int size = 32);
+//Получает кодовое слово и возвращает разшифрованное
+vector<bool> decodeHamming(vector<bool> word);
 
-string toStrWord(vector<bool> word);
+//Преобразует массив битов в число
 int toNumFromWord(vector<bool> word);
 
+//Преобразует переданное число в вектор битов
+//size - разрядность числа
+//(то есть переводит число из 10 СЧ в 2
+vector<bool> toWord(int val, int size = 32);
+
+//Преобразует слово в виде строки в слово в виде битов
+vector<bool> toWord(string strWord);
+
+//Преобразует слово в виде битов в слово в виде строки
+string toStrWord(vector<bool> word);
+
+/**
+* Запрашивает от пользователя значение нужного типа
+* @param{char[]} label - текст, что будет показанно пользователю
+*
+* Пример работы:
+* prompt<int>("Введите целое число: ");
+* prompt<char>("Введите символ: ");
+* prompt<string>("Введите строку: ");
+*/
 template <typename T>
 T prompt(const char label[]);
 
@@ -41,7 +66,7 @@ int main() {
 	return 0;
 }
 
-string decodeStr(string str, int wordSize) {
+string decode(string str, int wordSize) {
 	vector<bool> code = getCode(str);
 	vector<bool> decode;
 
@@ -180,15 +205,6 @@ void printHello() {
 	cout << "* * * Hamming decode * * *" << endl << endl;
 }
 
-/**
-* Запрашивает от пользователя значение нужного типа
-* @param{char[]} label - текст, предложенный пользователю
-*
-* Пример работы:
-* prompt<int>("Введите целое число: ");
-* prompt<char>("Введите символ: ");
-* prompt<string>("Введите строку: ");
-*/
 template <typename T>
 T prompt(const char label[]) {
 	cout << label;
