@@ -11,7 +11,7 @@ vector<bool> toWord(string strWord);
 string toStrWord(vector<bool> word);
 
 int main() {
-	string input = "0011011101";
+	string input = "111000000100"; //"0010011101";
 	auto output = decodeHamming(toWord(input));
 
 	cout << input << endl;
@@ -25,12 +25,12 @@ vector<bool> decodeHamming(vector<bool> word) {
 	int size = word.size();
 
 	if (size < 3) {
-		cerr << "Code word have to have leat 3 bits";
+		cerr << "Code word have to have leat 3 bits" << endl;
 		return word;
 	}
 	
-	short errors = 0; //Количество несовпавших проверочных битов
-	int errIndex = -1; //Индекс бита с ошибкой
+	short errors = 0; // Количество несовпавших проверочных битов
+	int errIndex = -1; // Индекс бита с ошибкой
 
 	for (int r = 1; r <= size; r *= 2) {
 		int res = 0;
@@ -40,7 +40,7 @@ vector<bool> decodeHamming(vector<bool> word) {
 				int index = i + j - 1;
 				if (index >= size) break;
 
-				res ^= word[i + j - 1];
+				res ^= (int)word[i + j - 1];
 			}
 		}
 
@@ -58,9 +58,13 @@ vector<bool> decodeHamming(vector<bool> word) {
 		cout << "Error in parity bit by index: " << errIndex << endl;
 	}
 
+	vector<bool> res;
+	for (int i = 1; i <= size; i++) {
+		if ((i & (i - 1)) == 0) continue; //Проверочный бит
+		res.push_back(word[i - 1]);
+	}
 
-
-	return word;
+	return res;
 }
 
 vector<bool> toWord(string strWord) {
