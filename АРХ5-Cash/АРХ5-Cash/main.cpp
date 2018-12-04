@@ -9,8 +9,9 @@ using namespace std;
 const int MIN_LEN = 1024/4; //256
 const int MAX_LEN = 32*1024*1024/4; //8388608
 
-//¬озвращает массив дл€ тестировани€ с размером len заполненный type способом
-//type = "preorder" - пр€мой | "postorder" - обратный | "randorder" 
+// ¬озвращает массив дл€ тестировани€ с размером len 
+// «аполненный type способом в виде цикличного списка
+// type = "preorder" - пр€мой | "postorder" - обратный | "randorder" 
 int* getTargArr(int len, string type) {
 	int *arr = new int[len];
 
@@ -39,13 +40,16 @@ int* getTargArr(int len, string type) {
 
 		int prevLink = 0;
 
+		// Ќепосредственное заполнение массива в виде списка в случайно пор€дке
+		// ¬ каждый последующий prevLink записываетс€ последнее значение links
+		// Ќе может бысть ситуации, когда элемент ссылаетс€ на себ€ так как extLink 
+		// ѕосле определени€ удал€етс€ из links из-за чего prevLink и nextLink всегда разные 
 		for (int i = 0; i < len - 1; i++) {
 			int nextLink = links.back();
+			links.pop_back();
 
 			arr[prevLink] = nextLink;
 			prevLink = nextLink;
-
-			links.pop_back();
 		}
 
 		arr[prevLink] = 0;
@@ -64,7 +68,7 @@ void printArr(int *arr, int len) {
 
 int main() {
 	srand(time(0));
-	int len = 5;	
+	int len = 20;	
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
