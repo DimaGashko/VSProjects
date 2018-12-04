@@ -27,13 +27,28 @@ int* getTargArr(int len, string type) {
 	
 	}
 	else if (type == "randorder") {
-		vector<int> links(len);
+		vector<int> links(len - 1);
 
-		for (int i = 0; i < len; i++) {
-			links[i] = i;
+		// Возможные значение ссылок без "0" - последовательность от 1 до "len-1"
+		// (Для исключения преждевременного ссылания на 0 элемент)
+		for (int i = 0; i < len - 1; i++) {
+			links[i] = i + 1;
 		}
 
 		random_shuffle(links.begin(), links.end());
+
+		int prevLink = 0;
+
+		for (int i = 0; i < len - 1; i++) {
+			int nextLink = links.back();
+
+			arr[prevLink] = nextLink;
+			prevLink = nextLink;
+
+			links.pop_back();
+		}
+
+		arr[prevLink] = 0;
 	}
 
 	return arr;
@@ -46,6 +61,50 @@ void printArr(int *arr, int len) {
 
 	cout << endl;
 }
+
+int main() {
+	srand(time(0));
+	int len = 5;	
+
+	auto arr1 = getTargArr(len, "preorder");
+	auto arr2 = getTargArr(len, "postorder");
+	auto arr3 = getTargArr(len, "randorder");
+
+	printArr(arr1, len);
+	printArr(arr2, len);
+	printArr(arr3, len);
+
+	/*int m;
+	len = 8000000;
+	int *a = new int[len];
+	for (int i = 0; i < len; i++) {
+		a[i] = i;
+	};
+
+	auto overhead = measure([] {});
+
+	auto loopOnly = measure([&m, &a, len] {
+		for (int i = 0; i < len; i++) {
+
+		}
+	}) - overhead;
+
+	auto all = measure([&m, &a, len] {
+		for (int i = 0; i < len; i++) {
+			m = a[i];
+		}
+	}) - loopOnly;
+
+	auto ticksPerEl = all / len;
+
+	cout << all << endl << ticksPerEl << endl;
+	*/
+	
+	system("pause");
+	return 0;
+}
+
+/*
 
 #include <intrin.h>
 #include <algorithm>
@@ -75,48 +134,7 @@ long long measure(F&& f) {
 	return *median;
 }
 
-int main() {
-	srand(time(0));
-	int len = 5;	
 
-	auto arr1 = getTargArr(len, "preorder");
-	auto arr2 = getTargArr(len, "postorder");
-	auto arr3 = getTargArr(len, "randorder");
-
-	int m;
-	len = 256;
-	int *a = new int[len];
-	for (int i = 0; i < len; i++) {
-		a[i] = i;
-	};
-
-	auto overhead = measure([] {});
-
-	auto loopOnly = measure([&m, &a, len] {
-		for (int i = 0; i < len; i++) {
-
-		}
-	}) - overhead;
-
-	auto all = measure([&m, &a, len] {
-		for (int i = 0; i < len; i++) {
-			m = a[i];
-		}
-	}) - loopOnly;
-
-	auto ticksPerEl = all / len;
-
-	cout << ticksPerEl << endl;
-
-	/*printArr(arr1, len);
-	printArr(arr2, len);
-	printArr(arr3, len);
-	*/
-	system("pause");
-	return 0;
-}
-
-/*
 #include <iostream>
 #include <algorithm>
 #include <ctime>
