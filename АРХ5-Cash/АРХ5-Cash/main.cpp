@@ -37,8 +37,8 @@ int* getTargArr(int len, string type) {
 		random_shuffle(links.begin(), links.end());
 		links.push_back(0);
 
-		for (int i = len - 1; i >= 1; i++) {
-			arr[links[i]] = arr[links[(i - 1) % len]];
+		for (int i = len - 1; i >= 0; i--) {
+			arr[links[i]] = links[(i - 1 + len) % len];
 		}
 	}
 
