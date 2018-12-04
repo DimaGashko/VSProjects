@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <string>
 #include <ctime>
+#include <vector>
 
 using namespace std;
 
@@ -13,15 +14,28 @@ const int MAX_LEN = 32*1024*1024/4; //8388608
 int* getTargArr(int len, string type) {
 	int *arr = new int[len];
 
-	for (int i = 0; i < len; i++) {
-		arr[i] = i;
-	}
+	if (type == "preorder") {
+		for (int i = 0; i < len; i++) {
+			arr[i] = (i + 1) % len;
+		}
 
-	if (type == "postorder") {
-		reverse(arr, arr + len);
+	}
+	else if (type == "postorder") {
+		for (int i = 0; i < len; i++) {
+			arr[i] = (i - 1 + len) % len;
+		}
+	
 	}
 	else if (type == "randorder") {
-		std::random_shuffle(arr, arr + len);
+		vector<int> links(len);
+
+		for (int i = 0; i < len; i++) {
+			links[i] = i;
+		}
+
+		random_shuffle(links.begin(), links.end());
+		
+		
 	}
 
 	return arr;
@@ -37,12 +51,12 @@ void printArr(int *arr, int len) {
 
 int main() {
 	srand(time(0));
-	const int len = 20;
+	const int len = 5;
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
 	auto arr3 = getTargArr(len, "randorder");
-	
+
 	printArr(arr1, len);
 	printArr(arr2, len);
 	printArr(arr3, len);
