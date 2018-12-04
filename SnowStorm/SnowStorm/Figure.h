@@ -27,6 +27,8 @@ namespace snow {
 		// Рисует общие части фигуры
 		void drawGeneralParts(sf::RenderWindow &window);
 
+		sf::VertexArray _getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 30);
+
 		float _size;
 		sf::Vector2f _coords;
 		float _angle;
@@ -44,6 +46,8 @@ namespace snow {
 
 		// Длина отрезка p0p8
 		static const double _P0P8;
+
+		static const double PI;
 	};
 
 } //namespace snow

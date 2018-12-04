@@ -3,8 +3,6 @@
 
 #include "Figure.h"
 
-void controlFigure(snow::Figure &figure, float frameTime);
-
 enum Keys {
 	Left = sf::Keyboard::A,
 	Top = sf::Keyboard::W,
@@ -16,11 +14,13 @@ enum Keys {
 	ScaleMinus = sf::Keyboard::Down,
 };
 
+void controlFigure(snow::Figure &figure, float frameTime);
+
 int main() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 4;
 
-	sf::RenderWindow window(sf::VideoMode(1000, 600), "Snowflake", sf::Style::Default, settings);
+	sf::RenderWindow window(sf::VideoMode(1000, 600), "Figure", sf::Style::Default, settings);
 	window.setFramerateLimit(180);
 
 	snow::Figure f1(sf::Vector2f(250, 250), 50, 0.2f);

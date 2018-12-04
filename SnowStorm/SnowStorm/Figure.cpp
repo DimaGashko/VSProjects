@@ -4,30 +4,7 @@
 #include "Figure.h"
 
 namespace snow {
-	const double PI = 3.14159265358979323846;
-
-	////////////////////////////////////////////////////////////
-	/// \brief Возвращает массив точек кривой Безье для 3 контрольных точек
-	///
-	/// \param p1, p2, p3  Соответственно 1, 2, 3 контрольные точки   
-	/// \param count	   Количество точек из которых будет состоять кривая
-	////////////////////////////////////////////////////////////
-	sf::VertexArray getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 30) {
-		if (count < 3) count = 3;
-
-		sf::VertexArray vertices(sf::LineStrip, count);
-
-		for (int i = 0; i < count; i++) {
-			float t = float(i) / (count - 1);
-
-			vertices[i].position = ((1.f - t) * (1.f - t)) * p1
-				+ (2.f * (1.f - t) * t) * p2
-				+ (t * t) * p3;
-		}
-
-		return vertices;
-	}
-
+	
 	Figure::Figure(): 
 		_coords(sf::Vector2f(0, 0)),
 		_size(10),
@@ -64,8 +41,8 @@ namespace snow {
 		sf::Vertex part2[] = { _coords, _p4 };
 		sf::Vertex part3[] = { _p5, _p6, _p7 };
 
-		auto arc1 = getBezierCoords(_coords, _p8, _p4, 15);
-		auto arc2 = getBezierCoords(_coords, _p9, _p4, 15);
+		auto arc1 = _getBezierCoords(_coords, _p8, _p4, 15);
+		auto arc2 = _getBezierCoords(_coords, _p9, _p4, 15);
 
 		window.draw(part1, 4, sf::LineStrip);
 		window.draw(part2, 2, sf::Lines);
@@ -146,6 +123,30 @@ namespace snow {
 	float Figure::getSize() {
 		return _size;
 	}
+
+	////////////////////////////////////////////////////////////
+	/// \brief Возвращает массив точек кривой Безье для 3 контрольных точек
+	///
+	/// \param p1, p2, p3  Соответственно 1, 2, 3 контрольные точки   
+	/// \param count	   Количество точек из которых будет состоять кривая
+	////////////////////////////////////////////////////////////
+	sf::VertexArray Figure::_getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count) {
+		if (count < 3) count = 3;
+
+		sf::VertexArray vertices(sf::LineStrip, count);
+
+		for (int i = 0; i < count; i++) {
+			float t = float(i) / (count - 1);
+
+			vertices[i].position = ((1.f - t) * (1.f - t)) * p1
+				+ (2.f * (1.f - t) * t) * p2
+				+ (t * t) * p3;
+		}
+
+		return vertices;
+	}
+
+	const double Figure::PI = 3.14159265358979323846;
 
 	const double Figure::_BETA1 = atan(7);
 	const double Figure::_BETA2 = PI / 2 - Figure::_BETA1;
