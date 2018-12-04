@@ -30,29 +30,16 @@ int* getTargArr(int len, string type) {
 	else if (type == "randorder") {
 		vector<int> links(len - 1);
 
-		// ¬озможные значение ссылок без "0" - последовательность от 1 до "len-1"
-		// (ƒл€ исключени€ преждевременного ссылани€ на 0 элемент)
 		for (int i = 0; i < len - 1; i++) {
 			links[i] = i + 1;
 		}
 
 		random_shuffle(links.begin(), links.end());
+		links.push_back(0);
 
-		int prevLink = 0;
-
-		// Ќепосредственное заполнение массива в виде списка в случайно пор€дке
-		// ¬ каждый последующий prevLink записываетс€ последнее значение links
-		// Ќе может бысть ситуации, когда элемент ссылаетс€ на себ€ так как extLink 
-		// ѕосле определени€ удал€етс€ из links из-за чего prevLink и nextLink всегда разные 
-		for (int i = 0; i < len - 1; i++) {
-			int nextLink = links.back();
-			links.pop_back();
-
-			arr[prevLink] = nextLink;
-			prevLink = nextLink;
+		for (int i = len - 1; i >= 1; i++) {
+			arr[links[i]] = arr[links[(i - 1) % len]];
 		}
-
-		arr[prevLink] = 0;
 	}
 
 	return arr;
@@ -77,6 +64,18 @@ int main() {
 	printArr(arr1, len);
 	printArr(arr2, len);
 	printArr(arr3, len);
+
+	cout << endl;
+
+	for (int t = 0; t < len; t++) {
+		
+		for (int k = 0, i = 0; i < len; i++, k = arr3[k]) {
+			cout << arr3[k] << " ";
+		}
+
+		cout << endl;
+	}
+	
 
 	/*int m;
 	len = 8000000;
