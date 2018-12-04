@@ -34,8 +34,6 @@ int* getTargArr(int len, string type) {
 		}
 
 		random_shuffle(links.begin(), links.end());
-		
-		
 	}
 
 	return arr;
@@ -49,18 +47,71 @@ void printArr(int *arr, int len) {
 	cout << endl;
 }
 
+#include <intrin.h>
+#include <algorithm>
+#include <iostream>
+#include <thread>
+
+template<typename F>
+long long measure(F&& f) {
+	const auto N = 10;
+	long long results[N];
+
+	for (auto& r : results) {
+		std::this_thread::yield();
+		__asm xor eax, eax
+		__asm cpuid // есть интринсик, но мы хотим проигнорировать результат cpuid
+		auto start_time = __rdtsc();
+
+		f();
+
+		__asm xor eax, eax
+		__asm cpuid
+		r = __rdtsc() - start_time;
+	}
+
+	auto median = results + N / 2;
+	std::nth_element(results, median, results + N);
+	return *median;
+}
+
 int main() {
 	srand(time(0));
-	const int len = 5;
+	int len = 5;	
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
 	auto arr3 = getTargArr(len, "randorder");
 
-	printArr(arr1, len);
+	int m;
+	len = 256;
+	int *a = new int[len];
+	for (int i = 0; i < len; i++) {
+		a[i] = i;
+	};
+
+	auto overhead = measure([] {});
+
+	auto loopOnly = measure([&m, &a, len] {
+		for (int i = 0; i < len; i++) {
+
+		}
+	}) - overhead;
+
+	auto all = measure([&m, &a, len] {
+		for (int i = 0; i < len; i++) {
+			m = a[i];
+		}
+	}) - loopOnly;
+
+	auto ticksPerEl = all / len;
+
+	cout << ticksPerEl << endl;
+
+	/*printArr(arr1, len);
 	printArr(arr2, len);
 	printArr(arr3, len);
-
+	*/
 	system("pause");
 	return 0;
 }
