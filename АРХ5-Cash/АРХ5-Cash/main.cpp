@@ -28,17 +28,16 @@ int* getTargArr(int len, string type) {
 	
 	}
 	else if (type == "randorder") {
-		vector<int> links(len - 1);
+		vector<int> links(len);
 
-		for (int i = 0; i < len - 1; i++) {
-			links[i] = i + 1;
+		for (int i = 0; i < len; i++) {
+			links[i] = i;
 		}
 
-		random_shuffle(links.begin(), links.end());
-		links.push_back(0);
+		random_shuffle(links.begin() + 1, links.end());
 
-		for (int i = len - 1; i >= 0; i--) {
-			arr[links[i]] = links[(i - 1 + len) % len];
+		for (int i = 0; i < len; i++) {
+			arr[links[i]] = links[(i + 1) % len];
 		}
 	}
 
