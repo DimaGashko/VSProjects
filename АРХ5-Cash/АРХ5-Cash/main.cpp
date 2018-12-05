@@ -75,33 +75,33 @@ unsigned long long measure(F&& f, const int n = 10) {
 	return res;
 }
 
-//TODO: fix time measure
 float measureTargArr(int *arr, int len) {
 	int fullLen = len * 1;
+	int repeat = 1;
 	
-	loopTargArr(arr, len);
+	// Подготовительный обход
+	loopTargArr(arr, len); 
 
-	auto overhead = measure([] {});
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
-	}, 1);
+	}, repeat);
 
-	return (time - overhead) / fullLen;
+	return time / fullLen;
 }
 
 int main() {
 	srand((int)time(0));
-	int len = MAX_LEN;	
+	int len = 256;//MAX_LEN;	
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
 	auto arr3 = getTargArr(len, "randorder");
 
-	//auto r1 = measureTargArr(arr1, len);
-	//auto r2 = measureTargArr(arr2, len);
+	auto r1 = measureTargArr(arr1, len);
+	auto r2 = measureTargArr(arr2, len);
 	auto r3 = measureTargArr(arr3, len);
 
-	cout <</* r1 << endl << r2 << endl <<*/ r3 << endl;
+	cout << r1 << endl << r2 << endl << r3 << endl;
 	
 	/*int m;
 	len = 8000000;
