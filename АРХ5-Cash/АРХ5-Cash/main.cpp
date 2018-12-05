@@ -130,12 +130,29 @@ bool saveInFile(string data, string src) {
 	return true;
 }
 
+string formatSize(int bytes) {
+	const int KB = 1024;
+	const int MB = 1024 * 1024;
+
+	if (bytes < KB) {
+		return to_string(bytes) + " bytes";
+	}
+	else if (bytes < MB) {
+		float size = int(((float)bytes / KB)*100)/100.f;
+		return to_string(size) + " KB";
+	}
+	else {
+		float size = int(((float)bytes / MB) * 100) / 100.f;
+		return to_string(size) + " MB";
+	}
+}
+
 int main() {
 	srand((int)time(0));
 
 	int systemTime = getSystemTime();
 
-	string res = "";
+	string res = "Length,Size,Preorder,Postorder,Randorder\n";
 	vector<int> lens = getLens();
 
 	for (int i = 0; i < (int)lens.size(); i++) {
@@ -147,13 +164,14 @@ int main() {
 
 		auto r1 = measureTargArr(arr1, len) - systemTime;
 		auto r2 = measureTargArr(arr2, len) - systemTime;
-		auto r3 = measureTargArr(arr3, len) - systemTime;
+		auto r3 = 0;//measureTargArr(arr3, len) - systemTime;
 
 		delete[] arr1;
 		delete[] arr2;
 		delete[] arr3;
 
-		string curRes = to_string(len) + ","
+		string curRes = formatSize(len * 4) + ","
+			+ to_string(len) + ","
 			+ to_string(r1) + ","
 			+ to_string(r2) + ","
 			+ to_string(r3) + "\n";
