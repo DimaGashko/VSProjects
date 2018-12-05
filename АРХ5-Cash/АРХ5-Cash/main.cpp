@@ -8,9 +8,6 @@
 
 using namespace std;
 
-const int MIN_LEN = 1024/4; //256
-const int MAX_LEN = 32*1024*1024/4; //8388608
-
 // Возвращает массив для тестирования с размером len 
 // Заполненный type способом в виде цикличного списка
 // type = "preorder" - прямой | "postorder" - обратный | "randorder" 
@@ -84,14 +81,14 @@ unsigned long long measure(F&& f, const int n = 10) {
 
 unsigned long long measureTargArr(int *arr, int len) {
 	int fullLen = max(len, 1'000'000);
-	int repeat = 5;
+	int repeat = 10;
 
 	auto overhead = measure([fullLen] {
 		for (int i = 0; i < fullLen; i++) {};
 	});
 
 	// Подготовительный обход
-	loopTargArr(arr, fullLen);
+	loopTargArr(arr, len);
 
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
@@ -100,14 +97,29 @@ unsigned long long measureTargArr(int *arr, int len) {
 	return (time - overhead) / fullLen;
 }
 
+vector<int> getLens() {
+	const int MIN_LEN = 1024 / 4; //256
+	const int MAX_LEN = 32 * 1024 * 1024 / 4; //8388608
+
+	vector<int> lens;
+
+	for (int len = MIN_LEN, step = 1; len < MAX_LEN; len += step) {
+		step = int(step * 1.03 + 10);
+		lens.push_back(len);
+	}
+
+	return lens;
+}
+
 int main() {
 	srand((int)time(0));
 
 	string res = "";
+	vector<int> lens = getLens();
 
-	int step = 1;
-	int i = 0;
-	for (int len = MIN_LEN; len < MAX_LEN; i++, len += step) {		
+	for (int i = 0; i < (int)lens.size(); i++) {
+		int len = lens[i];
+
 		auto arr1 = getTargArr(len, "preorder");
 		auto arr2 = getTargArr(len, "postorder");
 		auto arr3 = getTargArr(len, "randorder");
@@ -126,88 +138,10 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		step = int(step * 1.05 + 2);
-
-		cout << curRes;
+		cout << curRes; 
 	}
-	
-	cout << "ITER: " << i << endl;
-	cout << "STEP: " << step << endl;
-
-	/*int m;
-	len = 8000000;
-	int *a = new int[len];
-	for (int i = 0; i < len; i++) {
-		a[i] = i;
-	};
-
-	auto overhead = measure([] {});
-
-	auto loopOnly = measure([&m, &a, len] {
-		for (int i = 0; i < len; i++) {
-
-		}
-	}) - overhead;
-
-	auto all = measure([&m, &a, len] {
-		for (int i = 0; i < len; i++) {
-			m = a[i];
-		}
-	}) - loopOnly;
-
-	auto ticksPerEl = all / len;
-
-	cout << all << endl << ticksPerEl << endl;
-	*/
 	
 	string close;
 	cin >> close;
 	return 0;
 }
-
-/*
-
-
-
-template<typename F>
-long long measure(F&& f) {
-	const auto N = 10;
-	long long results[N];
-
-	for (auto& r : results) {
-		std::this_thread::yield();
-		__asm xor eax, eax
-		__asm cpuid // есть интринсик, но мы хотим проигнорировать результат cpuid
-		auto start_time = __rdtsc();
-
-		f();
-
-		__asm xor eax, eax
-		__asm cpuid
-		r = __rdtsc() - start_time;
-	}
-
-	auto median = results + N / 2;
-	std::nth_element(results, median, results + N);
-	return *median;
-}
-
-
-#include <iostream>
-#include <algorithm>
-#include <ctime>
-
-int main() {
-	srand(time(0));
-	const int n = 6;
-	int arr[n] = { 0, 1, 2, 3, 4, 5 };
-
-	std::random_shuffle(arr, arr + 5);
-
-	for (int i = 0; i < n; i++) {
-		std::cout << arr[i];
-	}
-
-	std::cout << std::endl;
-	system("pause");
-}*/
