@@ -44,6 +44,14 @@ int* getTargArr(int len, string type) {
 	return arr;
 }
 
+void loopTargArr(int *arr, int len) {
+	for (int l = 0, i = 0; i < len; i++, l = arr[l]) {
+		cout << arr[l] << " ";
+	}
+
+	cout << endl;
+}
+
 void printArr(int *arr, int len) {
 	for (int i = 0; i < len; i++) {
 		cout << arr[i] << ' ';
@@ -66,16 +74,15 @@ int main() {
 
 	cout << endl;
 
-	for (int t = 0; t < len; t++) {
-		
-		for (int k = 0, i = 0; i < len; i++, k = arr3[k]) {
-			cout << arr3[k] << " ";
-		}
+	loopTargArr(arr1, len);
+	loopTargArr(arr1, len);
 
-		cout << endl;
-	}
+	loopTargArr(arr2, len);
+	loopTargArr(arr2, len);
 	
-
+	loopTargArr(arr3, len);
+	loopTargArr(arr3, len);
+	
 	/*int m;
 	len = 8000000;
 	int *a = new int[len];
