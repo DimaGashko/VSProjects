@@ -82,11 +82,15 @@ float measureTargArr(int *arr, int len) {
 	// Подготовительный обход
 	loopTargArr(arr, len); 
 
+	auto overhead = measure([&fullLen] {
+		for (int i = 0; i < fullLen; i++) {};
+	});
+
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
 	}, repeat);
 
-	return time / fullLen;
+	return (time - overhead) / fullLen;
 }
 
 int main() {
