@@ -4,6 +4,7 @@
 #include <ctime>
 #include <vector>
 #include <intrin.h>
+#include <thread>
 
 using namespace std;
 
@@ -64,8 +65,15 @@ unsigned long long measure(F&& f, const int n = 10) {
 	unsigned long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
+		std::this_thread::yield();
+		__asm xor eax, eax
+		__asm cpuid
 		auto start = __rdtsc();
+
 		f();
+
+		__asm xor eax, eax
+		__asm cpuid
 		auto time = __rdtsc() - start;
 
 		if (time < res) res = time;
@@ -75,9 +83,8 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	const int MIN_FULL_LEN = 1'000'000 / len * len;
-	int fullLen = max(len, MIN_FULL_LEN);
-	int repeat = 2;
+	int fullLen = len*3;
+	int repeat = 100;
 
 	// Подготовительный обход
 	loopTargArr(arr, fullLen); 
@@ -94,10 +101,11 @@ unsigned long long measureTargArr(int *arr, int len) {
 int main() {
 	srand((int)time(0));
 
+	string res = "";
+
 	int step = 1;
 	int i = 0;
-	for (int len = MIN_LEN; len < MAX_LEN; i++, len += step) {
-		
+	for (int len = MIN_LEN; len < MAX_LEN; i++, len += step) {		
 		auto arr1 = getTargArr(len, "preorder");
 		auto arr2 = getTargArr(len, "postorder");
 		auto arr3 = getTargArr(len, "randorder");
@@ -106,19 +114,24 @@ int main() {
 		auto r2 = measureTargArr(arr2, len);
 		auto r3 = measureTargArr(arr3, len);
 
-		cout << r1 << "," << r2 << "," << r3 << endl;
-
-		cout << len << "\t\t\t" << step << endl;
-
-		/*delete[] arr1;
+		delete[] arr1;
 		delete[] arr2;
 		delete[] arr3;
 
-		step = step * 1.05 + 1;
+		string curRes = to_string(len) + ","
+			+ to_string(r1) + ","
+			+ to_string(r2) + ","
+			+ to_string(r3) + "\n";
+
+		res += curRes;
+		step = int(step * 1.05 + 1);
+
+		cout << curRes;
 	}
 	
-	cout << "IT: " << i << endl;
+	cout << "ITER: " << i << endl;
 	cout << "STEP: " << step << endl;
+
 	/*int m;
 	len = 8000000;
 	int *a = new int[len];
@@ -145,7 +158,8 @@ int main() {
 	cout << all << endl << ticksPerEl << endl;
 	*/
 	
-	system("pause");
+	string close;
+	cin >> close;
 	return 0;
 }
 
