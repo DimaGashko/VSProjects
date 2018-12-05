@@ -126,7 +126,7 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		step = int(step * 1.05 + 1);
+		step = int(step * 1.05 + 2);
 
 		cout << curRes;
 	}
