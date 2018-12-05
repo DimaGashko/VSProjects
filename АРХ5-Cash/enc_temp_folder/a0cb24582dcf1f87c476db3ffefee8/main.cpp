@@ -84,6 +84,10 @@ unsigned long long measureTargArr(int *arr, int len) {
 	int fullLen = max(len, 1'000'000);
 	int repeat = 10;
 
+	auto overhead = measure([fullLen] {
+		for (int i = 0; i < fullLen; i++) {};
+	});
+
 	// Подготовительный обход
 	loopTargArr(arr, len);
 
@@ -91,17 +95,7 @@ unsigned long long measureTargArr(int *arr, int len) {
 		loopTargArr(arr, fullLen);
 	}, repeat);
 
-	return time / fullLen;
-}
-
-int getSystemTime() {
-	const int len = 1e6;
-
-	auto overhead = measure([len] {
-		for (int i = 0; i < len; i++) {};
-	}, 50);
-
-	return overhead / len;
+	return (time - overhead) / fullLen;
 }
 
 vector<int> getLens() {
@@ -111,11 +105,9 @@ vector<int> getLens() {
 	vector<int> lens;
 
 	for (int len = MIN_LEN, step = 1; len < MAX_LEN; len += step) {
+		step = int(step * 1.03 + 10);
 		lens.push_back(len);
-		step = int(step * 1.06 + 10);
 	}
-
-	lens.push_back(MAX_LEN);
 
 	return lens;
 }
@@ -127,8 +119,6 @@ bool saveInFile(string data, string src) {
 int main() {
 	srand((int)time(0));
 
-	int systemTime = getSystemTime();
-
 	string res = "";
 	vector<int> lens = getLens();
 
@@ -139,9 +129,9 @@ int main() {
 		auto arr2 = getTargArr(len, "postorder");
 		auto arr3 = getTargArr(len, "randorder");
 
-		auto r1 = measureTargArr(arr1, len) - systemTime;
-		auto r2 = measureTargArr(arr2, len) - systemTime;
-		auto r3 = measureTargArr(arr3, len) - systemTime;
+		auto r1 = measureTargArr(arr1, len);
+		auto r2 = measureTargArr(arr2, len);
+		auto r3 = measureTargArr(arr3, len);
 
 		delete[] arr1;
 		delete[] arr2;
