@@ -75,7 +75,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	const int MIN_FULL_LEN = 1'000'000 / len * len;
+	const int MIN_FULL_LEN = 1'000 / len * len;
 	int fullLen = max(len, MIN_FULL_LEN);
 	int repeat = 1;
 
@@ -93,30 +93,30 @@ unsigned long long measureTargArr(int *arr, int len) {
 
 int main() {
 	srand((int)time(0));
-	//int len = 2560000;//MAX_LEN;	
 
-	for (int len = MIN_LEN; len < MAX_LEN; len++) {
+	int step = 1;
+	int i = 0;
+	for (int len = MIN_LEN; len < MAX_LEN; i++, len += step) {
 		
-			
+		auto arr1 = getTargArr(len, "preorder");
+		auto arr2 = getTargArr(len, "postorder");
+		auto arr3 = getTargArr(len, "randorder");
 
+		auto r1 = measureTargArr(arr1, len);
+		auto r2 = measureTargArr(arr2, len);
+		auto r3 = measureTargArr(arr3, len);
+
+		cout << len << ": " << r1 << " " << r2 << " " << r3 << endl;
+
+		delete[] arr1;
+		delete[] arr2;
+		delete[] arr3;
+
+		if (i % 10) step++;
 	}
-
-
-	auto arr1 = getTargArr(len, "preorder");
-	auto arr2 = getTargArr(len, "postorder");
-	auto arr3 = getTargArr(len, "randorder");
-
-	auto r1 = measureTargArr(arr1, len);
-	cout << r1 << endl;
-	auto r2 = measureTargArr(arr2, len);
-	cout << r2 << endl;
-	auto r3 = measureTargArr(arr3, len);
-	cout << r3 << endl;
-
-	delete[] arr1;
-	delete[] arr2;
-	delete[] arr3;
 	
+	cout << "IT: " << i << endl;
+	cout << "STEP: " << step << endl;
 	/*int m;
 	len = 8000000;
 	int *a = new int[len];
