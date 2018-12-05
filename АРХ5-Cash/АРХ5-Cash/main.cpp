@@ -121,6 +121,12 @@ vector<int> getLens() {
 }
 
 bool saveInFile(string data, string src) {
+	ofstream fout(src);
+	if (!fout) return false;
+
+	fout << data;
+
+	fout.close();
 	return true;
 }
 
@@ -156,7 +162,8 @@ int main() {
 		cout << curRes; 
 	}
 
-	saveInFile(res, "cash.csv");
+	bool saved = saveInFile(res, "cash.csv");
+	cout << (saved ? "Saved" : "Cannot save results to file");
 	
 	string close;
 	cin >> close;
