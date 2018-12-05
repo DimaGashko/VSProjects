@@ -75,9 +75,9 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	const int MIN_FULL_LEN = 1'000 / len * len;
+	const int MIN_FULL_LEN = 1'000'000 / len * len;
 	int fullLen = max(len, MIN_FULL_LEN);
-	int repeat = 1;
+	int repeat = 2;
 
 	// Подготовительный обход
 	loopTargArr(arr, fullLen); 
@@ -106,13 +106,15 @@ int main() {
 		auto r2 = measureTargArr(arr2, len);
 		auto r3 = measureTargArr(arr3, len);
 
-		cout << len << ": " << r1 << " " << r2 << " " << r3 << endl;
+		cout << r1 << "," << r2 << "," << r3 << endl;
 
-		delete[] arr1;
+		cout << len << "\t\t\t" << step << endl;
+
+		/*delete[] arr1;
 		delete[] arr2;
 		delete[] arr3;
 
-		if (i % 10) step++;
+		step = step * 1.05 + 1;
 	}
 	
 	cout << "IT: " << i << endl;
