@@ -59,7 +59,6 @@ void printArr(int *arr, int len) {
 	cout << endl;
 }
 
-
 template<typename F>
 unsigned long long measure(F&& f, const int n = 10) {
 	unsigned long long res = UINT64_MAX;
@@ -75,12 +74,13 @@ unsigned long long measure(F&& f, const int n = 10) {
 	return res;
 }
 
-float measureTargArr(int *arr, int len) {
-	int fullLen = len * 1;
+unsigned long long measureTargArr(int *arr, int len) {
+	const int MIN_FULL_LEN = 1'000'000 / len * len;
+	int fullLen = max(len, MIN_FULL_LEN);
 	int repeat = 1;
-	
+
 	// Подготовительный обход
-	loopTargArr(arr, len); 
+	loopTargArr(arr, fullLen); 
 
 	auto overhead = measure([] {});
 
@@ -93,17 +93,25 @@ float measureTargArr(int *arr, int len) {
 
 int main() {
 	srand((int)time(0));
-	int len = MAX_LEN;	
+	//int len = 2560000;//MAX_LEN;	
+
+	for (int len = MIN_LEN; len < MAX_LEN; len++) {
+		
+			
+
+	}
+
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
 	auto arr3 = getTargArr(len, "randorder");
 
 	auto r1 = measureTargArr(arr1, len);
+	cout << r1 << endl;
 	auto r2 = measureTargArr(arr2, len);
+	cout << r2 << endl;
 	auto r3 = measureTargArr(arr3, len);
-
-	cout << r1 << endl << r2 << endl << r3 << endl;
+	cout << r3 << endl;
 
 	delete[] arr1;
 	delete[] arr2;
