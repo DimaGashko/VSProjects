@@ -1,10 +1,10 @@
 #include <iostream>
-#include <algorithm>
-#include <string>
-#include <ctime>
-#include <vector>
 #include <intrin.h>
 #include <thread>
+#include <ctime>
+#include <string>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -83,9 +83,9 @@ unsigned long long measureTargArr(int *arr, int len) {
 	int fullLen = max(len, 1'000'000);
 	int repeat = 10;
 
-	auto overhead = measure([fullLen] {
+	auto overhead = 0;/* measure([fullLen] {
 		for (int i = 0; i < fullLen; i++) {};
-	});
+	});*/
 
 	// Подготовительный обход
 	loopTargArr(arr, len);
