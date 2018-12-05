@@ -82,9 +82,7 @@ float measureTargArr(int *arr, int len) {
 	// Подготовительный обход
 	loopTargArr(arr, len); 
 
-	auto overhead = measure([&fullLen] {
-		for (int i = 0; i < fullLen; i++) {};
-	});
+	auto overhead = measure([] {});
 
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
@@ -95,7 +93,7 @@ float measureTargArr(int *arr, int len) {
 
 int main() {
 	srand((int)time(0));
-	int len = 256;//MAX_LEN;	
+	int len = MAX_LEN;	
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
@@ -106,6 +104,10 @@ int main() {
 	auto r3 = measureTargArr(arr3, len);
 
 	cout << r1 << endl << r2 << endl << r3 << endl;
+
+	delete[] arr1;
+	delete[] arr2;
+	delete[] arr3;
 	
 	/*int m;
 	len = 8000000;
