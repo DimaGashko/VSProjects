@@ -83,13 +83,15 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = len*3;
-	int repeat = 100;
+	int fullLen = max(len, 1'000'000);
+	int repeat = 5;
+
+	auto overhead = measure([fullLen] {
+		for (int i = 0; i < fullLen; i++) {};
+	});
 
 	// Подготовительный обход
-	loopTargArr(arr, fullLen); 
-
-	auto overhead = measure([] {});
+	loopTargArr(arr, fullLen);
 
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
