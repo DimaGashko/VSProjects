@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include <vector>
+#include <intrin.h>
 
 using namespace std;
 
@@ -44,12 +45,10 @@ int* getTargArr(int len, string type) {
 	return arr;
 }
 
-void loopTargArr(int *arr, int len) {
-	for (int l = 0, i = 0; i < len; i++, l = arr[l]) {
-		cout << arr[l] << " ";
+inline void loopTargArr(int *arr, int n) {
+	for (int i = 0, link = 0; i < n; i++) {
+		link = arr[link];
 	}
-
-	cout << endl;
 }
 
 void printArr(int *arr, int len) {
@@ -60,28 +59,49 @@ void printArr(int *arr, int len) {
 	cout << endl;
 }
 
+
+template<typename F>
+unsigned long long measure(F&& f, const int n = 10) {
+	unsigned long long res = UINT64_MAX;
+
+	for (int i = 0; i < n; i++) {
+		auto start = __rdtsc();
+		f();
+		auto time = __rdtsc() - start;
+
+		if (time < res) res = time;
+	}
+	
+	return res;
+}
+
+//TODO: fix time measure
+float measureTargArr(int *arr, int len) {
+	int fullLen = len * 1;
+	
+	loopTargArr(arr, len);
+
+	auto overhead = measure([] {});
+	auto time = measure([&arr, fullLen] {
+		loopTargArr(arr, fullLen);
+	}, 1);
+
+	return (time - overhead) / fullLen;
+}
+
 int main() {
 	srand((int)time(0));
-	int len = 20;	
+	int len = MAX_LEN;	
 
 	auto arr1 = getTargArr(len, "preorder");
 	auto arr2 = getTargArr(len, "postorder");
 	auto arr3 = getTargArr(len, "randorder");
 
-	printArr(arr1, len);
-	printArr(arr2, len);
-	printArr(arr3, len);
+	//auto r1 = measureTargArr(arr1, len);
+	//auto r2 = measureTargArr(arr2, len);
+	auto r3 = measureTargArr(arr3, len);
 
-	cout << endl;
-
-	loopTargArr(arr1, len);
-	loopTargArr(arr1, len);
-
-	loopTargArr(arr2, len);
-	loopTargArr(arr2, len);
-	
-	loopTargArr(arr3, len);
-	loopTargArr(arr3, len);
+	cout <</* r1 << endl << r2 << endl <<*/ r3 << endl;
 	
 	/*int m;
 	len = 8000000;
@@ -115,10 +135,7 @@ int main() {
 
 /*
 
-#include <intrin.h>
-#include <algorithm>
-#include <iostream>
-#include <thread>
+
 
 template<typename F>
 long long measure(F&& f) {
