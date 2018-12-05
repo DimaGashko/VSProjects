@@ -53,7 +53,7 @@ void printArr(int *arr, int len) {
 }
 
 int main() {
-	srand(time(0));
+	srand((int)time(0));
 	int len = 20;	
 
 	auto arr1 = getTargArr(len, "preorder");
