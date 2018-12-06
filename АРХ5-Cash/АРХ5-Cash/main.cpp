@@ -39,6 +39,16 @@ int* getTargArr(int len, string type) {
 		for (int i = 0; i < len; i++) {
 			arr[links[i]] = links[(i + 1) % len];
 		}
+
+		/*
+		links = {0,2,1,3,4};
+
+		arr[0] = 2;
+		arr[2] = 1;
+		arr[1] = 3;
+		arr[3] = 4;
+		arr[4] = 0;
+		*/
 	}
 
 	return arr;
@@ -69,7 +79,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 		auto start = __rdtsc();
 
 		f();
-
+		
 		__asm xor eax, eax
 		__asm cpuid
 		auto time = __rdtsc() - start;
@@ -79,6 +89,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 	
 	return res;
 }
+//getCPUTime
 
 unsigned long long measureTargArr(int *arr, int len) {
 	int fullLen = max(len, 1'000'000);
