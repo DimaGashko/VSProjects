@@ -1,42 +1,53 @@
+﻿#pragma once
 
-#ifndef FIGURE_H_INCLUDED
-#define FIGURE_H_INCLUDED
+#include <cmath>
+#include <SFML/Graphics.hpp>
 
-#include <SFML\Graphics.hpp>
-
-namespace figure {
+namespace snow {
 
 	class Figure {
 	public:
 		Figure();
-		Figure(float angle, float radius, sf::Vector2f center);
-		~Figure() {};
-		void setRadius(float radius);
-		float getRadius();
+		Figure(sf::Vector2f coords, float angle = 0, float size = 20);
+		void draw(sf::RenderWindow &window);
+		void setPosition(sf::Vector2f coords);
+		sf::Vector2f getPosition();
+		void move(sf::Vector2f offset);
 		void setAngle(float angle);
 		float getAngle();
-		sf::Vector2f getCenter();
-		void setCenter(sf::Vector2f v);
-		void rotate(float direction = -1.f);
-		void scale(float coeficient = 1.f);
-		void draw(sf::RenderWindow &window);
-		void move(float x, float y);
+		void rotate(float angle);
+		void setSize(float size);
+		float getSize();
+		void updatePoints();
+		~Figure() {}
 
 	private:
-		sf::Vector2f _center;
-		float _angle;
-		float _radius;
-		const double _alpha = atan(1.f / 5.f);
-		const double _sigma = atan(1.f / 2.f);
-		const double _a = sqrt(26) / 4;
-		void _drawPart(sf::RenderWindow &window);
-		void _drawAllParts(sf::RenderWindow &window);
-		void _setPoints();
-		sf::VertexArray _getBezier(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int number = 50);
-		sf::Vector2f _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, _p9, _p10, _p11, _p12, _p13;
+		void drawFragment(sf::RenderWindow &window);
 
+		// Ðèñóåò îáùèå ÷àñòè ôèãóðû
+		void drawGeneralParts(sf::RenderWindow &window);
+
+		sf::VertexArray _getBezierCoords(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f p3, int count = 30);
+
+		float _size;
+		sf::Vector2f _coords;
+		float _angle;
+
+		sf::Vector2f _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8, _p9;
+
+		// Óãîë ñîçäàâàåìûé òî÷êàìè p2, p0, p6
+		static const double _BETA1;
+
+		// Óãîë ñîçäàâàåìûé òî÷êàìè p6, p0, p5
+		static const double _BETA2;
+
+		// Äëèíà îòðåçêà p0p2
+		static const double _P0P2;
+
+		// Äëèíà îòðåçêà p0p8
+		static const double _P0P8;
+
+		static const double PI;
 	};
 
-}
-
-#endif
+} //namespace snow
