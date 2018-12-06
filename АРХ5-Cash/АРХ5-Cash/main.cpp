@@ -108,7 +108,9 @@ vector<int> getLensByMemory() {
 	const int KB = 1024;
 	const int MB = 1024 * 1024;
 
+	vector<int> lens;
 
+	return lens;
 }
 
 vector<int> getLensByMinMaxLength() {
@@ -144,12 +146,12 @@ string formatSize(int bytes) {
 	if (bytes < KB) {
 		return to_string(bytes) + " bytes";
 	}
-	else if (bytes < MB) {
-		return to_string(bytes / KB) + " KB";
-	}
-	else {
-		return to_string(bytes / MB) + " MB";
-	}
+	
+	float size = (float)bytes / (bytes < MB ? KB : MB);
+	string strSize = to_string(size);
+	strSize = strSize.substr(0, strSize.length() - 4);
+
+	return strSize + " " + (bytes < MB ? "KB" : "MB");
 }
 
 int main() {
@@ -159,7 +161,7 @@ int main() {
 	vector<int> lens = getLensByMinMaxLength();
 
 	string res = "Length,Size,Preorder,Postorder,Randorder\n";
-	cout << res << endl;
+	cout << res;
 
 	for (int i = 0; i < (int)lens.size(); i++) {
 		int len = lens[i];
