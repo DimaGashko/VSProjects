@@ -183,7 +183,7 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		cout << to_string(i) + 1 << "/" << to_string(lens.size()) << "," << curRes; 
+		cout << to_string(i + 1) << "/" << to_string(lens.size()) << "," << curRes; 
 	}
 
 	bool saved = saveInFile(res, "cash.csv");
