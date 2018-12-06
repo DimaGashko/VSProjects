@@ -81,7 +81,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = max(len, 1'000'000 * len / len);
+	int fullLen = max(len, 1'000'000);
 	int repeat = 10;
 
 	// Подготовительный обход
