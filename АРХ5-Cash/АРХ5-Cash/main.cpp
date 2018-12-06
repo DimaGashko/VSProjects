@@ -92,8 +92,8 @@ unsigned long long measure(F&& f, const int n = 10) {
 //getCPUTime
 
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = max(len, 1'000'000);
-	int repeat = 10;
+	int fullLen = (len < 1'000'000) ? len * 5 : len;
+	int repeat = (len < 1'000'000) ? 10 : 1;
 
 	// Подготовительный обход
 	loopTargArr(arr, len);
@@ -117,7 +117,7 @@ int getSystemTime() {
 
 vector<int> getLens() {
 	const int MIN_LEN = 1024 / 4; //256
-	const int MAX_LEN = 32 * 1024 * 1024 / 4; //8388608
+	const int MAX_LEN = 10 * 1024 * 1024 / 4; //8388608
 
 	vector<int> lens;
 
