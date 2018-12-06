@@ -81,7 +81,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = max(len, 1'000'000);
+	int fullLen = max(len, 1'000'000 * len / len);
 	int repeat = 10;
 
 	// Подготовительный обход
@@ -104,16 +104,7 @@ int getSystemTime() {
 	return int(overhead / len);
 }
 
-vector<int> getLensByMemory() {
-	const int KB = 1024;
-	const int MB = 1024 * 1024;
-
-	vector<int> lens;
-
-	return lens;
-}
-
-vector<int> getLensByMinMaxLength() {
+vector<int> getLens() {
 	const int MIN_LEN = 1024 / 4; //256
 	const int MAX_LEN = 32 * 1024 * 1024 / 4; //8388608
 
@@ -158,7 +149,7 @@ int main() {
 	srand((int)time(0));
 
 	int systemTime = getSystemTime();
-	vector<int> lens = getLensByMinMaxLength();
+	vector<int> lens = getLens();
 
 	string res = "Length,Size,Preorder,Postorder,Randorder\n";
 	cout << res;
