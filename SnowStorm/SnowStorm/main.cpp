@@ -1,92 +1,65 @@
-﻿#include <iostream>
-#include <SFML/Graphics.hpp>
+﻿#include <SFML/Graphics.hpp>
+#include <cmath>
+#include "Figure.h" 
 
-#include "Figure.h"
+void manipulate(figure::Figure &f, sf::RenderWindow &window);
 
-enum Keys {
-	Left = sf::Keyboard::A,
-	Top = sf::Keyboard::W,
-	Right = sf::Keyboard::D,
-	Bottom = sf::Keyboard::S,
-	RotatePlus = sf::Keyboard::Right,
-	RotateMinus = sf::Keyboard::Left,
-	ScalePlus = sf::Keyboard::Up,
-	ScaleMinus = sf::Keyboard::Down,
-};
-
-void controlFigure(snow::Figure &figure, float frameTime);
-
-int main() {
+int main()
+{
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 4;
+	sf::RenderWindow window(sf::VideoMode(800, 800), "Figure", sf::Style::Default, settings);
+	window.setFramerateLimit(120);
 
-	sf::RenderWindow window(sf::VideoMode(1000, 600), "Figure", sf::Style::Default, settings);
-	window.setFramerateLimit(180);
+	sf::Vector2f center(400.0f, 400.0f);
+	figure::Figure f(0.f, 200.f, center);
 
-	snow::Figure f1(sf::Vector2f(250, 250), 50, 0.2f);
-	snow::Figure f2(sf::Vector2f(50, 250), 20, 0.6f);
-	snow::Figure f3(sf::Vector2f(600, 350), 20, 0.f);
-
-	sf::Clock clock;
-	float frameTime;
-
-	while (window.isOpen()) {
-		frameTime = clock.restart().asMilliseconds();
+	while (window.isOpen())
+	{
 
 		sf::Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
 				window.close();
-			}
-			else if (event.type == sf::Event::Resized) {
-				sf::FloatRect visible(0, 0, float(event.size.width), float(event.size.height));
-				window.setView(sf::View(visible));
-			}
 		}
 
-		controlFigure(f1, frameTime);
+		window.clear(sf::Color::Black);
 
-		window.clear();
-		f1.draw(window);
-		f2.draw(window);
-		f3.draw(window);
+		f.draw(window);
+
+		manipulate(f, window);
+
 		window.display();
 	}
 
 	return 0;
 }
 
-void controlFigure(snow::Figure &figure, float frameTime) {
-	typedef sf::Keyboard::Key Key;
-
-	float step = 0.3f * frameTime;
-	float angle = 0.005f * frameTime;
-	float scale = 0.05f * frameTime;
-
-	if (sf::Keyboard::isKeyPressed((Key)Keys::Left)) {
-		figure.move(sf::Vector2f(-step, 0));
-	}
-	if (sf::Keyboard::isKeyPressed((Key)Keys::Right)) {
-		figure.move(sf::Vector2f(step, 0));
-	}
-	if (sf::Keyboard::isKeyPressed((Key)Keys::Top)) {
-		figure.move(sf::Vector2f(0, -step));
-	}
-	if (sf::Keyboard::isKeyPressed((Key)Keys::Bottom)) {
-		figure.move(sf::Vector2f(0, step));
+void manipulate(figure::Figure &f, sf::RenderWindow &window) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		f.rotate(-0.1);
 	}
 
-	if (sf::Keyboard::isKeyPressed((Key)Keys::ScalePlus)) {
-		figure.setSize(figure.getSize() + scale);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		f.rotate(0.1);
 	}
-	if (sf::Keyboard::isKeyPressed((Key)Keys::ScaleMinus)) {
-		figure.setSize(figure.getSize() - scale);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		f.scale(1.001);
 	}
-
-	if (sf::Keyboard::isKeyPressed((Key)Keys::RotateMinus)) {
-		figure.rotate(-angle);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		f.scale(0.999);
 	}
-	if (sf::Keyboard::isKeyPressed((Key)Keys::RotatePlus)) {
-		figure.rotate(angle);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		f.move(0.0, -10);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		f.move(0.0, 10);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		f.move(-10, 0.0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		f.move(10, 0.0);
 	}
 }
