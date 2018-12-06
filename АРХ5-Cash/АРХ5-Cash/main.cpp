@@ -9,6 +9,40 @@
 
 using namespace std;
 
+template<typename F>
+unsigned long long measure(F&& f, const int n = 10);
+
+int getSystemTime();
+
+int* getTargArr(int len, string type);
+inline void loopTargArr(int *arr, int n);
+unsigned long long measureTargArr(int *arr, int len);
+int getRepeatVal(int len);
+vector<int> getLens(int k = 1.5);
+string formatSize(int bytes);
+bool saveInFile(string data, string src);
+
+void printArr(int *arr, int len);
+void run(), printHello();
+
+template <typename T>
+T prompt(const char label[]);
+
+int main() {
+	srand((int)time(0));
+	printHello();
+
+	while (1) {
+		run();
+		cout << endl;
+
+		auto repeat = prompt<string>("Repeat? (1 - yes): ");
+		if (repeat != "1") break;
+	}
+
+	return 0;
+}
+
 // Возвращает массив для тестирования с размером len 
 // Заполненный type способом в виде цикличного списка
 // type = "preorder" - прямой | "postorder" - обратный | "randorder" 
@@ -167,8 +201,6 @@ void printHello() {
 	cout << "- - - Cash diagnostic - - -" << endl << endl;
 }
 
-
-
 template <typename T>
 T prompt(const char label[]) {
 	cout << label;
@@ -226,19 +258,4 @@ void run() {
 
 	bool saved = saveInFile(res, "cash.csv");
 	cout << (saved ? "Saved" : "Cannot save results to file") << endl;
-}
-
-int main() {
-	srand((int)time(0));
-	printHello();
-
-	while(1) {
-		run();
-		cout << endl;
-
-		auto repeat = prompt<string>("Repeat? (1 - yes): ");
-		if (repeat != "1") break;
-	}
-	
-	return 0;
 }
