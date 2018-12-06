@@ -103,7 +103,7 @@ void printArr(int *arr, int len) {
 }
 
 template<typename F>
-unsigned long long measure(F&& f, const int n = 10) {
+unsigned long long measure(F&& f, const int n) {
 	unsigned long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
@@ -156,7 +156,7 @@ int getSystemTime() {
 	return int(overhead / len);
 }
 
-vector<int> getLens(int k = 1.5) {
+vector<int> getLens(int k) {
 	const int MIN_LEN = 1024 / 4; //256
 	const int MAX_LEN = 5 * 1024 * 1024 / 4; //8388608
 
