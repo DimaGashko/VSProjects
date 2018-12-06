@@ -9,6 +9,40 @@
 
 using namespace std;
 
+template<typename F>
+unsigned long long measure(F&& f, const int n = 10);
+
+int getSystemTime();
+
+int* getTargArr(int len, string type);
+inline void loopTargArr(int *arr, int n);
+unsigned long long measureTargArr(int *arr, int len);
+int getRepeatVal(int len);
+vector<int> getLens(int k = 1.5);
+string formatSize(int bytes);
+bool saveInFile(string data, string src);
+
+void printArr(int *arr, int len);
+void run(), printHello();
+
+template <typename T>
+T prompt(const char label[]);
+
+int main() {
+	srand((int)time(0));
+	printHello();
+
+	while (1) {
+		run();
+		cout << endl;
+
+		auto repeat = prompt<string>("Repeat? (1 - yes): ");
+		if (repeat != "1") break;
+	}
+
+	return 0;
+}
+
 // Возвращает массив для тестирования с размером len 
 // Заполненный type способом в виде цикличного списка
 // type = "preorder" - прямой | "postorder" - обратный | "randorder" 
@@ -39,6 +73,16 @@ int* getTargArr(int len, string type) {
 		for (int i = 0; i < len; i++) {
 			arr[links[i]] = links[(i + 1) % len];
 		}
+
+		/*
+		links = {0,2,1,3,4};
+
+		arr[0] = 2;
+		arr[2] = 1;
+		arr[1] = 3;
+		arr[3] = 4;
+		arr[4] = 0;
+		*/
 	}
 
 	return arr;
@@ -59,7 +103,7 @@ void printArr(int *arr, int len) {
 }
 
 template<typename F>
-unsigned long long measure(F&& f, const int n = 10) {
+unsigned long long measure(F&& f, const int n) {
 	unsigned long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
@@ -69,7 +113,7 @@ unsigned long long measure(F&& f, const int n = 10) {
 		auto start = __rdtsc();
 
 		f();
-
+		
 		__asm xor eax, eax
 		__asm cpuid
 		auto time = __rdtsc() - start;
@@ -79,13 +123,21 @@ unsigned long long measure(F&& f, const int n = 10) {
 	
 	return res;
 }
+//getCPUTime
+
+int getRepeatVal(int len) {
+	if (len < 100'000) return 100;
+	else if (len < 1'000'000) return 10;
+
+	return 1;
+}
 
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = max(len, 1'000'000);
-	int repeat = 10;
+	int fullLen = len;
+	int repeat = getRepeatVal(len);
 
 	// Подготовительный обход
-	loopTargArr(arr, len);
+	//loopTargArr(arr, len);
 
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
@@ -104,15 +156,15 @@ int getSystemTime() {
 	return int(overhead / len);
 }
 
-vector<int> getLens() {
+vector<int> getLens(int k) {
 	const int MIN_LEN = 1024 / 4; //256
-	const int MAX_LEN = 32 * 1024 * 1024 / 4; //8388608
+	const int MAX_LEN = 5 * 1024 * 1024 / 4; //8388608
 
 	vector<int> lens;
 
 	for (int len = MIN_LEN, step = 1; len < MAX_LEN; len += step) {
 		lens.push_back(len);
-		step = int(step * 1.06 + 10);
+		step = int(step * k + 10);
 	}
 
 	lens.push_back(MAX_LEN);
@@ -145,11 +197,36 @@ string formatSize(int bytes) {
 	return strSize + " " + (bytes < MB ? "KB" : "MB");
 }
 
-int main() {
-	srand((int)time(0));
+void printHello() {
+	cout << "- - - Cash diagnostic - - -" << endl << endl;
+}
 
+template <typename T>
+T prompt(const char label[]) {
+	cout << label;
+
+	while (true) {
+		T val;
+		cin >> val;
+
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+			cout << "Wrong. Try again: ";
+		}
+		else {
+			cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
+}
+
+void run() {
+	int lenK = prompt<float>("Enter the increment step: ");
 	int systemTime = getSystemTime();
-	vector<int> lens = getLens();
+	vector<int> lens = getLens(lenK);
 
 	string res = "Length,Size,Preorder,Postorder,Randorder\n";
 	cout << res;
@@ -176,13 +253,9 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		cout << to_string(i + 1) << "/" << to_string(lens.size()) << "," << curRes; 
+		cout << to_string(i + 1) << "/" << to_string(lens.size()) << "," << curRes;
 	}
 
 	bool saved = saveInFile(res, "cash.csv");
-	cout << (saved ? "Saved" : "Cannot save results to file");
-	
-	string close;
-	cin >> close;
-	return 0;
+	cout << (saved ? "Saved" : "Cannot save results to file") << endl;
 }
