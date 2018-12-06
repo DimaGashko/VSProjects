@@ -104,7 +104,14 @@ int getSystemTime() {
 	return int(overhead / len);
 }
 
-vector<int> getLens() {
+vector<int> getLensByMemory() {
+	const int KB = 1024;
+	const int MB = 1024 * 1024;
+
+
+}
+
+vector<int> getLensByMinMaxLength() {
 	const int MIN_LEN = 1024 / 4; //256
 	const int MAX_LEN = 32 * 1024 * 1024 / 4; //8388608
 
@@ -149,7 +156,7 @@ int main() {
 	srand((int)time(0));
 
 	int systemTime = getSystemTime();
-	vector<int> lens = getLens();
+	vector<int> lens = getLensByMinMaxLength();
 
 	string res = "Length,Size,Preorder,Postorder,Randorder\n";
 	cout << res << endl;
@@ -176,7 +183,7 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		cout << to_string(i) << "/" << to_string(lens.size()) << "," << curRes; 
+		cout << to_string(i) + 1 << "/" << to_string(lens.size()) << "," << curRes; 
 	}
 
 	bool saved = saveInFile(res, "cash.csv");
