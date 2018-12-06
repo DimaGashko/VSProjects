@@ -167,15 +167,32 @@ void printHello() {
 	cout << "- - - Cash diagnostic - - -" << endl << endl;
 }
 
-int main() {
-	srand((int)time(0));
 
-	printHello();
 
-	float lenK;
-	cout << "Enter the increment step: ";
-	cin >> lenK;
+template <typename T>
+T prompt(const char label[]) {
+	cout << label;
 
+	while (true) {
+		T val;
+		cin >> val;
+
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+			cout << "Wrong. Try again: ";
+		}
+		else {
+			cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
+}
+
+void run() {
+	int lenK = prompt<float>("Enter the increment step: ");
 	int systemTime = getSystemTime();
 	vector<int> lens = getLens(lenK);
 
@@ -204,13 +221,24 @@ int main() {
 			+ to_string(r3) + "\n";
 
 		res += curRes;
-		cout << to_string(i + 1) << "/" << to_string(lens.size()) << "," << curRes; 
+		cout << to_string(i + 1) << "/" << to_string(lens.size()) << "," << curRes;
 	}
 
 	bool saved = saveInFile(res, "cash.csv");
 	cout << (saved ? "Saved" : "Cannot save results to file") << endl;
+}
+
+int main() {
+	srand((int)time(0));
+	printHello();
+
+	while(1) {
+		run();
+		cout << endl;
+
+		auto repeat = prompt<string>("Repeat? (1 - yes): ");
+		if (repeat != "1") break;
+	}
 	
-	string close;
-	cin >> close;
 	return 0;
 }
