@@ -91,12 +91,19 @@ unsigned long long measure(F&& f, const int n = 10) {
 }
 //getCPUTime
 
+int getRepeatVal(int len) {
+	if (len < 100'000) return 100;
+	else if (len < 1'000'000) return 10;
+
+	return 1;
+}
+
 unsigned long long measureTargArr(int *arr, int len) {
-	int fullLen = (len < 1'000'000) ? len * 5 : len;
-	int repeat = (len < 1'000'000) ? 10 : 1;
+	int fullLen = len;
+	int repeat = getRepeatVal(len);
 
 	// Подготовительный обход
-	loopTargArr(arr, len);
+	//loopTargArr(arr, len);
 
 	auto time = measure([&arr, fullLen] {
 		loopTargArr(arr, fullLen);
@@ -115,15 +122,15 @@ int getSystemTime() {
 	return int(overhead / len);
 }
 
-vector<int> getLens() {
+vector<int> getLens(int k = 1.5) {
 	const int MIN_LEN = 1024 / 4; //256
-	const int MAX_LEN = 10 * 1024 * 1024 / 4; //8388608
+	const int MAX_LEN = 5 * 1024 * 1024 / 4; //8388608
 
 	vector<int> lens;
 
 	for (int len = MIN_LEN, step = 1; len < MAX_LEN; len += step) {
 		lens.push_back(len);
-		step = int(step * 1.06 + 10);
+		step = int(step * k + 10);
 	}
 
 	lens.push_back(MAX_LEN);
@@ -156,11 +163,21 @@ string formatSize(int bytes) {
 	return strSize + " " + (bytes < MB ? "KB" : "MB");
 }
 
+void printHello() {
+	cout << "- - - Cash diagnostic - - -" << endl << endl;
+}
+
 int main() {
 	srand((int)time(0));
 
+	printHello();
+
+	float lenK;
+	cout << "Enter the increment step: ";
+	cin >> lenK;
+
 	int systemTime = getSystemTime();
-	vector<int> lens = getLens();
+	vector<int> lens = getLens(lenK);
 
 	string res = "Length,Size,Preorder,Postorder,Randorder\n";
 	cout << res;
@@ -191,7 +208,7 @@ int main() {
 	}
 
 	bool saved = saveInFile(res, "cash.csv");
-	cout << (saved ? "Saved" : "Cannot save results to file");
+	cout << (saved ? "Saved" : "Cannot save results to file") << endl;
 	
 	string close;
 	cin >> close;
