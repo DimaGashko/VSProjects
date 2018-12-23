@@ -20,11 +20,15 @@ public:
 	BasePerson() { cout << "___BasePersonConstructor -> "; };
 	virtual void a() = 0;
 	BasePerson(int a) { cout << "BasePersonConstructor -> "; };
+	bool isFoo() { return foo; }
+
+	bool foo = true;
 	virtual ~BasePerson() { cout << "~BasePerson -> "; };
 };
 
 class Person : public BasePerson {
 public:
+
 	Person() { cout << "___PersonConstructor -> "; };
 	void a() { cout << "a from Person"; };
 	Person(int a) : BasePerson(a) { cout << "PersonConstructor -> "; };
@@ -35,32 +39,24 @@ class Student : public Person {
 public:
 	Student() { cout << "___StudentConstructor -> "; };
 	Student(int a) : Person(a) { cout << "StudentConstructor -> "; };
-	void a() override { cout << "a from Student"; }
+	void a() override { 
+		cout << "a from Student"; 
+		foo = false;
+	}
+
+	//bool foo = false;
 	~Student() { cout << "~Student -> "; };
 };
 
-class Nlassleader : public Student {
-public:
-	Nlassleader() { cout << "___CalssLeaderConstructor -> "; };
-	void a() override { cout << "a form CLeader"; };
-	Nlassleader(int a) : Student(a) { cout << "ClassleaderConstructor -> "; };
-	~Nlassleader() { cout << "~Classleader -> "; };
-};
-
 void classes() {
-	{
-		Person *p1 = new Person(5);
-
-		cout << endl;
-		p1->a();
-
-		cout << endl;
-		system("pause");
-
-		delete p1;
-	}
-
+	Student *p1 = new Student(5);
 	cout << endl;
+	
+	cout << p1->isFoo() << endl;
+	p1->a();
+
+	cout << p1->isFoo() << endl;
+	
 	system("pause");
 }
 
