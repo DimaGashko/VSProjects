@@ -47,11 +47,9 @@ void classes2() {
 	GameObject* sobs = new SimpleGameObject();
 
 	std::cout << "Obstacle is Obstacle? " << oobs->isObstacle() << "\n";
-	std::cout << "SimpleGameObject is Obstacle? " << sobs->isObstacle() << "\n";
+	std::cout << "SimpleGameObject is Obstacle? " << sobs->isObstacle();
 
 	delete oobs; delete sobs;
-
-	system("pause");
 }
 
 // -------------------------
