@@ -6,14 +6,55 @@ typedef long double ld;
 
 using namespace std;
 
-void ptrs(), classes();
+void ptrs(), classes(), classes2();
 
 int main() {
 	//ptrs();
-	classes();
-
+	//classes();
+	classes2();
 	return 0;
 }
+
+//-------------------------
+
+class GameObject
+{
+	bool obstacle;
+public:
+	GameObject(bool obs) : obstacle{ obs } {}
+	virtual ~GameObject() {}
+	virtual void f() = 0;
+	bool isObstacle() { return obstacle; }
+};
+
+class Obstacle : public GameObject
+{
+public:
+	Obstacle(bool obs = true) : GameObject(obs) {}
+	~Obstacle() {}
+	void f() {}
+};
+
+class SimpleGameObject : public GameObject
+{
+public:
+	SimpleGameObject(bool obs = false) : GameObject(obs) {}
+	void f() {}
+};
+
+void classes2() {
+	GameObject* oobs = new Obstacle();
+	GameObject* sobs = new SimpleGameObject();
+
+	std::cout << "Obstacle is Obstacle? " << oobs->isObstacle() << "\n";
+	std::cout << "SimpleGameObject is Obstacle? " << sobs->isObstacle() << "\n";
+
+	delete oobs; delete sobs;
+
+	system("pause");
+}
+
+// -------------------------
 
 class BasePerson {
 public:
