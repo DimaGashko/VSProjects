@@ -1,18 +1,57 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <memory>
 
 typedef long double ld;
 
 using namespace std;
 
-void ptrs(), classes(), classes2();
+void ptrs(), classes(), classes2(), singleton();
 
 int main() {
 	//ptrs();
 	//classes();
-	classes2();
+	//classes2();
+	singleton();
 	return 0;
+}
+
+//-------------------------
+
+class Logger {
+
+public:
+
+	static Logger* getInstance() {
+		if (s_logger == nullptr) {
+			s_logger = new Logger();
+		}
+
+		return s_logger;
+	}
+
+	void log(string mess) {
+		cout << mess << endl;
+	}
+
+private:
+
+	Logger() { }
+
+	static Logger* s_logger;
+};
+
+Logger* Logger::s_logger = nullptr;
+
+void singleton() {
+	Logger* console = Logger::getInstance();
+
+	console->log("Hello, world!");
+
+	delete console;
+
+	system("pause");
 }
 
 //-------------------------
