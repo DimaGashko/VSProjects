@@ -31,7 +31,7 @@ public:
 		return *s_logger;
 	}
 
-	static void deleteInstance() {
+	static void destroyInstance() {
 		delete s_logger;
 	}
 
@@ -53,7 +53,7 @@ void singleton() {
 
 	console.log("Hello, world!");
 
-	Logger::deleteInstance();
+	Logger::destroyInstance();
 
 	system("pause");
 }
