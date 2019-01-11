@@ -24,7 +24,7 @@ class Logger {
 public:
 
 	static Logger& getInstance() {
-		if (s_logger == nullptr) {
+		if (s_logger) {
 			s_logger = new Logger();
 		}
 
@@ -32,7 +32,11 @@ public:
 	}
 
 	static void destroyInstance() {
-		delete s_logger;
+
+		if (s_logger) {
+			delete s_logger;
+		}
+
 	}
 
 	void log(string mess) {
