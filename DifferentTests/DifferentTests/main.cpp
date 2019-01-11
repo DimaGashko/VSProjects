@@ -23,12 +23,16 @@ class Logger {
 
 public:
 
-	static Logger* getInstance() {
+	static Logger& getInstance() {
 		if (s_logger == nullptr) {
 			s_logger = new Logger();
 		}
 
-		return s_logger;
+		return *s_logger;
+	}
+
+	static void deleteInstance() {
+		delete s_logger;
 	}
 
 	void log(string mess) {
@@ -45,11 +49,11 @@ private:
 Logger* Logger::s_logger = nullptr;
 
 void singleton() {
-	Logger* console = Logger::getInstance();
+	Logger console = Logger::getInstance();
 
-	console->log("Hello, world!");
+	console.log("Hello, world!");
 
-	delete console;
+	Logger::deleteInstance();
 
 	system("pause");
 }
