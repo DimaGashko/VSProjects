@@ -12,10 +12,13 @@ SparseMatrix::SparseMatrix(int m, int n) :
 int SparseMatrix::get(int i, int j) {
 	if (_isZiroItem(i, j)) return 0;
 
+	return m_compressedMatrix[_getInternalIndex(i, j)];
 }
 
 void SparseMatrix::set(int i, int j, int val) {
+	if (_isZiroItem(i, j)) return;
 
+	m_compressedMatrix[_getInternalIndex(i, j)] = val;
 }
 
 int SparseMatrix::getM() {

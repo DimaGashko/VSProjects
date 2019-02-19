@@ -21,5 +21,8 @@ private:
 
 	std::vector<int> m_compressedMatrix;
 
+	int _getInternalIndex(int i, int j);
+	bool _isZiroItem(int i, int j);
+
 };
 
