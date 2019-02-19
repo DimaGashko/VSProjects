@@ -47,6 +47,42 @@ int main() {
 
 	std::cout << timeToReadVecMatrix << std::endl;
 
+	auto timeToWriteVecMatrix = measure([&matrix] {
+		for (auto& row : matrix) {
+			for (auto& item : row) {
+				item = 1;
+			}
+		}
+		}, 100) / len;
+
+	std::cout << timeToWriteVecMatrix << std::endl;
+
+	auto timeToReadSparseMatrix = measure([&matrix1] {
+		int m, n, val;
+
+		m = matrix1.getM();
+		n = matrix1.getN();
+
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				val = matrix1.get(i, j);
+			}
+		}
+		
+	}, 100) / len;
+
+	std::cout << timeToReadVecMatrix << std::endl;
+
+	auto timeToWriteSparseatrix = measure([&matrix1] {
+		for (auto& row : matrix) {
+			for (auto& item : row) {
+				item = 1;
+			}
+		}
+	}, 100) / len;
+
+	std::cout << timeToWriteVecMatrix << std::endl;
+
 	/*std::cout << "= = = Matrix = = =" << std::endl;
 	printMatrix(matrix);
 
