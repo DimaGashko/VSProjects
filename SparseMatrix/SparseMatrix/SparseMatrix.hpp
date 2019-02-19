@@ -24,5 +24,6 @@ private:
 	int _getInternalIndex(int i, int j);
 	bool _isZiroItem(int i, int j);
 
-};
+	void _checkIndexes(int i, int j);
 
+};
