@@ -5,8 +5,8 @@ class SparseMatrix {
 public:
 	SparseMatrix(int m, int n);
 
-	int get(int m, int n);
-	void set(int m, int n, int val);
+	int get(int i, int j);
+	void set(int i, int j, int val);
 
 	int getM();
 	int getN();

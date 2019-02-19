@@ -8,11 +8,11 @@ SparseMatrix::SparseMatrix(int m, int n) :
 
 }
 
-int SparseMatrix::get(int m, int n) {
+int SparseMatrix::get(int i, int j) {
 	return 0;
 }
 
-void SparseMatrix::set(int m, int n, int val) {
+void SparseMatrix::set(int i, int j, int val) {
 
 }
 
