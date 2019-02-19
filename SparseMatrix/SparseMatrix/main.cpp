@@ -35,33 +35,38 @@ int main() {
 	printMatrix(matrix2);
 	std::cout << std::endl;
 
-	auto timeToReadVecMatrix = measure([&matrix] {
+	auto sys = measure([&matrix, m, n] {
 		int val;
 
-		for (auto &row : matrix) {
-			for (auto& item : row) {
-				val = item;
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				val = 1;
 			}
 		}
+
 	}, 100) / len;
 
-	std::cout << timeToReadVecMatrix << std::endl;
+	auto timeToReadVecMatrix = measure([&matrix, m, n] {
+		int val;
 
-	auto timeToWriteVecMatrix = measure([&matrix] {
-		for (auto& row : matrix) {
-			for (auto& item : row) {
-				item = 1;
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				val = matrix[i][j];
 			}
 		}
-		}, 100) / len;
 
-	std::cout << timeToWriteVecMatrix << std::endl;
+	}, 1000) / len;
 
-	auto timeToReadSparseMatrix = measure([&matrix1] {
-		int m, n, val;
+	auto timeToWriteVecMatrix = measure([&matrix, m, n] {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				matrix[i][j] = 1;
+			}
+		}
+	}, 1000) / len;
 
-		m = matrix1.getM();
-		n = matrix1.getN();
+	auto timeToReadSparseMatrix = measure([&matrix1, m, n] {
+		int val;
 
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
@@ -69,19 +74,20 @@ int main() {
 			}
 		}
 		
-	}, 100) / len;
+	}, 1000) / len;
 
-	std::cout << timeToReadVecMatrix << std::endl;
-
-	auto timeToWriteSparseatrix = measure([&matrix1] {
-		for (auto& row : matrix) {
-			for (auto& item : row) {
-				item = 1;
+	auto timeToWriteSparseMatrix = measure([&matrix1, m, n] {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				matrix1.set(i, j, 1);
 			}
 		}
-	}, 100) / len;
+	}, 1000) / len;
 
-	std::cout << timeToWriteVecMatrix << std::endl;
+	std::cout << "timeToReadVecMatrix: " << timeToReadVecMatrix << std::endl;
+	std::cout << "timeToWriteVecMatrix: " << timeToWriteVecMatrix << std::endl;
+	std::cout << "timeToReadSparseMatrix: " << timeToReadSparseMatrix << std::endl;
+	std::cout << "timeToWriteSparseMatrix: " << timeToWriteSparseMatrix << std::endl;
 
 	/*std::cout << "= = = Matrix = = =" << std::endl;
 	printMatrix(matrix);
