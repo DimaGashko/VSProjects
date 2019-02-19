@@ -2,14 +2,14 @@
 
 
 
-SparseMatrix::SparseMatrix(int m, int n) :
+SparseMatrix::SparseMatrix(ui m, ui n) :
 	m_m(m), m_n(n),
 	m_compressedMatrix((m / 2) * n)
 {
 
 }
 
-int SparseMatrix::get(int i, int j) {
+int SparseMatrix::get(ui i, ui j) {
 	_checkIndexes(i, j);
 
 	if (_isZiroItem(i, j)) return 0;
@@ -17,7 +17,7 @@ int SparseMatrix::get(int i, int j) {
 	return m_compressedMatrix[_getInternalIndex(i, j)];
 }
 
-void SparseMatrix::set(int i, int j, int val) {
+void SparseMatrix::set(ui i, ui j, int val) {
 	_checkIndexes(i, j);
 
 	if (_isZiroItem(i, j)) return;
@@ -25,15 +25,15 @@ void SparseMatrix::set(int i, int j, int val) {
 	m_compressedMatrix[_getInternalIndex(i, j)] = val;
 }
 
-inline int SparseMatrix::_getInternalIndex(int i, int j) {
+inline int SparseMatrix::_getInternalIndex(ui i, ui j) {
 	return i * m_n + j;
 }
 
-inline bool SparseMatrix::_isZiroItem(int i, int j) {
+inline bool SparseMatrix::_isZiroItem(ui i, ui j) {
 	return i >= m_m / 2;
 }
 
-inline void SparseMatrix::_checkIndexes(int i, int j) {
+inline void SparseMatrix::_checkIndexes(ui i, ui j) {
 	if (i >= 0 && j >= 0 && i < m_m && j < m_n) {
 		return;
 	}

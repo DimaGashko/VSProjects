@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <intrin.h>
+
 #include "SparseMatrix.hpp"
+
 
 typedef std::vector<std::vector<int>> VecMatrix;
 
@@ -40,7 +43,7 @@ int main() {
 				val = item;
 			}
 		}
-	}) / len;
+	}, 100) / len;
 
 	std::cout << timeToReadVecMatrix << std::endl;
 
@@ -138,15 +141,10 @@ unsigned long long measure(F&& f, const int n) {
 	unsigned long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
-		std::this_thread::yield();
-		__asmxor eax, eax
-			__asm cpuid
 		auto start = __rdtsc();
 
 		f();
 
-		__asmxor eax, eax
-			__asm cpuid
 		auto time = __rdtsc() - start;
 
 		if (time < res) res = time;

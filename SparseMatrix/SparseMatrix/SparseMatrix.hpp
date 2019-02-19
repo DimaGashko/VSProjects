@@ -5,10 +5,12 @@
 class SparseMatrix {
 
 public:
-	SparseMatrix(int m, int n);
+	typedef unsigned int ui;
 
-	int get(int i, int j);
-	void set(int i, int j, int val);
+	SparseMatrix(ui m, ui n);
+	
+	int get(ui i, ui j);
+	void set(ui i, ui j, int val);
 
 	int getM();
 	int getN();
@@ -23,9 +25,9 @@ private:
 
 	std::vector<int> m_compressedMatrix;
 
-	int _getInternalIndex(int i, int j);
-	bool _isZiroItem(int i, int j);
+	int _getInternalIndex(ui i, ui j);
+	bool _isZiroItem(ui i, ui j);
 
-	void _checkIndexes(int i, int j);
+	void _checkIndexes(ui i, ui j);
 
 };
