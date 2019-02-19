@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 class SparseMatrix {
 
 public:
@@ -14,10 +16,10 @@ public:
 	~SparseMatrix();
 
 private:
-	int _m;
-	int _n;
+	int m_m;
+	int m_n;
 
-
+	std::vector<int> m_compressedMatrix;
 
 };
 

@@ -3,13 +3,15 @@
 
 
 SparseMatrix::SparseMatrix(int m, int n) :
-	_m(m), _n(n)
+	m_m(m), m_n(n),
+	m_compressedMatrix((m / 2) * n)
 {
 
 }
 
 int SparseMatrix::get(int i, int j) {
-	return 0;
+	if (_isZiroItem(i, j)) return 0;
+
 }
 
 void SparseMatrix::set(int i, int j, int val) {
@@ -17,11 +19,19 @@ void SparseMatrix::set(int i, int j, int val) {
 }
 
 int SparseMatrix::getM() {
-	return _m;
+	return m_m;
+}
+
+inline int SparseMatrix::_getInternalIndex(int i, int j) {
+	return i * m_n + i;
+}
+
+inline bool SparseMatrix::_isZiroItem(int i, int j) {
+	return i >= m_m / 2;
 }
 
 int SparseMatrix::getN() {
-	return _n;
+	return m_n;
 }
 
 SparseMatrix::~SparseMatrix() {
