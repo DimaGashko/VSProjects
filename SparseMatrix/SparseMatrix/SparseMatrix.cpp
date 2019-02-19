@@ -26,7 +26,7 @@ void SparseMatrix::set(int i, int j, int val) {
 }
 
 inline int SparseMatrix::_getInternalIndex(int i, int j) {
-	return i * m_n + i;
+	return i * m_n + j;
 }
 
 inline bool SparseMatrix::_isZiroItem(int i, int j) {
