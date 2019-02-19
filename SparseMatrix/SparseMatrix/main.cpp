@@ -9,7 +9,7 @@ int main() {
 
 	matrix.set(1, 2, 10);
 
-	std::cout << matrix.get(10, 2) << std::endl;
+	std::cout << matrix.get(1, 2) << std::endl;
 	
 	system("pause");
 	return 0;
