@@ -25,10 +25,6 @@ void SparseMatrix::set(int i, int j, int val) {
 	m_compressedMatrix[_getInternalIndex(i, j)] = val;
 }
 
-int SparseMatrix::getM() {
-	return m_m;
-}
-
 inline int SparseMatrix::_getInternalIndex(int i, int j) {
 	return i * m_n + i;
 }
@@ -38,11 +34,19 @@ inline bool SparseMatrix::_isZiroItem(int i, int j) {
 }
 
 inline void SparseMatrix::_checkIndexes(int i, int j) {
-	if (i > 0 && j > 0 && i < m_m && j < m_n) {
+	if (i >= 0 && j >= 0 && i < m_m && j < m_n) {
 		return;
 	}
 
 	throw std::runtime_error("SparseMatrix subscript out of range");
+}
+
+std::vector<int> SparseMatrix::__getCompressedMatrix() {
+	return m_compressedMatrix;
+}
+
+int SparseMatrix::getM() {
+	return m_m;
 }
 
 int SparseMatrix::getN() {

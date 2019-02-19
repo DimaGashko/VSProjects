@@ -13,6 +13,8 @@ public:
 	int getM();
 	int getN();
 
+	std::vector<int> __getCompressedMatrix();
+
 	~SparseMatrix();
 
 private:
