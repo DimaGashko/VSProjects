@@ -20,63 +20,17 @@ void printCompressedMatrix(SparseMatrix &matrix);
 int main() {
 	auto vecMatrix = getVecMatrix();
 
-	int m = vecMatrix.size() / 2;
+	int m = vecMatrix.size();
 	int n = vecMatrix[0].size();
 	int len = m * n;
 
 	auto matrix = vecMatrix;
-
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			vecMatrix[i][j];
-		}
-	}
-
-	auto start = __rdtsc();
-	vecMatrix[1][2];
-	auto end = __rdtsc() - start;
-
-	std::cout << end << std::endl;
-
-	std::vector<int> a(10);
-
-	for (int i = 0; i < a.size(); i++) {
-		a[i] = i;
-	}
-
-	start = __rdtsc();
-	a[1];
-	end = __rdtsc() - start;
-
-	std::cout << end << std::endl;
-
-	int** b = new int*[10];
-	for (int i = 0; i < 10; i++) {
-		b[i] = new int[10];
-
-		for (int j = 0; j < 10; j++) {
-			b[i][j] = i * j;
-		}
-	}
-
-	start = __rdtsc();
-	b[1][2];
-	end = __rdtsc() - start;
-
-	std::cout << end << std::endl;
+	auto compressed = compress(matrix);
+	auto uncompressed = uncompress(compressed);
 
 	printMatrix(matrix);
-	std::cout << std::endl;
-
-	
-
-	auto matrix1 = compress(matrix);
-	printMatrix(matrix1);
-	std::cout << std::endl;
-
-	auto matrix2 = uncompress(matrix1);
-	printMatrix(matrix2);
-	std::cout << std::endl;
+	printMatrix(compressed);
+	printMatrix(uncompressed);
 
 	auto sys = measure([&matrix, m, n] {
 		int val;
@@ -88,8 +42,6 @@ int main() {
 		}
 
 	}, 100) / len;
-
-	std::cout << sys << std::endl;
 
 	auto timeToReadVecMatrix = measure([&matrix, m, n] {
 		int val;
@@ -110,21 +62,21 @@ int main() {
 		}
 	}, 1000) / len;
 
-	auto timeToReadSparseMatrix = measure([&matrix1, m, n] {
+	auto timeToReadSparseMatrix = measure([&compressed, m, n] {
 		int val;
 
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				val = matrix1.get(i, j);
+				val = compressed.get(i, j);
 			}
 		}
 		
 	}, 1000) / len;
 
-	auto timeToWriteSparseMatrix = measure([&matrix1, m, n] {
+	auto timeToWriteSparseMatrix = measure([&compressed, m, n] {
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				matrix1.set(i, j, 1);
+				compressed.set(i, j, 1);
 			}
 		}
 	}, 1000) / len;
@@ -201,6 +153,8 @@ void printMatrix(VecMatrix& matrix) {
 
 		std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
 }
 
 void printMatrix(SparseMatrix& matrix) {
@@ -211,6 +165,8 @@ void printMatrix(SparseMatrix& matrix) {
 
 		std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
 }
 
 void printCompressedMatrix(SparseMatrix& matrix) {
@@ -220,7 +176,7 @@ void printCompressedMatrix(SparseMatrix& matrix) {
 		std::cout << item << " ";
 	}
 
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 }
 
 template<typename F>
