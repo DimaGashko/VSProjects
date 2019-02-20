@@ -2,9 +2,12 @@
 
 SparseMatrix::SparseMatrix(ui m, ui n) :
 	m_m(m), m_n(n),
-	m_compressedMatrix((m / 2) * n)
+	m_compressedSize((m / 2)* n),
+	m_compressedMatrix(new int[m_compressedSize])
 {
-
+	for (int i = 0; i < m_compressedSize; i++) {
+		m_compressedMatrix[i] = 0;
+	}
 }
 
 int SparseMatrix::get(ui i, ui j) {
@@ -39,7 +42,7 @@ inline void SparseMatrix::_checkIndexes(ui i, ui j) {
 	throw std::runtime_error("SparseMatrix subscript out of range");
 }
 
-std::vector<int> SparseMatrix::__getCompressedMatrix() {
+int* SparseMatrix::__getCompressedMatrix() {
 	return m_compressedMatrix;
 }
 
@@ -52,5 +55,5 @@ int SparseMatrix::getN() {
 }
 
 SparseMatrix::~SparseMatrix() {
-
+	delete[] m_compressedMatrix;
 }

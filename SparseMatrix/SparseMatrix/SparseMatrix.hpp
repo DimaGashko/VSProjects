@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <iostream>
 
 class SparseMatrix {
 
@@ -15,7 +15,7 @@ public:
 	int getM();
 	int getN();
 
-	std::vector<int> __getCompressedMatrix();
+	int* __getCompressedMatrix();
 
 	~SparseMatrix();
 
@@ -23,7 +23,8 @@ private:
 	int m_m;
 	int m_n;
 
-	std::vector<int> m_compressedMatrix;
+	int m_compressedSize;
+	int* m_compressedMatrix;
 
 	int _getInternalIndex(ui i, ui j);
 	bool _isZiroItem(ui i, ui j);
