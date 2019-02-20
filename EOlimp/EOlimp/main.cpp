@@ -7,17 +7,14 @@ int main() {
 	int n, k;
 	cin >> n >> k;
 
-	float base = ceil(float(n) / k) * 4 - 2;
+	float base = ceil(float(n) / k) * 4;
 
-	cout << base;
-
-	/*if ((n% k) > k / 2) {
-		cout << base - 2;
+	if ((n % k) >= k / 2.f) {
+		cout << base;
 	}
 	else {
-		cout << base;
-	}*/
-
+		cout << base - 2;
+	}
 
 	system("pause");
 	return 0;
