@@ -5,7 +5,6 @@
 
 #include "SparseMatrix.hpp"
 
-
 typedef std::vector<std::vector<int>> VecMatrix;
 
 template<typename F>
@@ -19,13 +18,57 @@ void printMatrix(SparseMatrix &matrix);
 void printCompressedMatrix(SparseMatrix &matrix);
 
 int main() {
-	auto matrix = getVecMatrix();
+	auto vecMatrix = getVecMatrix();
+
+	int m = vecMatrix.size() / 2;
+	int n = vecMatrix[0].size();
+	int len = m * n;
+
+	auto matrix = vecMatrix;
+
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			vecMatrix[i][j];
+		}
+	}
+
+	auto start = __rdtsc();
+	vecMatrix[1][2];
+	auto end = __rdtsc() - start;
+
+	std::cout << end << std::endl;
+
+	std::vector<int> a(10);
+
+	for (int i = 0; i < a.size(); i++) {
+		a[i] = i;
+	}
+
+	start = __rdtsc();
+	a[1];
+	end = __rdtsc() - start;
+
+	std::cout << end << std::endl;
+
+	int** b = new int*[10];
+	for (int i = 0; i < 10; i++) {
+		b[i] = new int[10];
+
+		for (int j = 0; j < 10; j++) {
+			b[i][j] = i * j;
+		}
+	}
+
+	start = __rdtsc();
+	b[1][2];
+	end = __rdtsc() - start;
+
+	std::cout << end << std::endl;
+
 	printMatrix(matrix);
 	std::cout << std::endl;
 
-	int m = matrix.size();
-	int n = matrix[0].size();
-	int len = m * n;
+	
 
 	auto matrix1 = compress(matrix);
 	printMatrix(matrix1);
@@ -45,6 +88,8 @@ int main() {
 		}
 
 	}, 100) / len;
+
+	std::cout << sys << std::endl;
 
 	auto timeToReadVecMatrix = measure([&matrix, m, n] {
 		int val;
@@ -84,10 +129,10 @@ int main() {
 		}
 	}, 1000) / len;
 
-	std::cout << "timeToReadVecMatrix: " << timeToReadVecMatrix << std::endl;
-	std::cout << "timeToWriteVecMatrix: " << timeToWriteVecMatrix << std::endl;
-	std::cout << "timeToReadSparseMatrix: " << timeToReadSparseMatrix << std::endl;
-	std::cout << "timeToWriteSparseMatrix: " << timeToWriteSparseMatrix << std::endl;
+	std::cout << "timeToReadVecMatrix: " << timeToReadVecMatrix - sys << std::endl;
+	std::cout << "timeToWriteVecMatrix: " << timeToWriteVecMatrix - sys << std::endl;
+	std::cout << "timeToReadSparseMatrix: " << timeToReadSparseMatrix - sys << std::endl;
+	std::cout << "timeToWriteSparseMatrix: " << timeToWriteSparseMatrix - sys << std::endl;
 
 	/*std::cout << "= = = Matrix = = =" << std::endl;
 	printMatrix(matrix);

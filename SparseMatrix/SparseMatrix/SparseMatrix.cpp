@@ -1,7 +1,5 @@
 #include "SparseMatrix.hpp"
 
-
-
 SparseMatrix::SparseMatrix(ui m, ui n) :
 	m_m(m), m_n(n),
 	m_compressedMatrix((m / 2) * n)
