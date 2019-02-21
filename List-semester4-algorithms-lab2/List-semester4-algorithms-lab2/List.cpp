@@ -81,13 +81,13 @@ namespace dg {
 	List::Node* List::getByIndexRight(unsigned int index) {
 		if (index > m_size) return nullptr;
 
-		Node * next = m_head.next;
+		Node* prev = m_back;
 
 		for (int i = 0; i <= index; i++) {
-			next = next->next;
+			prev = prev->prev;
 		}
 
-		return next;
+		return prev;
 	}
 
 	List::~List() {
