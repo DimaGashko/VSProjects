@@ -6,7 +6,22 @@ int main() {
 
 	dg::List list;
 
-	std::cout << "Hello, World" << std::endl;
+	int value = 0;
+
+	while (std::cin >> value) {
+		list.pushBack(value);
+	}
+
+	std::cout << "Size: " << list.size() << std::endl;
+
+	auto next = list.front();
+
+	while (next) {
+		std::cout << next->value << " ";
+		next = next->next;
+	}
+
+	std::cout << std::endl;
 
 	system("pause");
 	return 0;

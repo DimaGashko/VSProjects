@@ -105,7 +105,7 @@ namespace dg {
 		newNode->next = node->next;
 		newNode->prev = node;
 
-		node->next->prev = newNode;
+		if (node->next) node->next->prev = newNode;
 		node->next = newNode;
 
 		m_size++;
@@ -128,8 +128,8 @@ namespace dg {
 			return;
 		}
 
-		node->prev->next = node->next;
-		node->next->prev = node->prev;
+		if (node->prev) node->prev->next = node->next;
+		if (node->next) node->next->prev = node->prev;
 
 		delete node;
 		m_size--;
