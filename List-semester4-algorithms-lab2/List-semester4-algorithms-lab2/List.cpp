@@ -48,23 +48,35 @@ namespace dg {
 
 	void List::popFront() {
 		if (!m_head.next) return;
+		auto deleted = m_head.next;
 
 		m_head.next = m_head.next->next;
+		delete deleted;
 
-		delete m_head.next->prev;
-		m_head.next->prev = nullptr;
+		if (m_head.next) {
+			m_head.next->prev = nullptr;
+		}
+		else {
+			m_back = nullptr;
+		}
 
 		m_size--;
 	}
 
 	void List::popBack() {
 		if (!m_back) return;
+		auto deleted = m_back;
 
 		m_back = m_back->prev;
+		delete deleted;
 
-		delete m_back->next;
-		m_back->next = nullptr;
-
+		if (m_back) {
+			m_back->next = nullptr;
+		}
+		else {
+			m_head.next = nullptr;
+		}
+		
 		m_size--;
 	}
 

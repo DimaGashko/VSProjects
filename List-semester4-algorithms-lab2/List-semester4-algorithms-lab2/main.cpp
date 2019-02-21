@@ -8,7 +8,15 @@ int main() {
 
 	list.pushBack(5);
 	list.pushBack(15);
+	list.pushBack(12);
+	list.pushBack(13);
 	list.pushBack(20);
+
+	list.popFront();
+	list.popFront();
+	list.popFront();
+	list.popFront();
+	list.popFront();
 
 	std::cout << "Hello, World" << std::endl;
 
