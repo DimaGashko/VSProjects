@@ -92,6 +92,26 @@ namespace dg {
 		return next;
 	}
 
+	void List::insert(Node* node, int value) {
+		if (!node) return;
+
+
+	}
+
+	void List::insert(int index, int value) {
+		insert(getByIndex(index), value);
+	}
+
+	void List::removeItem(Node* node) {
+		if (!node) return;
+
+
+	}
+
+	void List::removeItem(int index) {
+		removeItem(getByIndex(index));
+	}
+
 	int List::size() {
 		return m_size;
 	}

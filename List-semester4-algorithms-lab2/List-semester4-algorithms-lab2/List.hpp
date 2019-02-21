@@ -23,6 +23,15 @@ namespace dg {
 
 		Node* getByIndex(int index);
 
+		// Вставляет элемнет в список после node
+		void insert(Node* node, int value);
+
+		// Вставляет элемент в список после перданного индекса
+		void insert(int index, int value);
+
+		void removeItem(Node* node);
+		void removeItem(int index);
+
 		int size();
 		bool isEmpty();
 		void clear();
