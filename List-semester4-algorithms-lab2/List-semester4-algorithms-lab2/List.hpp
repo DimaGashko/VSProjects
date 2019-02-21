@@ -21,7 +21,7 @@ namespace dg {
 		void popFront();
 		void popBack();
 
-		Node* getByIndex();
+		Node* getByIndex(unsigned int);
 
 		void clear();
 
@@ -33,6 +33,12 @@ namespace dg {
 		Node* m_back;
 
 		int m_size = 0;
+
+		// Возвращает элемент по индексу перебирая с начала
+		Node* getByIdnexLeft(unsigned int);
+
+		// Возвращает элемент по индексу перебирая с конца
+		Node* getByIdnexRight(unsigned int);
 
 	};
 

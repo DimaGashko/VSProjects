@@ -61,6 +61,11 @@ namespace dg {
 		m_size--;
 	}
 
+	List::Node* List::getByIndex(unsigned int index) {
+		return (index < m_size / 2) ? 
+			getByIdnexLeft(index) : getByIdnexLeft(index);
+	}
+
 	List::~List() {
 
 	}
