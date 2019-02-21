@@ -45,7 +45,18 @@ namespace dg {
 		m_head.next = m_head.next->next;
 
 		delete m_head.next->prev;
-		m_head.prev = nullptr;
+		m_head.next->prev = nullptr;
+
+		m_size--; 
+	}
+
+	void List::popBack() {
+		if (!m_back) return;
+
+		m_back = m_back->prev;
+
+		delete m_back->next;
+		m_back->next = nullptr;
 
 		m_size--;
 	}
