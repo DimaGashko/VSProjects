@@ -39,6 +39,17 @@ namespace dg {
 		m_size++;
 	}
 
+	void List::popFront() {
+		if (!m_head.next) return;
+
+		m_head.next = m_head.next->next;
+
+		delete m_head.next->prev;
+		m_head.prev = nullptr;
+
+		m_size--;
+	}
+
 	List::~List() {
 
 	}

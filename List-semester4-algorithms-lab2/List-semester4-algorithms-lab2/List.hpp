@@ -18,11 +18,8 @@ namespace dg {
 		void pushFront(int value);
 		void pushBack(int value);
 
-		// Удаляет первый элемент из списка и возвращает его
-		Node* popFront();
-
-		// Удаляет последний элемент из списка и возвращает его
-		Node* popBack();
+		void popFront();
+		void popBack();
 
 		Node* getByIndex();
 
