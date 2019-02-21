@@ -7,9 +7,9 @@ namespace dg {
 		List();
 
 		struct Node {
-			int value;
-			Node* next;
-			Node* prev;
+			int value = 0;
+			Node* next = nullptr;
+			Node* prev = nullptr;
 		};
 
 		Node* front();
@@ -40,7 +40,7 @@ namespace dg {
 
 	private:
 
-		Node m_head; // Не указатель
+		Node* m_front;
 		Node* m_back;
 
 		int m_size = 0;

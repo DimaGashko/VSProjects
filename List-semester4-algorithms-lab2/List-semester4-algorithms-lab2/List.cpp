@@ -7,7 +7,7 @@ namespace dg {
 	}
 
 	List::Node* List::front() {
-		return m_head.next;
+		return m_front;
 	}
 
 	List::Node* List::back() {
@@ -17,16 +17,16 @@ namespace dg {
 	void List::pushFront(int value) {
 		auto newNode = new Node();
 		newNode->value = value;
-		newNode->next = m_head.next;
+		newNode->next = m_front;
 
-		if (m_head.next) {
-			m_head.next->prev = newNode;
+		if (m_front) {
+			m_front->prev = newNode;
 		}
 		else {
 			m_back = newNode;
 		}
 
-		m_head.next = newNode;
+		m_front = newNode;
 		m_size++;
 	}
 
@@ -39,7 +39,7 @@ namespace dg {
 			m_back->next = newNode;
 		}
 		else {
-			m_head.next = newNode;
+			m_front = newNode;
 		}
 
 		m_back = newNode;
@@ -47,14 +47,14 @@ namespace dg {
 	}
 
 	void List::popFront() {
-		if (!m_head.next) return;
-		auto deleted = m_head.next;
+		if (!m_front) return;
+		auto deleted = m_front;
 
-		m_head.next = m_head.next->next;
+		m_front = m_front->next;
 		delete deleted;
 
-		if (m_head.next) {
-			m_head.next->prev = nullptr;
+		if (m_front) {
+			m_front->prev = nullptr;
 		}
 		else {
 			m_back = nullptr;
@@ -74,16 +74,16 @@ namespace dg {
 			m_back->next = nullptr;
 		}
 		else {
-			m_head.next = nullptr;
+			m_front = nullptr;
 		}
-		
+
 		m_size--;
 	}
 
 	List::Node* List::getByIndex(int index) {
 		if (index < 0 || index >= m_size) return nullptr;
 
-		Node* next = m_head.next;
+		Node * next = m_front;
 
 		for (int i = 1; i <= index; i++) {
 			next = next->next;
@@ -115,10 +115,10 @@ namespace dg {
 		insert(getByIndex(index), value);
 	}
 
-	void List::removeItem(Node* node) {
+	void List::removeItem(Node * node) {
 		if (!node) return;
 
-		if (node == m_head.next) {
+		if (node == m_front) {
 			popFront();
 			return;
 		}
@@ -157,7 +157,7 @@ namespace dg {
 			delete deleted;
 		}
 
-		m_head.next = nullptr;
+		m_front = nullptr;
 		m_back = nullptr;
 	}
 
