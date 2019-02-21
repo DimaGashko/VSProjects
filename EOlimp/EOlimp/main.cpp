@@ -9,7 +9,7 @@ int main() {
 
 	float base = ceil(float(n) / k) * 4;
 
-	if ((n % k) >= k / 2.f) {
+	if ((n % k) % 2 == 0 || (n / k) % 2 == 0) {
 		cout << base;
 	}
 	else {

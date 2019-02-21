@@ -17,83 +17,68 @@ void printMatrix(VecMatrix& matrix);
 void printMatrix(SparseMatrix& matrix);
 void printCompressedMatrix(SparseMatrix& matrix);
 
+void measureAll(VecMatrix vecMatrix, SparseMatrix sparseMatrix);
+
 int main() {
 	auto vecMatrix = getVecMatrix();
+	auto compressed = compress(vecMatrix);
+	auto uncompressed = uncompress(compressed);
 
+	std::cout << "= = = Matrix = = =" << std::endl;
+	printMatrix(compressed);
+
+	std::cout << "= = = Compressed Matrix = = =" << std::endl;
+	printCompressedMatrix(compressed);
+
+	measureAll(vecMatrix, compressed);
+
+	system("pause");
+	return 0;
+}
+
+void measureAll(VecMatrix vecMatrix, SparseMatrix sparseMatrix) {
 	int m = vecMatrix.size();
 	int n = vecMatrix[0].size();
 	int len = m * n;
 
-	auto matrix = vecMatrix;
-	auto compressed = compress(matrix);
-	auto uncompressed = uncompress(compressed);
-
-	printMatrix(matrix);
-	printMatrix(compressed);
-	printMatrix(uncompressed);
-
-	auto sys = measure([&matrix, m, n] {
+	auto timeToReadVecMatrix = measure([&vecMatrix, m, n] {
 		int val;
-
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				val = 1;
+				val = vecMatrix[i][j];
 			}
 		}
+	}) / len;
 
-		}, 100) / len;
+	auto timeToWriteVecMatrix = measure([&vecMatrix, m, n] {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				vecMatrix[i][j] = 1;
+			}
+		}
+	}) / len;
 
-	auto timeToReadVecMatrix = measure([&matrix, m, n] {
+	auto timeToReadSparseMatrix = measure([&sparseMatrix, m, n] {
 		int val;
-
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				val = matrix[i][j];
+				val = sparseMatrix.get(i, j);
 			}
 		}
+	}) / len;
 
-		}, 1000) / len;
-
-	auto timeToWriteVecMatrix = measure([&matrix, m, n] {
+	auto timeToWriteSparseMatrix = measure([&sparseMatrix, m, n] {
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
-				matrix[i][j] = 1;
+				sparseMatrix.set(i, j, 1);
 			}
 		}
-		}, 1000) / len;
+	}) / len;
 
-	auto timeToReadSparseMatrix = measure([&compressed, m, n] {
-		int val;
-
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				val = compressed.get(i, j);
-			}
-		}
-
-		}, 1000) / len;
-
-	auto timeToWriteSparseMatrix = measure([&compressed, m, n] {
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				compressed.set(i, j, 1);
-			}
-		}
-		}, 1000) / len;
-
-	std::cout << "timeToReadVecMatrix: " << timeToReadVecMatrix - sys << std::endl;
-	std::cout << "timeToWriteVecMatrix: " << timeToWriteVecMatrix - sys << std::endl;
-	std::cout << "timeToReadSparseMatrix: " << timeToReadSparseMatrix - sys << std::endl;
-	std::cout << "timeToWriteSparseMatrix: " << timeToWriteSparseMatrix - sys << std::endl;
-
-	/*std::cout << "= = = Matrix = = =" << std::endl;
-	printMatrix(matrix);
-
-	std::cout << std::endl << "= = = Compressed Matrix = = =" << std::endl;
-	printCompressedMatrix(matrix);*/
-
-	system("pause");
-	return 0;
+	std::cout << "timeToReadVecMatrix: " << timeToReadVecMatrix << std::endl;
+	std::cout << "timeToWriteVecMatrix: " << timeToWriteVecMatrix << std::endl;
+	std::cout << "timeToReadSparseMatrix: " << timeToReadSparseMatrix << std::endl;
+	std::cout << "timeToWriteSparseMatrix: " << timeToWriteSparseMatrix << std::endl;
 }
 
 SparseMatrix compress(VecMatrix& matrix) {
