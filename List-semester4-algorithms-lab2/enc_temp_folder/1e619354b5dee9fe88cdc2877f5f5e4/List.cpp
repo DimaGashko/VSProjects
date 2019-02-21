@@ -90,16 +90,6 @@ namespace dg {
 		return prev;
 	}
 
-	inline
-	int List::size() {
-		return m_size;
-	}
-
-	inline 
-	bool List::isEmpty() {
-		return m_size == 0;
-	}
-
 	void List::clear() {
 		Node* prev = m_back;
 

@@ -23,8 +23,6 @@ namespace dg {
 
 		Node* getByIndex(int index);
 
-		int size();
-		bool isEmpty();
 		void clear();
 
 		~List();
