@@ -95,7 +95,22 @@ namespace dg {
 	void List::insert(Node* node, int value) {
 		if (!node) return;
 
+		if (node == m_head.next) {
+			pushFront(value);
+			return;
+		}
 
+		if (node == m_back) {
+			pushBack(value);
+			return;
+		}
+
+		auto newNode = new Node();
+		newNode->next = node->next;
+		newNode->prev = node;
+
+		node->next->prev = newNode;
+		node->next = newNode;
 	}
 
 	void List::insert(int index, int value) {
@@ -105,7 +120,18 @@ namespace dg {
 	void List::removeItem(Node* node) {
 		if (!node) return;
 
+		if (node == m_head.next) {
+			popFront();
+			return;
+		}
 
+		if (node == m_back) {
+			popBack();
+			return;
+		}
+
+		node->prev->next = node->next;
+		node->next->prev = node->prev;
 	}
 
 	void List::removeItem(int index) {
@@ -135,7 +161,7 @@ namespace dg {
 	}
 
 	List::~List() {
-
+		clear();
 	}
 
 }; // namespace dg
