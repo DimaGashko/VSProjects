@@ -111,6 +111,8 @@ namespace dg {
 
 		node->next->prev = newNode;
 		node->next = newNode;
+
+		m_size++;
 	}
 
 	void List::insert(int index, int value) {
@@ -132,6 +134,8 @@ namespace dg {
 
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
+
+		m_size--;
 	}
 
 	void List::removeItem(int index) {

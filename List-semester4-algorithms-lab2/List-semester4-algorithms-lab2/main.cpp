@@ -12,6 +12,8 @@ int main() {
 	list.pushBack(13);
 	list.pushBack(20);
 
+	list.removeItem(3);
+
 	std::cout << "Hello, World" << std::endl;
 
 	system("pause");
