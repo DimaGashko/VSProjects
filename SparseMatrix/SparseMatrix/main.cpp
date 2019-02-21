@@ -8,7 +8,7 @@
 typedef std::vector<std::vector<int>> VecMatrix;
 
 template<typename F>
-unsigned long long measure(F&& f, const int n = 10);
+unsigned long long measure(F&& f, const int n = 1000);
 
 VecMatrix getVecMatrix();
 SparseMatrix compress(VecMatrix& matrix);
@@ -44,34 +44,26 @@ void measureAll(VecMatrix vecMatrix, SparseMatrix sparseMatrix) {
 	auto timeToReadVecMatrix = measure([&vecMatrix, m, n] {
 		int val;
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				val = vecMatrix[i][j];
-			}
+			for (int j = 0; j < n; j++) val = vecMatrix[i][j];
 		}
 	}) / len;
 
 	auto timeToWriteVecMatrix = measure([&vecMatrix, m, n] {
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				vecMatrix[i][j] = 1;
-			}
+			for (int j = 0; j < n; j++) vecMatrix[i][j] = 1;
 		}
 	}) / len;
 
 	auto timeToReadSparseMatrix = measure([&sparseMatrix, m, n] {
 		int val;
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				val = sparseMatrix.get(i, j);
-			}
+			for (int j = 0; j < n; j++) val = sparseMatrix.get(i, j);
 		}
 	}) / len;
 
 	auto timeToWriteSparseMatrix = measure([&sparseMatrix, m, n] {
 		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				sparseMatrix.set(i, j, 1);
-			}
+			for (int j = 0; j < n; j++) sparseMatrix.set(i, j, 1);
 		}
 	}) / len;
 
