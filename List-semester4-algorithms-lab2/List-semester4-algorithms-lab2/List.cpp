@@ -95,17 +95,13 @@ namespace dg {
 	void List::insert(Node* node, int value) {
 		if (!node) return;
 
-		if (node == m_head.next) {
-			pushFront(value);
-			return;
-		}
-
 		if (node == m_back) {
 			pushBack(value);
 			return;
 		}
 
 		auto newNode = new Node();
+		newNode->value = value;
 		newNode->next = node->next;
 		newNode->prev = node;
 
@@ -135,6 +131,7 @@ namespace dg {
 		node->prev->next = node->next;
 		node->next->prev = node->prev;
 
+		delete node;
 		m_size--;
 	}
 
