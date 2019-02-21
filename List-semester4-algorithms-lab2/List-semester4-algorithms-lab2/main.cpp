@@ -6,6 +6,10 @@ int main() {
 
 	dg::List list;
 
+	list.pushBack(5);
+	list.pushBack(15);
+	list.pushBack(20);
+
 	std::cout << "Hello, World" << std::endl;
 
 	system("pause");
