@@ -90,6 +90,20 @@ namespace dg {
 		return prev;
 	}
 
+	void List::clear() {
+		Node* prev = m_back;
+
+		while (prev) {
+			auto deleted = prev;
+			prev = prev->prev;
+
+			delete deleted;
+		}
+
+		m_head.next = nullptr;
+		m_back = nullptr;
+	}
+
 	List::~List() {
 
 	}
