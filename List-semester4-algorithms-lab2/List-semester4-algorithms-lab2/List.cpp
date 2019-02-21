@@ -47,7 +47,7 @@ namespace dg {
 		delete m_head.next->prev;
 		m_head.next->prev = nullptr;
 
-		m_size--; 
+		m_size--;
 	}
 
 	void List::popBack() {
@@ -62,8 +62,32 @@ namespace dg {
 	}
 
 	List::Node* List::getByIndex(unsigned int index) {
-		return (index < m_size / 2) ? 
-			getByIdnexLeft(index) : getByIdnexLeft(index);
+		return (index < m_size / 2) ?
+			getByIndexLeft(index) : getByIndexRight(index);
+	}
+
+	List::Node* List::getByIndexLeft(unsigned int index) {
+		if (index > m_size) return nullptr;
+
+		Node* next = m_head.next;
+
+		for (int i = 0; i <= index; i++) {
+			next = next->next;
+		}
+
+		return next;
+	}
+
+	List::Node* List::getByIndexRight(unsigned int index) {
+		if (index > m_size) return nullptr;
+
+		Node * next = m_head.next;
+
+		for (int i = 0; i <= index; i++) {
+			next = next->next;
+		}
+
+		return next;
 	}
 
 	List::~List() {
