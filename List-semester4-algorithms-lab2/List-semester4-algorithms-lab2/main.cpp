@@ -12,11 +12,19 @@ int main() {
 	list.pushBack(13);
 	list.pushBack(20);
 
-	list.popFront();
-	list.popFront();
-	list.popFront();
-	list.popFront();
-	list.popFront();
+	auto a = list.getByIndex(-1);
+	int b = 5;
+	auto c = list.getByIndex(0)->value;
+	b = 10;
+	c = list.getByIndex(1)->value;
+	b = 10;
+	c = list.getByIndex(2)->value;
+	b = 10;
+	c = list.getByIndex(3)->value;
+	b = 10;
+	c = list.getByIndex(4)->value;
+	b = 10;
+	a = list.getByIndex(5);
 
 	std::cout << "Hello, World" << std::endl;
 

@@ -81,32 +81,15 @@ namespace dg {
 	}
 
 	List::Node* List::getByIndex(int index) {
-		return (index < m_size / 2) ?
-			getByIndexLeft(index) : getByIndexRight(index);
-	}
-
-	List::Node* List::getByIndexLeft(int index) {
 		if (index < 0 || index >= m_size) return nullptr;
 
-		Node * next = m_head.next;
+		Node* next = m_head.next;
 
-		for (int i = 0; i <= index; i++) {
+		for (int i = 1; i <= index; i++) {
 			next = next->next;
 		}
 
 		return next;
-	}
-
-	List::Node* List::getByIndexRight(int index) {
-		if (index < 0 || index >= m_size) return nullptr;
-
-		Node * prev = m_back;
-
-		for (int i = 0; i <= index; i++) {
-			prev = prev->prev;
-		}
-
-		return prev;
 	}
 
 	int List::size() {

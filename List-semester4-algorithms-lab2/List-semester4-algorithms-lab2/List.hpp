@@ -36,11 +36,6 @@ namespace dg {
 
 		int m_size = 0;
 
-		// Возвращает элемент по индексу перебирая с начала
-		Node* getByIndexLeft(int index);
-
-		// Возвращает элемент по индексу перебирая с конца
-		Node* getByIndexRight(int index);
 	};
 
 }; // namespace dg
