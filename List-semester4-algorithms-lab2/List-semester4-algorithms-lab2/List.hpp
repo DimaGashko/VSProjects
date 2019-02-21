@@ -15,14 +15,14 @@ namespace dg {
 		Node* front();
 		Node* back();
 
+		void pushFront(int value);
+		void pushBack(int value);
+
 		// Удаляет первый элемент из списка и возвращает его
 		Node* popFront();
 
 		// Удаляет последний элемент из списка и возвращает его
 		Node* popBack();
-
-		void pushFront();
-		void pushBack();
 
 		Node* getByIndex();
 
@@ -35,7 +35,7 @@ namespace dg {
 		Node m_head; // Не указатель
 		Node* m_back;
 
-		int m_size;
+		int m_size = 0;
 
 	};
 
