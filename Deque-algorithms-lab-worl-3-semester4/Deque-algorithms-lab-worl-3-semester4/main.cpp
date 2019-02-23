@@ -2,11 +2,15 @@
 
 #include "StaticDeque.hpp"
 #include "DinamicDeque.hpp"
+#include "Deque.hpp"
+
+dg::Deque* createDeque();
+
 
 int main() {
 	int size = 10;
-	dg::DinamicDeque deque;
-
+	//dg::DinamicDeque deque;
+	dg::StaticDeque deque(size + 1);
 	deque.pushBack(55);
 	deque.pushBack(55);
 	deque.pushBack(55);

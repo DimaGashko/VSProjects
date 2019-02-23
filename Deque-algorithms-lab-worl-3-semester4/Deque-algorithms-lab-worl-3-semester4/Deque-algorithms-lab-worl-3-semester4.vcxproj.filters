@@ -38,7 +38,7 @@
     <ClInclude Include="DinamicDeque.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDeque.hpp">
+    <ClInclude Include="Deque.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

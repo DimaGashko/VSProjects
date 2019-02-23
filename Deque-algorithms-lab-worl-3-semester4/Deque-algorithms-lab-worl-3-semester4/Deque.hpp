@@ -2,7 +2,7 @@
 
 namespace dg {
 
-	class IDeque {
+	class Deque {
 
 	public:
 

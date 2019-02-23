@@ -3,11 +3,11 @@
 #include <iostream>
 #include <vector>
 
-#include "IDeque.hpp"
+#include "Deque.hpp"
 
 namespace dg {
 
-	class StaticDeque: public IDeque {
+	class StaticDeque: public Deque {
 	public:
 		StaticDeque(unsigned int capacity = 16);
 
