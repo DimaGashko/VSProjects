@@ -2,7 +2,10 @@
 
 namespace dg {
 
-	StaticDeque::StaticDeque() {
+	StaticDeque::StaticDeque(unsigned int capacity):
+		m_capacity(capacity),
+		m_items(capacity)
+	{
 
 	}
 
