@@ -1,10 +1,11 @@
 #pragma once
 
 #include "./List.hpp"
+#include "IDeque.hpp"
 
 namespace dg {
 
-	class DinamicDeque {
+	class DinamicDeque : public IDeque {
 
 	public:
 		DinamicDeque();

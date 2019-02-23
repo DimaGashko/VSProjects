@@ -38,5 +38,8 @@
     <ClInclude Include="DinamicDeque.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IDeque.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
