@@ -83,27 +83,45 @@ void cliHelp() {
 }
 
 void cliFront() {
-	std::cout << "cliFront" << std::endl;
+	std::cout << deque->front() << std::endl;
 }
 
 void cliBack() {
-	std::cout << "cliBack" << std::endl;
+	std::cout << deque->back() << std::endl;
 }
 
 void cliPushFront() {
-	std::cout << "Front" << std::endl;
+	int value = prompt<int>("Enter item value: ");
+
+	try {
+		deque->pushFront(value);
+		std::cout << "Successfully" << std::endl;
+	}
+	catch (int err) {
+		std::cout << "Can't add the item to the Deque" << std::endl;
+	}
 }
 
 void cliPushBack() {
-	std::cout << "cliPushFront" << std::endl;
+	int value = prompt<int>("Enter item value: ");
+
+	try {
+		deque->pushBack(value);
+		std::cout << "Successfully" << std::endl;
+	}
+	catch (int err) {
+		std::cout << "Can't add the item to the Deque" << std::endl;
+	}
 }
 
 void cliPopFront() {
-	std::cout << "cliPopFront" << std::endl;
+	deque->popFront();
+	std::cout << "Successfully" << std::endl;
 }
 
 void cliPopBack() {
-	std::cout << "cliPopBack" << std::endl;
+	deque->popBack();
+	std::cout << "Successfully" << std::endl;
 }
 
 template <typename T>
