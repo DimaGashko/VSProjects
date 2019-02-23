@@ -23,7 +23,6 @@ int main() {
 	createDeque();
 	runCommands();
 
-	system("pause");
 	return 0;
 }
 
@@ -50,9 +49,9 @@ void runCommands() {
 }
 
 void createDeque() {
-	int type = prompt<int>("Select Deque type\n(if 1 - static, otherwise - dinamic): ");
+	std::string type = prompt<std::string>("Select Deque type\n(if 1 - static, otherwise - dinamic): ");
 
-	if (type == 1) {
+	if (type == "1") {
 		int capacity = prompt<unsigned short>("Enter capacity: ");
 		deque = new dg::StaticDeque(capacity);
 	}
