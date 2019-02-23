@@ -162,7 +162,7 @@ namespace dg {
 	}
 
 	List::~List() {
-		//clear();
+		clear();
 	}
 
 }; // namespace dg

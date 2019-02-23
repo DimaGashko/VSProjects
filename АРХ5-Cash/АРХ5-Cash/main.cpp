@@ -107,15 +107,9 @@ unsigned long long measure(F&& f, const int n) {
 	unsigned long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
-		std::this_thread::yield();
-		__asm xor eax, eax
-		__asm cpuid
 		auto start = __rdtsc();
 
 		f();
-		
-		__asm xor eax, eax
-		__asm cpuid
 		auto time = __rdtsc() - start;
 
 		if (time < res) res = time;
