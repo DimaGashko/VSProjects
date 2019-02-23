@@ -9,6 +9,9 @@ namespace dg {
 
 	}
 
+	int StaticDeque::size() {
+		return m_size;
+	}
 
 	StaticDeque::~StaticDeque() {
 
