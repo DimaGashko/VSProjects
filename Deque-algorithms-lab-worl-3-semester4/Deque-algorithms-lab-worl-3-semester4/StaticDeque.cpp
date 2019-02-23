@@ -59,6 +59,10 @@ namespace dg {
 		return m_size;
 	}
 
+	int StaticDeque::capacity() {
+		return m_capacity;
+	}
+
 	inline
 	int StaticDeque::_toIndex(int index) {
 		if (index < 0) index = m_capacity + index;

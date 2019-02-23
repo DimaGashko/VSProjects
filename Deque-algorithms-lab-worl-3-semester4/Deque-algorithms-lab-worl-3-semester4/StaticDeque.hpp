@@ -19,6 +19,7 @@ namespace dg {
 		void popBack();
 
 		int size();
+		int capacity();
 
 		~StaticDeque();
 
