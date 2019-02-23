@@ -5,7 +5,7 @@
 
 int main() {
 	int size = 10;
-	dg::StaticDeque deque(size + 1);
+	dg::DinamicDeque deque;
 
 	deque.pushBack(55);
 	deque.pushBack(55);

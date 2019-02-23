@@ -7,11 +7,11 @@ namespace dg {
 	}
 
 	int DinamicDeque::front() {
-		m_list.front();
+		return m_list.front()->value;
 	}
 
 	int DinamicDeque::back() {
-		m_list.back();
+		return m_list.back()->value;
 	}
 
 	void DinamicDeque::pushFront(int value) {
@@ -31,7 +31,7 @@ namespace dg {
 	}
 
 	int DinamicDeque::size() {
-		m_list.size();
+		return m_list.size();
 	}
 
 	void DinamicDeque::clear() {
