@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 namespace dg {
@@ -14,12 +15,10 @@ namespace dg {
 		int popFront();
 		int popBack();
 
-		void pushFront();
-		void pushBack();
+		void pushFront(int value);
+		void pushBack(int value);
 
 		int size();
-
-		void clear();
 
 		~StaticDeque();
 
@@ -33,7 +32,8 @@ namespace dg {
 		int m_front = 0;
 		int m_back = 0;
 
-		int toIndex(int index);
+		int _toIndex(int index);
+		void _checkCanAdd();
 
 	};
 
