@@ -23,13 +23,10 @@ int main() {
 }
 
 void insert(dg::List& list) {
-	int len = list.size();
-	if (len % 2 == 0) len -= 1;
-
 	std::cout << "Enter items to insert: " << std::endl;
 
 	auto next = list.front();
-	
+	 
 	while (next) {
 		auto current = next;
 		next = next->next;
@@ -38,7 +35,7 @@ void insert(dg::List& list) {
 }
 
 void writeList(dg::List &list) {
-	unsigned int size = prompt<unsigned int>("Enter size of the List: ");
+	int size = prompt<unsigned int>("Enter size of the List: ");
 
 	std::cout << "Enter items:" << std::endl;
 
