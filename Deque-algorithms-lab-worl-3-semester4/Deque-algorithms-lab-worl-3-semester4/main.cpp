@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "StaticDeque.hpp"
+#include "DinamicDeque.hpp"
 
 int main() {
 	int size = 10;

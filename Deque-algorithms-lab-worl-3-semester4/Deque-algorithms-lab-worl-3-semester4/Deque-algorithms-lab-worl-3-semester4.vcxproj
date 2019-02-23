@@ -123,10 +123,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DinamicDeque.cpp" />
+    <ClCompile Include="List.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StaticDeque.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DinamicDeque.hpp" />
+    <ClInclude Include="List.hpp" />
     <ClInclude Include="StaticDeque.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
