@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./List.hpp"
+#include "List.hpp"
 #include "Deque.hpp"
 
 namespace dg {

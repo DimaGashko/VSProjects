@@ -34,10 +34,10 @@ void runCommands() {
 
 		if (command == "front") cliFront();
 		else if (command == "back") cliBack();
-		else if (command == "pushfront") cliPushFront();
-		else if (command == "pushback") cliPushBack();
-		else if (command == "popfront") cliPopFront();
-		else if (command == "popback") cliPopBack();
+		else if (command == "pushFront") cliPushFront();
+		else if (command == "pushBack") cliPushBack();
+		else if (command == "popFront") cliPopFront();
+		else if (command == "popBack") cliPopBack();
 		else if (command == "help") cliHelp();
 		else if (command == "exit") break;
 		else {
@@ -95,7 +95,7 @@ void cliPushFront() {
 
 	try {
 		deque->pushFront(value);
-		//std::cout << "Successfully" << std::endl;
+		std::cout << "Successfully" << std::endl;
 	}
 	catch (int err) {
 		std::cout << "Can't add the item to the Deque" << std::endl;
@@ -107,7 +107,7 @@ void cliPushBack() {
 
 	try {
 		deque->pushBack(value);
-		//std::cout << "Successfully" << std::endl;
+		std::cout << "Successfully" << std::endl;
 	}
 	catch (std::runtime_error err) {
 		std::cout << "Can't add the item to the Deque" << std::endl;
@@ -116,12 +116,12 @@ void cliPushBack() {
 
 void cliPopFront() {
 	deque->popFront();
-	//std::cout << "Successfully" << std::endl;
+	std::cout << "Successfully" << std::endl;
 }
 
 void cliPopBack() {
 	deque->popBack();
-	//std::cout << "Successfully" << std::endl;
+	std::cout << "Successfully" << std::endl;
 }
 
 template <typename T>
