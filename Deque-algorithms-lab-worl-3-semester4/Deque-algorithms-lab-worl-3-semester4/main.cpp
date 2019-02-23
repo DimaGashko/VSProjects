@@ -4,37 +4,55 @@
 #include "DinamicDeque.hpp"
 #include "Deque.hpp"
 
+void printHello();
 dg::Deque* createDeque();
 
+template <typename T>
+T prompt(const char label[]);
 
 int main() {
-	int size = 10;
-	//dg::DinamicDeque deque;
-	dg::StaticDeque deque(size + 1);
-	deque.pushBack(55);
-	deque.pushBack(55);
-	deque.pushBack(55);
-	deque.pushBack(55);
-	deque.pushBack(55);
+	printHello();
 
-	deque.popFront();
-	deque.popFront();
-	deque.popFront();
-	deque.popFront();
-
-	for (int i = 0; i < size; i++) {
-		deque.pushFront(i + 1);
-	}
-
-	while (deque.size()) {
-		int item = deque.front();
-		deque.popFront();
-
-		std::cout << item << " ";
-	}
-
-	std::cout << std::endl;
+	dg::Deque* deque = createDeque();
 
 	system("pause");
-	return 1;
+	return 0;
+}
+
+dg::Deque* createDeque() {
+	int type = prompt<int>("Select Deque type\n(if 1 - static, otherwise - dinamic): ");
+
+	if (type == 1) {
+		int capacity = prompt<unsigned short>("Enter capacity: ");
+		return new dg::StaticDeque(capacity);
+	}
+	else {
+		return new dg::DinamicDeque;
+	}
+}
+
+void printHello() {
+	std::cout << "= = = Console Deque = = =\n\n";
+}
+
+template <typename T>
+T prompt(const char label[]) {
+	std::cout << label;
+
+	while (true) {
+		T val;
+		std::cin >> val;
+
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(32767, '\n');
+			std::cout << "Wrong. Try again: ";
+		}
+		else {
+			std::cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
 }
