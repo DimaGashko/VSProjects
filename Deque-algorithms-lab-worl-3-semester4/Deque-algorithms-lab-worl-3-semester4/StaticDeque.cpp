@@ -22,9 +22,9 @@ namespace dg {
 
 		if (m_size != 0) {
 			m_front = _toIndex(m_front - 1);
-			m_size++;
 		}
 		
+		m_size++;
 		m_items[m_front] = value;
 	}
 
@@ -32,11 +32,11 @@ namespace dg {
 		_checkCanAdd();
 
 		if (m_size != 0) {
-			m_front = _toIndex(m_back + 1);
-			m_size++;
+			m_back = _toIndex(m_back + 1);
 		}
 
-		m_items[m_front] = value;
+		m_size++;
+		m_items[m_back] = value;
 	}
 
 	void StaticDeque::popFront() {
@@ -67,9 +67,9 @@ namespace dg {
 
 	inline
 	void StaticDeque::_checkCanAdd() {
-		if (m_size >= m_capacity - 1) return;
+		if (m_size < m_capacity) return;
 
-		std::runtime_error("Capacity overflow");
+		throw std::runtime_error("Capacity overflow");
 	}
 
 	StaticDeque::~StaticDeque() {

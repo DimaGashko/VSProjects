@@ -3,15 +3,22 @@
 #include "StaticDeque.hpp"
 
 int main() {
-	dg::StaticDeque deque(6);
+	int size = 6;
+	dg::StaticDeque deque(size);
 
-	deque.pushBack(1);
-	deque.pushBack(2);
-	deque.pushBack(3);
-	deque.pushBack(4);
-	deque.pushBack(5);
-	deque.pushBack(6);
-	deque.pushBack(7);
+	for (int i = 0; i < size; i++) {
+		deque.pushBack(i);
+	}
 
+	while (deque.size()) {
+		int item = deque.back();
+		deque.popBack();
+
+		std::cout << item << " ";
+	}
+
+	std::cout << std::endl;
+
+	system("pause");
 	return 1;
 }
