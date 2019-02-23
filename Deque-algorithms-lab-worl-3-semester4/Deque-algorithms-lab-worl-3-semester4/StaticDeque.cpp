@@ -13,6 +13,11 @@ namespace dg {
 		return m_size;
 	}
 
+	int StaticDeque::_toIndex(int index) {
+		if (index < 0) index = m_capacity + index;
+		return index % m_capacity;
+	}
+
 	StaticDeque::~StaticDeque() {
 
 	}
