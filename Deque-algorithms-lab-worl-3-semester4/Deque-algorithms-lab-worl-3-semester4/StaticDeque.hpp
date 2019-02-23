@@ -7,16 +7,16 @@ namespace dg {
 
 	class StaticDeque {
 	public:
-		StaticDeque(unsigned int capacity);
+		StaticDeque(unsigned int capacity = 16);
 
 		int front();
 		int back();
 
-		int popFront();
-		int popBack();
-
 		void pushFront(int value);
 		void pushBack(int value);
+
+		void popFront();
+		void popBack();
 
 		int size();
 

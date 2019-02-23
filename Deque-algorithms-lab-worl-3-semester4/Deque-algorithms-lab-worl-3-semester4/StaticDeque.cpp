@@ -10,11 +10,11 @@ namespace dg {
 	}
 
 	int StaticDeque::front() {
-		return m_front;
+		return m_items[m_front];
 	}
 
 	int StaticDeque::back() {
-		return m_back;
+		return m_items[m_back];
 	}
 
 	void StaticDeque::pushFront(int value) {
@@ -22,6 +22,7 @@ namespace dg {
 
 		if (m_size != 0) {
 			m_front = _toIndex(m_front - 1);
+			m_size++;
 		}
 		
 		m_items[m_front] = value;
@@ -31,32 +32,27 @@ namespace dg {
 		_checkCanAdd();
 
 		if (m_size != 0) {
-			m_front = _toIndex(m_front + 1);
+			m_front = _toIndex(m_back + 1);
+			m_size++;
 		}
 
 		m_items[m_front] = value;
 	}
 
-	int StaticDeque::popFront() {
+	void StaticDeque::popFront() {
 		if (m_size == 0) return;
 		m_size--;
 		if (m_size == 0) return;
 
-		int value = m_items[m_front];
 		m_front = _toIndex(m_front + 1);
-
-		return value;
 	}
 
-	int StaticDeque::popBack() {
+	void StaticDeque::popBack() {
 		if (m_size == 0) return;
 		m_size--;
 		if (m_size == 0) return;
 
-		int value = m_items[m_back];
-		m_back = _toIndex(m_front - 1);
-
-		return value;
+		m_back = _toIndex(m_back - 1);
 	}
 
 	int StaticDeque::size() {
