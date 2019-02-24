@@ -9,7 +9,9 @@ public:
 		m_n(n),
 		m_arr(new double[m_n])
 	{
-		initArr();
+		for (int i = 0; i < m_n; i++) {
+			m_arr[i] = 0;
+		}
 	}
 
 	void q_0(int p, int q, double v) {
@@ -17,8 +19,8 @@ public:
 			m_arr[i] += v;
 		}
 	}
-
-	double q_1(int p, int q) {
+	
+	long long q_1(int p, int q) {
 		double sum = 0;
 
 		for (int i = p; i <= q; i++) {
@@ -29,18 +31,13 @@ public:
 	}
 
 	~QArr() {
-		delete[] m_arr;
+		delete m_arr;
 	}
-private:
 
+private:
+	
 	int m_n;
 	double* m_arr;
-
-	void initArr() {
-		for (int i = 0; i < m_n; i++) {
-			m_arr[i] = 0;
-		}
-	}
 };
 
 int main() {
@@ -58,6 +55,9 @@ int main() {
 			int command, p, q;
 			cin >> command >> p >> q;
 
+			p--;
+			q--;
+
 			if (command == 0) {
 				double v;
 				cin >> v;
@@ -73,5 +73,6 @@ int main() {
 
 	cout << res;
 
+	system("pause");
 	return 0;
 }
