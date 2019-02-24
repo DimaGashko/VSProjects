@@ -1,27 +1,36 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
+
+ifstream fin("input.txt");
+ofstream fout("output.txt");
 
 class QArr {
 public:
 	QArr(int n):
 		m_n(n),
-		m_arr(new double[m_n])
+		m_arr(new long long[m_n])
 	{
 		for (int i = 0; i < m_n; i++) {
 			m_arr[i] = 0;
 		}
 	}
 
-	void q_0(int p, int q, double v) {
+	void q_0(int p, int q, long long v) {
+		if (v == 0) return;
+		if (p > q) return q_0(q, p, v);
+
 		for (int i = p; i <= q; i++) {
 			m_arr[i] += v;
 		}
 	}
 	
 	long long q_1(int p, int q) {
-		double sum = 0;
+		if (p > q) return q_1(q, p);
+
+		long long sum = 0;
 
 		for (int i = p; i <= q; i++) {
 			sum += m_arr[i];
@@ -37,42 +46,37 @@ public:
 private:
 	
 	int m_n;
-	double* m_arr;
+	long long* m_arr;
 };
 
 int main() {
 	int t, n, c;
-	string res;
 
-	cin >> t;
+	fin >> t;
 
 	for (int i = 0; i < t; i++) {
-		cin >> n >> c;
+		fin >> n >> c;
 
 		QArr qArr(n);
 
 		for (int i = 0; i < c; i++) {
 			int command, p, q;
-			cin >> command >> p >> q;
+			fin >> command >> p >> q;
 
-			p--;
-			q--;
+			p--; q--;
 
 			if (command == 0) {
-				double v;
-				cin >> v;
+				int v;
+				fin >> v;
 
 				qArr.q_0(p, q, v);
 			}
 			else {
-				res += to_string(qArr.q_1(p, q)) + "\n";
+				fout << qArr.q_1(p, q) << endl;
 			}
-		}
+		}0
 
 	}
 
-	cout << res;
-
-	system("pause");
 	return 0;
 }
