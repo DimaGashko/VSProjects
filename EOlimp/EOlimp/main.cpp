@@ -4,31 +4,32 @@
 
 using namespace std;
 
-typedef vector<vector<bool>> G;
+typedef vector<vector<int>> G;
 
 ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 void writeGraph();
 void writeVs();
-void run(int v);
-void checkRes();
+void run(int v = 0, int prev = -1);
+bool checkIsTree();
 
 G g;
 vector<bool> vs;
 int n = 0;
-bool isLoop = false;
+int isLoop = false;
 
 int main() {
 	writeGraph();
 	writeVs();
-	run(0);
-	checkRes();
+	run();
 	
+	fout << (checkIsTree() ? "YES" : "NO");
+
 	return 0;
 }
 
-void run(int v) {
+void run(int v, int prev) {
 	if (isLoop) return;
 
 	if (vs[v] == true) {
@@ -39,38 +40,35 @@ void run(int v) {
 	vs[v] = true;
 
 	for (int i = 0; i < n; i++) {
-		if (g[v][i] == 0) continue;
+		if (g[v][i] == 0 || i == prev) continue;
 
-		run(i);
+		run(i, v);
 	}
 }
 
-void checkRes() {
-	bool isTree = true;
+bool checkIsTree() {
+	if (isLoop) return false;
 
 	for (auto item : vs) {
-		if (item) continue;
-
-		isTree = false;
-		break;
+		if (!item) return false;
 	}
 
-	fout << (isTree ? "YES" : "NO");
+	return true;
 }
 
 void writeGraph() {
 	fin >> n;
 
-	g = G(n, vector<bool>(n));
+	g = G(n, vector<int>(n));
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			bool val;
+			int val;
 			fin >> val;
 
-			if (j <= i) continue;
-
 			g[i][j] = val;
+
+			auto a = g[i][j];
 		}
 	}
 }
