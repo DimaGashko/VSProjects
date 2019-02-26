@@ -40,16 +40,17 @@ void next() {
 		if (vs[v] == true) continue;
 
 		for (int i = 0; i < n; i++) {
+			if (vs[i] == false) continue;
 			int w = g[v][i];
-			//cout << (w == 0 || vs[i] == false || w >= minW) << endl;
-			if (w == 0 || vs[i] == false || w >= minW) continue;
-			cout << "A ";
+
+			if (w == 0 || w >= minW) continue;
+
 			index = v;
 			minW = w;
 		}
 	}
 
-	if (index = -1) return;
+	if (index == -1) return;
 
 	vs[index] = true;
 	resW += minW;
@@ -61,11 +62,11 @@ int main() {
 
 	vs[0] = true;
 
-	//while (vUsed <= n) {
+	while (vUsed < n) {
 		next();
-	//}
+	}
 	
 	fout << resW;
-	system("pause");
+
 	return 0;
 }
