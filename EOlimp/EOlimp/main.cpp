@@ -10,18 +10,16 @@ ofstream fout("output.txt");
 typedef vector<vector<int>> G;
 
 G g;
-vector<bool> vVal;
-vector<bool> vs;
+vector<int> vVal;
 int n;
 
-int a, b, max;
+int a, b, minW = 1e10;
 
 void writeG() {
 	fin >> n;
 
 	g = G(n, vector<int>(n));
-	vVal = vector<bool>(n);
-	vs = vector<bool>(n);
+	vVal = vector<int>(n);
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
@@ -30,20 +28,21 @@ void writeG() {
 	}
 
 	for (int i = 0; i < n; i++) {
-		bool val;
-		fin >> val;
-		vVal[i] = val;
+		fin >> vVal[i];
 	}
 }
 
 void nextV(int v) {
-	if (vs[v]) return;
-	vs[v] = true;
-
 	for (int i = 0; i < n; i++) {
-		if (g[v][i] == 0 || vs[i] || vVal[v] == vVal[i]) continue;
+		int w = g[v][i];
+		if (w == 0) continue;
 
-
+		if (vVal[v] == 0 && vVal[i] == 1 && w < minW) {
+			a = v;
+			b = i;
+			minW = w;
+		}
+		
 	}
 
 }
@@ -55,7 +54,7 @@ int main() {
 		nextV(i);
 	}
 
-	fout << a << " " << b;
+	fout << a + 1 << " " << b + 1;
 
 	return 0;
 }
