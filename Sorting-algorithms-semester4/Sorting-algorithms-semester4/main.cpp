@@ -12,8 +12,11 @@ int main() {
 	srand((int)time(0));
 
 	std::vector<int> arr(20);
-	writeVector(arr);
 
+	writeVector(arr);
+	printArr(arr);
+
+	selectionSort(arr);
 	printArr(arr);
 
 	system("pause");
@@ -21,7 +24,21 @@ int main() {
 }
 
 void selectionSort(std::vector<int>& arr) {
+	int size = arr.size();
 
+	for (int i = 0; i < size; i++) {
+		int min = arr[i];
+		int minIndex = i;
+
+		for (int j = i + 1; j < size; j++) {
+			if (arr[j] >= min) continue;
+
+			min = arr[j];
+			minIndex = j;
+		}
+
+		std::swap(arr[i], arr[minIndex]);
+	}
 }
 
 void writeVector(std::vector<int>& arr) {
