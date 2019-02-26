@@ -1,33 +1,61 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 using namespace std;
 
-int main() {
-	int n, q, w;
-	cin >> n;
+ifstream fin("input.txt");
+ofstream fout("output.txt");
 
-	vector<int> arr(n);
+typedef vector<vector<int>> G;
+
+G g;
+vector<bool> vVal;
+vector<bool> vs;
+int n;
+
+int a, b, max;
+
+void writeG() {
+	fin >> n;
+
+	g = G(n, vector<int>(n));
+	vVal = vector<bool>(n);
+	vs = vector<bool>(n);
 
 	for (int i = 0; i < n; i++) {
-		cin >> arr[i];
+		for (int j = 0; j < n; j++) {
+			fin >> g[i][j];
+		}
 	}
 
-	cin >> q >> w;
-	q--; w--;
+	for (int i = 0; i < n; i++) {
+		bool val;
+		fin >> val;
+		vVal[i] = val;
+	}
+}
 
-	int replaceVal = arr[q];
-	int toVal = arr[w];
+void nextV(int v) {
+	if (vs[v]) return;
+	vs[v] = true;
 
-	for (auto& item : arr) {
-		if (item != replaceVal) continue;
-		item = toVal;
+	for (int i = 0; i < n; i++) {
+		if (g[v][i] == 0 || vs[i] || vVal[v] == vVal[i]) continue;
+
+
 	}
 
-	for (auto& item : arr) {
-		cout << item << " ";
+}
+
+int main() {
+	writeG();
+
+	for (int i = 0; i < n; i++) {
+		nextV(i);
 	}
 
-	system("pause");
+	fout << a << " " << b;
+
 	return 0;
 }
