@@ -73,14 +73,23 @@ void writeG() {
 }
 
 void run(int v, int prev = -1) {
+	if (vs[v] == true) return;
+	vs[v] = true;
 
+	for (int i = 0; i < gN; i++) {
+		if (g[v][i] == 0 || i == prev) continue;
+
+		run(i, v);
+	}
 }
 
 int main() {
 	writeG();
 
-	int nextV;
-	while (nextV = getNextV()) {
+	while (true) {
+		int nextV = getNextV();
+		if (nextV == -1) break;
+
 		run(nextV);
 		parts++;
 	}
