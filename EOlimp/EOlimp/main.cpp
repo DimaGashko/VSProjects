@@ -12,7 +12,8 @@ typedef vector<vector<int>> G;
 G g;
 vector<bool> vs;
 int n = 0;
-int res = 0;
+int vUsed = 1;
+int resW = 0;
 
 void writeG() {
 	int m;
@@ -31,17 +32,40 @@ void writeG() {
 	}
 }
 
-int main() {
+void next() {
+	int index = -1;
+	int minW = 1e10;
 
-	writeG();
+	for (int v = 1; v < n; v++) {
+		if (vs[v] == true) continue;
 
-	for (auto row : g) {
-		for (auto item : row) {
-			fout << item << " ";
+		for (int i = 0; i < n; i++) {
+			int w = g[v][i];
+			//cout << (w == 0 || vs[i] == false || w >= minW) << endl;
+			if (w == 0 || vs[i] == false || w >= minW) continue;
+			cout << "A ";
+			index = v;
+			minW = w;
 		}
-
-		fout << endl;
 	}
 
+	if (index = -1) return;
+
+	vs[index] = true;
+	resW += minW;
+	vUsed++;
+}
+
+int main() {
+	writeG();
+
+	vs[0] = true;
+
+	//while (vUsed <= n) {
+		next();
+	//}
+	
+	fout << resW;
+	system("pause");
 	return 0;
 }
