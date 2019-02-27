@@ -4,6 +4,7 @@
 #include <ctime>
 
 void selectionSort(std::vector<int>& arr);
+void quickSort(std::vector<int>& arr, int l, int r);
 
 void printArr(std::vector<int>& arr);
 void writeVector(std::vector<int>& arr);
@@ -11,16 +12,36 @@ void writeVector(std::vector<int>& arr);
 int main() {
 	srand((int)time(0));
 
-	std::vector<int> arr(20);
+	std::vector<int> arr(100000000);
 
 	writeVector(arr);
-	printArr(arr);
+	//printArr(arr);
 
-	selectionSort(arr);
-	printArr(arr);
+	//selectionSort(arr);
+	//printArr(arr);
+
+	quickSort(arr, 0, arr.size() - 1);
+	//printArr(arr);
 
 	system("pause");
 	return 0;
+}
+
+void quickSort(std::vector<int>& arr, int l, int r) {
+	int i = l, j = r;
+	int middle = arr[(i + j) / 2];
+
+	while (i < j) {
+		while (arr[i] < middle) i++;
+		while (arr[j] > middle) j--;
+		if (i > j) break;
+
+		std::swap(arr[i], arr[j]);
+		i++; j--;
+	}
+
+	if (i < r) quickSort(arr, i, r);
+	if (j > l) quickSort(arr, l, j);
 }
 
 void selectionSort(std::vector<int>& arr) {
