@@ -1,22 +1,22 @@
 ﻿#include <iostream>
 #include <vector>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 
-unordered_map<string, bool> getPrimes(int a, int b) {
-	vector<bool> numbers(b - 2); // 1 - не простое, каждый индек - на два меньше
+map<string, bool> getPrimesMap(int n) {
+	vector<bool> numbers(n - 2); // 1 - не простое, каждый индек - на два меньше
 	int p = 2;
 
-	for (int p = 2; p * p <= b; p++) {
+	for (int p = 2; p * p <= n; p++) {
 
-		for (int i = 2 * p; i < b; i += p) {
+		for (int i = 2 * p; i < n; i += p) {
 			numbers[i - 2] = true;
 		}
 	}
 
-	unordered_map<string, bool> primesMap;
+	map<string, bool> primesMap;
 
 	for (int i = 0; i < numbers.size(); i++) {
 		if (numbers[i]) continue;
@@ -24,6 +24,7 @@ unordered_map<string, bool> getPrimes(int a, int b) {
 		primesMap[to_string(i + 2)] = true;
 	}
 
+	return primesMap;
 }
 
 int main() {
@@ -32,13 +33,22 @@ int main() {
 
 	if (a > b) swap(a, b);
 
-	auto primes = getPrimes(a, b);
+	auto primesMap = getPrimesMap(10000);
+	int mirrorPrimesCount = 0;
 
-	for (int i = 0; i < primes.size(); i++) {
-		if (primes[i]) continue;
+	for (int i = a; i <= b; i++) {
+		string n = to_string(i);
+		//if (primesMap[n] == false) continue;
 
-		cout << i + 2 << " ";
+		//string reversed = n;
+		//reverse(reversed.begin(), reversed.end());
+
+		//if (primesMap[reversed] == false) continue;
+
+		mirrorPrimesCount++;
 	}
+
+	cout << mirrorPrimesCount << endl;
 
 	system("pause");
 	return 0;
