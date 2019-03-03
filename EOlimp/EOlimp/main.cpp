@@ -51,11 +51,9 @@ bool isEmpty(Pos pos) {
 }
 
 void updateMinWay() {
-	if (currentWay.size() >= minWay.size() && !minWay.empty()) {
-		return;
+	if (currentWay.size() < minWay.size() || minWay.empty()) {
+		minWay = currentWay;
 	}
-
-	minWay = currentWay;
 }
 
 void nextStep(Pos pos) {
