@@ -62,6 +62,8 @@ void nextStep(Pos pos) {
 	if (pos.x == goal.x && pos.y == goal.y) {
 		currentWay.push_back(pos);
 		updateMinWay();
+		currentWay.pop_back();
+		return;
 	}
 
 	if (visited[pos.x][pos.y]) return;
