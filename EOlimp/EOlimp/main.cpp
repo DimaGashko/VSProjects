@@ -52,7 +52,26 @@ bool isEmpty(Pos pos) {
 }
 
 void nextStep(Pos pos) {
+	if (pos.x == goal.x && pos.y == goal.y) {
+		// check on minWay;
+	}
 
+	if (visited[pos.x][pos.y]) return;
+	visited[pos.x][pos.y] = true;
+
+	currentWay.push_back(pos);
+
+	Pos left = { pos.x - 1, pos.y };
+	Pos top = { pos.x, pos.y - 1 };
+	Pos right = { pos.x + 1, pos.y };
+	Pos bottom = { pos.x, pos.y + 1 };
+
+	if (isEmpty(left)) nextStep(left);
+	if (isEmpty(top)) nextStep(top);
+	if (isEmpty(right)) nextStep(right);
+	if (isEmpty(bottom)) nextStep(bottom);
+
+	currentWay.pop_back();
 }
 
 void printResult() {
