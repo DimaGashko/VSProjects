@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <vector>
+#include <list>
 #include <string>
 
 using namespace std;
@@ -14,8 +15,8 @@ Pos goal;
 vector<string> taskMap;
 vector<vector<bool>> visited;
 
-vector<Pos> currentWay;
-vector<Pos> minWay;
+list<Pos> currentWay;
+list<Pos> minWay;
 
 void init() {
 	cin >> n;
@@ -39,8 +40,6 @@ void init() {
 
 			if (item == '@') start = pos;
 			else if (item == 'X') goal = pos;
-
-			taskMap[i][j] = '.';
 		}
 	}
 }
@@ -48,12 +47,21 @@ void init() {
 bool isEmpty(Pos pos) {
 	if (pos.x < 0 || pos.y < 0 || pos.x >= n || pos.y >= n) return false;
 
-	return taskMap[pos.x][pos.y] == '.';
+	return taskMap[pos.x][pos.y] != 'O';
+}
+
+void updateMinWay() {
+	if (currentWay.size() >= minWay.size() && !minWay.empty()) {
+		return;
+	}
+
+	minWay = currentWay;
 }
 
 void nextStep(Pos pos) {
 	if (pos.x == goal.x && pos.y == goal.y) {
-		// check on minWay;
+		currentWay.push_back(pos);
+		updateMinWay();
 	}
 
 	if (visited[pos.x][pos.y]) return;
@@ -75,35 +83,28 @@ void nextStep(Pos pos) {
 }
 
 void printResult() {
-	
+	if (minWay.empty()) {
+		cout << "N" << endl;
+		return;
+	}
+
+	cout << "Y" << endl;
+
+	minWay.pop_front();
+
+	for (auto pos : minWay) {
+		taskMap[pos.x][pos.y] = '+';
+	}
+
+	for (auto row : taskMap) {
+		cout << row << endl;
+	}
 }
 
 int main() {
-	//init();
-	//nextStep(start);
-	//printResult();
-
-	vector<Pos> a;
-
-	a.push_back({ 1, 1 });
-	a.push_back({ 2, 2 });
-	a.push_back({ 3, 3 });
-	a.push_back({ 4, 4 });
-	a.push_back({ 5, 5 });
-
-	vector<Pos> b(a);
-	
-	a[0].x = 8;
-	a[1].x = 8;
-	a[2].x = 8;
-	a[3].x = 8;
-	a[4].x = 8;
-	
-	for (auto item : b) {
-		cout << item.x << " ";
-	}
-
-	cout << endl;
+	init();
+	nextStep(start);
+	printResult();
 
 	system("pause");
 	return 0;
