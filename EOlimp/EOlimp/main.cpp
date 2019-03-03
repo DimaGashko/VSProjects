@@ -79,9 +79,31 @@ void printResult() {
 }
 
 int main() {
-	init();
-	nextStep(start);
-	printResult();
+	//init();
+	//nextStep(start);
+	//printResult();
+
+	vector<Pos> a;
+
+	a.push_back({ 1, 1 });
+	a.push_back({ 2, 2 });
+	a.push_back({ 3, 3 });
+	a.push_back({ 4, 4 });
+	a.push_back({ 5, 5 });
+
+	vector<Pos> b(a);
+	
+	a[0].x = 8;
+	a[1].x = 8;
+	a[2].x = 8;
+	a[3].x = 8;
+	a[4].x = 8;
+	
+	for (auto item : b) {
+		cout << item.x << " ";
+	}
+
+	cout << endl;
 
 	system("pause");
 	return 0;
