@@ -73,6 +73,7 @@ void run() {
 			if (!isEmpty(next) || visited[next.x][next.y]) continue;
 
 			frointer.push(next);
+			visited[next.x][next.y] = true;
 			cameFrom[next.x][next.y] = pos;
 		}
 	}	
