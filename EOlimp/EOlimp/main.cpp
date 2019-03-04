@@ -7,12 +7,15 @@
 using namespace std;
 
 struct Pos {
+	Pos(): Pos(0, 0) {}
+	Pos(int x, int y): x(x), y(y) {}
 	int x = 0, y = 0;
 };
 
 int n;
 Pos start;
 Pos goal;
+bool found = false;
 vector<string> taskMap;
 vector<vector<bool>> visited;
 vector<vector<Pos>> cameFrom;
@@ -36,7 +39,7 @@ void init() {
 				continue;
 			}
 
-			Pos pos = { i, j };
+			Pos pos(i, j);
 
 			if (item == '@') start = pos;
 			else if (item == 'X') goal = pos;
@@ -63,11 +66,16 @@ void run() {
 		auto pos = frointer.front();
 		frointer.pop();
 
+		if (equals(pos, goal)) {
+			found = true;
+			break;
+		}
+
 		vector<Pos> nexts(4);
-		nexts[0] = { pos.x - 1, pos.y };
-		nexts[1] = { pos.x, pos.y - 1 };
-		nexts[2] = { pos.x + 1, pos.y };
-		nexts[3] = { pos.x, pos.y + 1 };
+		nexts[0] = Pos(pos.x - 1, pos.y);
+		nexts[1] = Pos(pos.x, pos.y - 1);
+		nexts[2] = Pos(pos.x + 1, pos.y);
+		nexts[3] = Pos(pos.x, pos.y + 1);
 
 		for (auto& next : nexts) {
 			if (!isEmpty(next) || visited[next.x][next.y]) continue;
@@ -80,7 +88,21 @@ void run() {
 }
 
 void printResult() {
-	
+	if (!found) {
+		cout << "N" << endl;
+		return;
+	}
+
+	cout << "Y" << endl;
+
+	auto next = goal;
+
+	taskMap[next.x][next.y] = '+';
+
+	while (!equals(next, start)) {
+		taskMap[next.x][next.y] = '+';
+		next = cameFrom[next.x][next.y];
+	}
 
 	for (auto row : taskMap) {
 		cout << row << endl;
