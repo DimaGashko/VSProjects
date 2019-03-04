@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <vector>
 #include <list>
+#include <queue>
 #include <string>
 
 using namespace std;
@@ -14,15 +15,14 @@ Pos start;
 Pos goal;
 vector<string> taskMap;
 vector<vector<bool>> visited;
-
-list<Pos> currentWay;
-list<Pos> minWay;
+vector<vector<Pos>> cameFrom;
 
 void init() {
 	cin >> n;
 
 	taskMap = vector<string>(n);
 	visited = vector<vector<bool>>(n, vector<bool>(n));
+	cameFrom = vector<vector<Pos>>(n, vector<Pos>(n));
 
 	for (int i = 0; i < n; i++) {
 		cin >> taskMap[i];
@@ -44,57 +44,42 @@ void init() {
 	}
 }
 
+bool equals(Pos a, Pos b) {
+	return a.x == b.x && a.y == b.y;
+}
+
 bool isEmpty(Pos pos) {
 	if (pos.x < 0 || pos.y < 0 || pos.x >= n || pos.y >= n) return false;
 
 	return taskMap[pos.x][pos.y] != 'O';
 }
 
-void updateMinWay() {
-	if (currentWay.size() < minWay.size() || minWay.empty()) {
-		minWay = currentWay;
-	}
-}
+void run() {
+	queue<Pos> frointer;
+	frointer.push(start);
+	visited[start.x][start.y] = true;
 
-void nextStep(Pos pos) {
-	if (pos.x == goal.x && pos.y == goal.y) {
-		currentWay.push_back(pos);
-		updateMinWay();
-		currentWay.pop_back();
-		return;
-	}
+	while (!frointer.empty()) {
+		auto pos = frointer.front();
+		frointer.pop();
 
-	if (visited[pos.x][pos.y]) return;
-	visited[pos.x][pos.y] = true;
+		vector<Pos> nexts(4);
+		nexts[0] = { pos.x - 1, pos.y };
+		nexts[1] = { pos.x, pos.y - 1 };
+		nexts[2] = { pos.x + 1, pos.y };
+		nexts[3] = { pos.x, pos.y + 1 };
 
-	currentWay.push_back(pos);
+		for (auto& next : nexts) {
+			if (!isEmpty(next) || visited[next.x][next.y]) continue;
 
-	Pos left = { pos.x - 1, pos.y };
-	Pos top = { pos.x, pos.y - 1 };
-	Pos right = { pos.x + 1, pos.y };
-	Pos bottom = { pos.x, pos.y + 1 };
-
-	if (isEmpty(left)) nextStep(left);
-	if (isEmpty(top)) nextStep(top);
-	if (isEmpty(right)) nextStep(right);
-	if (isEmpty(bottom)) nextStep(bottom);
-
-	currentWay.pop_back();
+			frointer.push(next);
+			cameFrom[next.x][next.y] = pos;
+		}
+	}	
 }
 
 void printResult() {
-	if (minWay.empty()) {
-		cout << "N" << endl;
-		return;
-	}
-
-	cout << "Y" << endl;
-
-	minWay.pop_front();
-
-	for (auto pos : minWay) {
-		taskMap[pos.x][pos.y] = '+';
-	}
+	
 
 	for (auto row : taskMap) {
 		cout << row << endl;
@@ -103,7 +88,7 @@ void printResult() {
 
 int main() {
 	init();
-	nextStep(start);
+	run();
 	printResult();
 
 	system("pause");
