@@ -1,95 +1,98 @@
 ﻿#include <iostream>
 #include <vector>
-#include <queue>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
-struct Pos {
-	Pos() : Pos(0, 0) {}
-	Pos(int i, int j) : i(i), j(j) {}
-	int i, j;
+class Num {
+public:
+	Num() {
+	
+	}
+
+	Num(string str) {
+		string revStr = str;
+		reverse(revStr.begin(), revStr.end());
+		int size = revStr.size();
+
+		number = vector<int>(size);
+
+		for (int i = 0; i < size; i++) {
+			number[i] = revStr[i] == '1' ? 1 : 0;
+		}
+
+		optimize();
+	}
+
+	int get(int index) {
+		if (index >= (int)number.size()) return 0;
+
+		return number[index];
+	}
+
+	void set(int value, int index) {
+		if (index >= (int)number.size()) {
+			number.push_back(value);
+		}
+
+		number[index] = value;
+	}
+
+	void addToItem(int value, int index) {
+		set(get(index) + value, index);
+	}
+
+	Num add(Num num) {
+		int size = max(number.size(), num.number.size());
+		Num res;
+
+		for (int i = 0; i < size; i++) {
+			int sum = get(i) + num.get(i);
+
+			res.addToItem(sum % 2, i);
+			num.addToItem(sum / 2, i + 1);
+		}
+
+		res.addToItem(num.get(size), size);
+		
+		res.optimize();
+
+		return res;
+	}
+
+	void optimize() {
+		for (int i = number.size() - 1; i >= 1 && number[i] == 0; i--) {
+			number.pop_back();
+		}
+	}
+
+	string toString() {
+		string res;
+
+		for (int i = (int)number.size() - 1; i >= 0; i--) {
+			res += to_string(number[i]);
+		}
+
+		return res;
+	}
+
+private:
+	vector<int> number;
+
 };
 
-int n;
-Pos start;
-Pos goal;
-
-vector<vector<bool>> visited;
-vector<vector<Pos>> cameFrom;
-
-bool isEmpty(Pos pos) {
-	if (pos.i < 0 || pos.j < 0 || pos.i >= n || pos.j >= n) return false;
-
-	return true;
-}
-
-bool posEquals(Pos a, Pos b) {
-	return a.i == b.i && a.j == b.j;
-}
-
-void init() {
-	cin >> n;
-	cin >> start.j >> start.i;
-	cin >> goal.j >> goal.i;
-
-	start.i--; start.j--;
-	goal.i--; goal.j--;
-
-	visited = vector<vector<bool>>(n, vector<bool>(n));
-	cameFrom = vector<vector<Pos>>(n, vector<Pos>(n));
-}
-
-void run() {
-	queue<Pos> frontier;
-	frontier.push(start);
-
-	while (!frontier.empty()) {
-		Pos current = frontier.front();
-		frontier.pop();
-
-		if (posEquals(current, goal)) {
-			return;
-		}
-
-		vector<Pos> nexts(8);
-
-		nexts[0] = Pos(current.i - 2, current.j - 1);
-		nexts[1] = Pos(current.i - 2, current.j + 1);
-		nexts[2] = Pos(current.i - 1, current.j + 2);
-		nexts[3] = Pos(current.i + 1, current.j + 2);
-		nexts[4] = Pos(current.i + 2, current.j + 1);
-		nexts[5] = Pos(current.i + 2, current.j - 1);
-		nexts[6] = Pos(current.i + 1, current.j - 2);
-		nexts[7] = Pos(current.i - 1, current.j - 2);
-
-		for (auto next : nexts) {
-			if (!isEmpty(next) || visited[next.i][next.j]) continue;
-
-			visited[next.i][next.j] = true;
-			cameFrom[next.i][next.j] = current;
-			frontier.push(next);
-		}
-	}
-
-}
-
-void printResults() {
-	Pos next = goal;
-	int steps = 0;
-
-	while (!posEquals(next, start)) {
-		steps++;
-		next = cameFrom[next.i][next.j];
-	}
-
-	cout << steps << endl;
-}
-
 int main() {
-	init();
-	run();
-	printResults();
-	
+	string strNum1, strNum2;
+	cin >> strNum1 >> strNum2;
+
+	Num a(strNum1);
+	Num b(strNum2);
+
+	Num res = a.add(b);
+
+	cout << res.toString() << endl;
+
 	system("pause");
 	return 0;
 }
