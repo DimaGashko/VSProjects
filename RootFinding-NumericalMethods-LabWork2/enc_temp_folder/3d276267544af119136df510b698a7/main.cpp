@@ -32,3 +32,18 @@ double bisection(double l, double r, double eps) {
 	if (abs(mVal) <= eps) return m;
 
 }
+
+double bisectionIterative(double l, double r, double eps) {
+	double m, mVal;
+
+	do {
+		m = (l + r) / 2;
+		mVal = getF(m);
+
+		if (mVal * getF(l) < 0) r = m;
+		else l = m;
+
+	} while (abs(mVal) > eps);
+
+	return m;
+}
