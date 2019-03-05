@@ -21,12 +21,11 @@ int main() {
 
 		try {
 			res = bisectionIterative(l, r);
+			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
 			std::cout << err.what() << std::endl;
 		}
-
-		std::cout << res << std::endl;
 
 	}
 
