@@ -20,7 +20,7 @@ int main() {
 		std::cin >> l >> r;
 
 		try {
-			res = bisectionIterative(l, r);
+			res = bisection(l, r);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
