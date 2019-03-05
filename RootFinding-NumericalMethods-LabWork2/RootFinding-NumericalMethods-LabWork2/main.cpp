@@ -10,14 +10,23 @@ double getF(double x) {
 double bisection(double l, double r, double eps = DEF_EPSILON);
 double bisectionIterative(double l, double r, double eps = DEF_EPSILON);
 
+void checkRange(double l, double r);
+
 int main() {
 
 	while (true) {
 
-		double l, r;
+		double l, r, res;
 		std::cin >> l >> r;
 
-		std::cout << bisectionIterative(l, r) << std::endl;
+		try {
+			res = bisectionIterative(l, r);
+		}
+		catch (std::runtime_error err) {
+			std::cout << err.what() << std::endl;
+		}
+
+		std::cout << res << std::endl;
 
 	}
 
@@ -26,6 +35,8 @@ int main() {
 }
 
 double bisection(double l, double r, double eps) {
+	checkRange(l, r);
+
 	double m = (l + r) / 2;
 	double mVal = getF(m);
 
@@ -34,6 +45,8 @@ double bisection(double l, double r, double eps) {
 }
 
 double bisectionIterative(double l, double r, double eps) {
+	checkRange(l, r);
+
 	double m, mVal;
 
 	while (true) {
@@ -49,4 +62,10 @@ double bisectionIterative(double l, double r, double eps) {
 	}
 
 	return m;
+}
+
+void checkRange(double l, double r) {
+	if (getF(l) * getF(r) < 0) return;
+
+	throw std::runtime_error("No roots on this range");
 }
