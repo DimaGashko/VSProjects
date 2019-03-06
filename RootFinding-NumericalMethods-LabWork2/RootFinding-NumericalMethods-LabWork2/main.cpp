@@ -8,10 +8,13 @@ double getF(double x) {
 }
 
 double bisection(double l, double r, double eps = DEF_EPSILON);
-double bisectionIterative(double l, double r, double eps = DEF_EPSILON);
+double bisection_iterative(double l, double r, double eps = DEF_EPSILON);
 
 double falsePosition(double l, double r, double eps = DEF_EPSILON);
-double falsePositionIterative(double l, double r, double eps = DEF_EPSILON);
+double falsePosition_iterative(double l, double r, double eps = DEF_EPSILON);
+
+double fixedPointIterative(double x0, double eps = DEF_EPSILON);
+double fixedPointIterative_iterative(double x0, double eps = DEF_EPSILON);
 
 void checkRoots(double l, double r);
 
@@ -20,10 +23,10 @@ int main() {
 	while (true) {
 
 		double l, r, res;
-		std::cin >> l >> r;
+		std::cin >> l;
 
 		try {
-			res = falsePositionIterative(l, r);
+			res = fixedPointIterative(l);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
@@ -48,7 +51,7 @@ double bisection(double l, double r, double eps) {
 	else return bisection(m, r);
 }
 
-double bisectionIterative(double l, double r, double eps) {
+double bisection_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double m, mVal;
@@ -85,7 +88,7 @@ double falsePosition(double l, double r, double eps) {
 	else return falsePosition(mx, r);
 }
 
-double falsePositionIterative(double l, double r, double eps) {
+double falsePosition_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double ly, ry, mx, my;
@@ -106,6 +109,24 @@ double falsePositionIterative(double l, double r, double eps) {
 	}
 
 	return mx;
+}
+
+double fixedPointIterative(double x0, double eps) {
+	double y0 = getF(x0);
+	if (abs(y0) <= eps) return x0;
+
+	return fixedPointIterative(y0 + x0);
+}
+
+double fixedPointIterative_iterative(double x0, double eps) {	
+	while (true) {
+		double y0 = getF(x0);
+		if (abs(y0) <= eps) break;
+
+		x0 = y0 + x0;
+	}
+
+	return x0;
 }
 
 void checkRoots(double l, double r) {
