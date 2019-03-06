@@ -37,7 +37,7 @@ int main() {
 		std::cin >> l >> r;
 
 		try {
-			res = iterative_iterative((l + r) / 2);
+			res = falsePosition(l, r);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
