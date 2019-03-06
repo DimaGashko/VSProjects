@@ -4,7 +4,7 @@
 const double DEF_EPSILON = 0.0001;
 
 double getF(double x) {
-	return sin(x);
+	return 4 * sin(x);
 }
 
 double bisection(double l, double r, double eps = DEF_EPSILON);
@@ -123,7 +123,7 @@ double fixedPointIterative_iterative(double x0, double eps) {
 		double y0 = getF(x0);
 		if (abs(y0) <= eps) break;
 
-		x0 = y0 + x0;
+		x0 += y0;
 	}
 
 	return x0;
