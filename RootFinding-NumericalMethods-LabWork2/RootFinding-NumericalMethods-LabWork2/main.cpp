@@ -10,6 +10,9 @@ double getF(double x) {
 double bisection(double l, double r, double eps = DEF_EPSILON);
 double bisectionIterative(double l, double r, double eps = DEF_EPSILON);
 
+double falsePosition(double l, double r, double eps = DEF_EPSILON);
+double falsePositionIterative(double l, double r, double eps = DEF_EPSILON);
+
 void checkRange(double l, double r);
 
 int main() {
@@ -37,11 +40,11 @@ double bisection(double l, double r, double eps) {
 	checkRange(l, r);
 
 	double m = (l + r) / 2;
-	double mVal = getF(m);
+	double ym = getF(m);
 
-	if (abs(mVal) <= eps) return m;
+	if (abs(ym) <= eps) return m;
 
-	if (mVal * getF(l) < 0) return bisection(l, m);
+	if (ym * getF(l) < 0) return bisection(l, m);
 	else return bisection(m, r);
 }
 
@@ -63,6 +66,12 @@ double bisectionIterative(double l, double r, double eps) {
 	}
 
 	return m;
+}
+
+double falsePosition(double l, double r, double eps = DEF_EPSILON) {
+	checkRange(l, r);
+
+
 }
 
 void checkRange(double l, double r) {
