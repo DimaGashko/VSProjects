@@ -23,7 +23,7 @@ int main() {
 		std::cin >> l >> r;
 
 		try {
-			res = bisection(l, r);
+			res = falsePosition(l, r);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
@@ -68,10 +68,21 @@ double bisectionIterative(double l, double r, double eps) {
 	return m;
 }
 
-double falsePosition(double l, double r, double eps = DEF_EPSILON) {
+double falsePosition(double l, double r, double eps) {
 	checkRange(l, r);
 
+	double ly = getF(l);
+	double ry = getF(r);
 
+	double mx = l - ly * (r - l) / (ry - ly);
+	double my = getF(mx);
+
+	if (abs(my) <= eps) {
+		return mx;
+	}
+
+	if (ly * my < 0) return falsePosition(l, mx);
+	else return falsePosition(mx, r);
 }
 
 void checkRange(double l, double r) {
