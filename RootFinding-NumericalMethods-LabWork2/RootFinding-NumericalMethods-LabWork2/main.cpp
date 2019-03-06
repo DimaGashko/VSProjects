@@ -4,15 +4,11 @@
 const double DEF_EPSILON = 0.00001;
 
 double getF(double x) {
-	return sin(x);
+	return log10(x) - 7 / (2 * x + 6);
 }
 
 double getFPrime(double x) {
-	return cos(x);
-}
-
-double getFDPrime(double x) {
-	return -sin(x);
+	return 1 / (x * log(10)) + 14 / ((2 * x + 6) * (2 * x + 6));
 }
 
 double getG(double x) {
@@ -41,7 +37,7 @@ int main() {
 		std::cin >> l >> r;
 
 		try {
-			res = newtonRaphsan_iterative(l, r);
+			res = iterative_iterative((l + r) / 2);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
