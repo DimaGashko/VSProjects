@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 
-const double DEF_EPSILON = 0.0001;
+const double DEF_EPSILON = 0.00001;
 
 double getF(double x) {
 	return sin(x);
@@ -15,6 +15,10 @@ double getFDPrime(double x) {
 	return -sin(x);
 }
 
+double getG(double x) {
+	return sin(x) + x;
+}
+
 double bisection(double l, double r, double eps = DEF_EPSILON);
 double bisection_iterative(double l, double r, double eps = DEF_EPSILON);
 
@@ -24,8 +28,8 @@ double falsePosition_iterative(double l, double r, double eps = DEF_EPSILON);
 double newtonRaphsan(double l, double r, double eps = DEF_EPSILON);
 double newtonRaphsan_iterative(double l, double r, double eps = DEF_EPSILON);
 
-//double fixedPointIterative(double x0, double eps = DEF_EPSILON);
-//double fixedPointIterative_iterative(double x0, double eps = DEF_EPSILON);
+double iterative(double x0, double eps = DEF_EPSILON);
+double iterative_iterative(double x0, double eps = DEF_EPSILON);
 
 void checkRoots(double l, double r);
 
@@ -153,24 +157,23 @@ double newtonRaphsan_iterative(double l, double r, double eps) {
 	return x;
 }
 
-/*
-double fixedPointIterative(double x0, double eps) {
-	double y0 = getF(x0);
-	if (abs(y0) <= eps) return x0;
+double iterative(double x0, double eps) {
+	double x1 = getG(x0);
+	if (abs(x1 - x0) <= eps) return x0;
 
-	return fixedPointIterative(y0 + x0);
+	return iterative(x1);
 }
 
-double fixedPointIterative_iterative(double x0, double eps) {	
+double iterative_iterative(double x0, double eps) {
 	while (true) {
-		double y0 = getF(x0);
-		if (abs(y0) <= eps) break;
+		double x1 = getG(x0);
+		if (abs(x1 - x0) <= eps) break;
 
-		x0 += y0;
+		x0 = x1;
 	}
 
 	return x0;
-}*/
+}
 
 void checkRoots(double l, double r) {
 	if (getF(l) * getF(r) < 0) return;
