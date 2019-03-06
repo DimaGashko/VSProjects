@@ -45,7 +45,7 @@ double bisection(double l, double r, double eps) {
 	double m = (l + r) / 2;
 	double ym = getF(m);
 
-	if (abs(ym) <= eps) return m;
+	if (abs(ym) < eps || abs(r - l) < eps) return m;
 
 	if (ym * getF(l) < 0) return bisection(l, m);
 	else return bisection(m, r);
@@ -60,7 +60,7 @@ double bisection_iterative(double l, double r, double eps) {
 		m = (l + r) / 2;
 		mVal = getF(m);
 
-		if (abs(mVal) <= eps) {
+		if (abs(mVal) <= eps || abs(r - l) < eps) {
 			break;
 		}
 
@@ -80,7 +80,7 @@ double falsePosition(double l, double r, double eps) {
 	double mx = l - ly * (r - l) / (ry - ly);
 	double my = getF(mx);
 
-	if (abs(my) <= eps) {
+	if (abs(my) <= eps || abs(r - l) < eps) {
 		return mx;
 	}
 
@@ -100,7 +100,7 @@ double falsePosition_iterative(double l, double r, double eps) {
 		mx = l - ly * (r - l) / (ry - ly);
 		my = getF(mx);
 
-		if (abs(my) <= eps) {
+		if (abs(my) <= eps || abs(r - l) < eps) {
 			break;
 		}
 
