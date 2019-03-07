@@ -28,7 +28,7 @@ int main() {
 		printArr(sizesToTest);
 
 		if (askIfExit()) break;
-		std::cout << "\n- - - - - - - -\n\n";
+		std::cout << "\n\n- - - - - - - -\n\n";
 	}
 
 	return 0;
@@ -54,7 +54,7 @@ void printHello() {
 }
 
 bool askIfExit() {
-	return (prompt<std::string>("\nRepeat? (0 if not): ") == "0");
+	return (prompt<std::string>("\nRepeat? (0 if not)") == "0");
 }
 
 void quickSort(std::vector<int>& arr, int l, int r) {
