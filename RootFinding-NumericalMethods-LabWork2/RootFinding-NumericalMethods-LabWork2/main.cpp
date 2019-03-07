@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <cmath>
 
 const double DEF_EPSILON = 0.00001;
@@ -17,49 +18,59 @@ double getG(double x) {
 }
 
 double bisection(double l, double r, double eps = DEF_EPSILON);
-double bisection_iterative(double l, double r, double eps = DEF_EPSILON);
+double bisection_recursive(double l, double r, double eps = DEF_EPSILON);
 
 double falsePosition(double l, double r, double eps = DEF_EPSILON);
-double falsePosition_iterative(double l, double r, double eps = DEF_EPSILON);
+double falsePosition_recursive(double l, double r, double eps = DEF_EPSILON);
 
 double newtonRaphsan(double l, double r, double eps = DEF_EPSILON);
-double newtonRaphsan_iterative(double l, double r, double eps = DEF_EPSILON);
+double newtonRaphsan_recursive(double l, double r, double eps = DEF_EPSILON);
 
 double iterative(double x0, double eps = DEF_EPSILON);
-double iterative_iterative(double x0, double eps = DEF_EPSILON);
+double iterative_recursive(double x0, double eps = DEF_EPSILON);
 
+void printResult(std::string method, double res);
 void checkRoots(double l, double r);
 void clearIterativeCounter();
+void run();
+
+template <typename T>
+T prompt(const char label[]);
 
 int main() {
 
 	while (true) {
+		run();
 
-		
-
-
-
+		if (prompt<std::string>("Repeat (0 - no): ") == "0") {
+			break;
+		}
 	}
 
-	system("pause");
 	return 0;
 }
 
 void run() {
-	double l, r, resBisection;
-	std::cin >> l >> r;
+	std::cout << "Enter [a, b]:" << std::endl;
+	double l = prompt<double>("a: ");
+	double r = prompt<double>("b: ");
 
 	try {
 		checkRoots(l, r);
 
+		printResult("Bisection Method", bisection(l, r));
 		clearIterativeCounter();
-		resBisection = bisection(l, r);
 
+		printResult("Bisection Method", bisection(l, r));
 		clearIterativeCounter();
 	}
 	catch (std::runtime_error err) {
 		std::cout << err.what() << std::endl;
 	}
+}
+
+void printResult(std::string method, double res) {
+	std::cout << method << ": " << res << "; Iterative Counter: " << iterativeCounter << std::endl;
 }
 
 double bisection(double l, double r, double eps) {
@@ -194,4 +205,26 @@ void checkRoots(double l, double r) {
 
 void clearIterativeCounter() {
 	iterativeCounter = 0;
+}
+
+template <typename T>
+T prompt(const char label[]) {
+	std::cout << label;
+
+	while (true) {
+		T val;
+		std::cin >> val;
+
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(32767, '\n');
+			std::cout << "Wrong. Try again: ";
+		}
+		else {
+			std::cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
 }
