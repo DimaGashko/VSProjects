@@ -137,6 +137,7 @@ double falsePosition(double l, double r, double eps) {
 	double ly, ry, mx, my;
 
 	while (true) {
+		iterativeCounter++;
 		ly = getF(l);
 		ry = getF(r);
 
@@ -156,6 +157,7 @@ double falsePosition(double l, double r, double eps) {
 
 double falsePosition_recursive(double l, double r, double eps) {
 	checkRoots(l, r);
+	iterativeCounter++;
 
 	double ly = getF(l);
 	double ry = getF(r);
@@ -176,6 +178,8 @@ double newtonRaphson(double l, double r, double eps) {
 	double x;
 
 	while (true) {
+		iterativeCounter++;
+
 		if (abs(r - l) < eps) {
 			x = (l + r) / 2;
 			break;
@@ -192,6 +196,8 @@ double newtonRaphson(double l, double r, double eps) {
 }
 
 double newtonRaphson_recursive(double l, double r, double eps) {
+	iterativeCounter++;
+
 	if (abs(r - l) < eps) return (l + r) / 2;
 
 	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
@@ -203,6 +209,8 @@ double newtonRaphson_recursive(double l, double r, double eps) {
 
 double iterative(double x0, double eps) {
 	while (true) {
+		iterativeCounter++;
+
 		double x1 = getG(x0);
 		if (abs(x1 - x0) <= eps) break;
 
@@ -213,6 +221,8 @@ double iterative(double x0, double eps) {
 }
 
 double iterative_recursive(double x0, double eps) {
+	iterativeCounter++;
+
 	double x1 = getG(x0);
 	if (abs(x1 - x0) <= eps) return x0;
 
