@@ -38,7 +38,7 @@ int main() {
 	system("pause");
 	return 0;
 }
-/*
+
 void quickSort(std::vector<int>& arr, int l, int r) {
 	int i = l, j = r;
 	int pivot = arr[(i + j) / 2];
@@ -46,31 +46,11 @@ void quickSort(std::vector<int>& arr, int l, int r) {
 	while (i < j) {
 		while (arr[i] < pivot) i++;
 		while (arr[j] > pivot) j--;
+		if (i > j) break;
 
 		std::swap(arr[i], arr[j]);
 		i++; j--;
 	}
-
-	if (i < r) quickSort(arr, i, r);
-	if (j > l) quickSort(arr, l, j);
-}*/
-
-void quickSort(std::vector<int>& arr, int l, int r) {
-	int i = l, j = r, middle = arr[(i + j) / 2];
-	asdf;
-	do {
-		while (middle > arr[i]) i++;
-		while (middle < arr[j]) j--;
-
-		if (i <= j) {
-			int tmp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = tmp;
-
-			i++; j--;
-		}
-
-	} while (i < j);
 
 	if (i < r) quickSort(arr, i, r);
 	if (j > l) quickSort(arr, l, j);
