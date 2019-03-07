@@ -12,7 +12,7 @@ double getFPrime(double x) {
 }
 
 double getG(double x) {
-	return sin(x) + x;
+	return x - 4.13 * getF(x);
 }
 
 double bisection(double l, double r, double eps = DEF_EPSILON);
@@ -31,13 +31,16 @@ void checkRoots(double l, double r);
 
 int main() {
 
+	//std::cout << getFPrime(3) << " " << getFPrime(3.5) << " " << getFPrime(4) << std::endl;
+
 	while (true) {
 
 		double l, r, res;
 		std::cin >> l >> r;
 
 		try {
-			res = falsePosition(l, r);
+			//res = falsePosition(l, r);
+			res = iterative_iterative((l + r) / 2);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
