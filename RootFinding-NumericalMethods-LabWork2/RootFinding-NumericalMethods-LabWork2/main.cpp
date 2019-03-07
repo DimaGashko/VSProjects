@@ -15,17 +15,17 @@ double getG(double x) {
 	return x - 4.13 * getF(x);
 }
 
-double bisection(double l, double r, double eps = DEF_EPSILON);
-double bisection_iterative(double l, double r, double eps = DEF_EPSILON);
+double bisection(double l, double r, int& k, double eps = DEF_EPSILON);
+double bisection_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
 
-double falsePosition(double l, double r, double eps = DEF_EPSILON);
-double falsePosition_iterative(double l, double r, double eps = DEF_EPSILON);
+double falsePosition(double l, double r, int& k, double eps = DEF_EPSILON);
+double falsePosition_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
 
-double newtonRaphsan(double l, double r, double eps = DEF_EPSILON);
-double newtonRaphsan_iterative(double l, double r, double eps = DEF_EPSILON);
+double newtonRaphsan(double l, double r, int& k, double eps = DEF_EPSILON);
+double newtonRaphsan_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
 
-double iterative(double x0, double eps = DEF_EPSILON);
-double iterative_iterative(double x0, double eps = DEF_EPSILON);
+double iterative(double x0, int& k, double eps = DEF_EPSILON);
+double iterative_iterative(double x0, int& k, double eps = DEF_EPSILON);
 
 void checkRoots(double l, double r);
 
@@ -33,12 +33,13 @@ int main() {
 
 	while (true) {
 
+		int k;
 		double l, r, res;
 		std::cin >> l >> r;
 
 		try {
 			//res = falsePosition(l, r);
-			res = iterative_iterative((l + r) / 2);
+			res = iterative_iterative((l + r) / 2, k);
 			std::cout << res << std::endl;
 		}
 		catch (std::runtime_error err) {
@@ -51,7 +52,7 @@ int main() {
 	return 0;
 }
 
-double bisection(double l, double r, double eps) {
+double bisection(double l, double r, int& k, double eps) {
 	checkRoots(l, r);
 
 	double m = (l + r) / 2;
@@ -59,11 +60,11 @@ double bisection(double l, double r, double eps) {
 
 	if (abs(ym) < eps || abs(r - l) < eps) return m;
 
-	if (ym * getF(l) < 0) return bisection(l, m);
-	else return bisection(m, r);
+	if (ym * getF(l) < 0) return bisection(l, m, k);
+	else return bisection(m, r, k);
 }
 
-double bisection_iterative(double l, double r, double eps) {
+double bisection_iterative(double l, double r, int& k, double eps) {
 	checkRoots(l, r);
 
 	double m, mVal;
@@ -83,7 +84,7 @@ double bisection_iterative(double l, double r, double eps) {
 	return m;
 }
 
-double falsePosition(double l, double r, double eps) {
+double falsePosition(double l, double r, int& k, double eps) {
 	checkRoots(l, r);
 
 	double ly = getF(l);
@@ -96,12 +97,12 @@ double falsePosition(double l, double r, double eps) {
 		return mx;
 	}
 
-	if (ly * my < 0) return falsePosition(l, mx);
-	else return falsePosition(mx, r);
+	if (ly * my < 0) return falsePosition(l, mx, k);
+	else return falsePosition(mx, r, k);
 }
 
 
-double falsePosition_iterative(double l, double r, double eps) {
+double falsePosition_iterative(double l, double r, int& k, double eps) {
 	checkRoots(l, r);
 
 	double ly, ry, mx, my;
@@ -124,17 +125,17 @@ double falsePosition_iterative(double l, double r, double eps) {
 	return mx;
 }
 
-double newtonRaphsan(double l, double r, double eps) {
+double newtonRaphsan(double l, double r, int& k, double eps) {
 	if (abs(r - l) < eps) return (l + r) / 2;
 
 	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
 	double x = l - getF(l) / getFPrime(l);
 
 	if (abs(x - l) < eps) return x;
-	return newtonRaphsan(x, r, eps);
+	return newtonRaphsan(x, r, k, eps);
 }
 
-double newtonRaphsan_iterative(double l, double r, double eps) {
+double newtonRaphsan_iterative(double l, double r, int& k, double eps) {
 	checkRoots(l, r);
 	double x;
 
@@ -154,14 +155,14 @@ double newtonRaphsan_iterative(double l, double r, double eps) {
 	return x;
 }
 
-double iterative(double x0, double eps) {
+double iterative(double x0, int& k, double eps) {
 	double x1 = getG(x0);
 	if (abs(x1 - x0) <= eps) return x0;
 
-	return iterative(x1);
+	return iterative(x1, k);
 }
 
-double iterative_iterative(double x0, double eps) {
+double iterative_iterative(double x0, int& k, double eps) {
 	while (true) {
 		double x1 = getG(x0);
 		if (abs(x1 - x0) <= eps) break;
