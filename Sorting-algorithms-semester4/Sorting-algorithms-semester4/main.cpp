@@ -26,11 +26,11 @@ template <typename T>
 T prompt(const char label[]);
 
 template<typename F>
-unsigned long long measure(F&& f, const int n = 1);
+long long measure(F&& f, const int n = 1);
 
 int main() {
 	srand((int)time(0));
-
+	
 	printHello();
 
 	while (true) {
@@ -196,15 +196,15 @@ T prompt(const char label[]) {
 }
 
 template<typename F>
-unsigned long long measure(F&& f, const int n) {
-	unsigned long long res = UINT64_MAX;
+long long measure(F&& f, const int n) {
+	long long res = UINT64_MAX;
 
 	for (int i = 0; i < n; i++) {
-		auto start = __rdtsc();
+		auto start = std::clock();
 
 		f();
 
-		auto time = __rdtsc() - start;
+		auto time = (long long)(std::clock() - start) / CLOCKS_PER_SEC * 1000;
 
 		if (time < res) res = time;
 	}
