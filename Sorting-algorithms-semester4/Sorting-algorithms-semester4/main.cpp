@@ -15,6 +15,9 @@ std::vector<int> getSizesToTest();
 void printHello();
 bool askIfExit();
 
+void runTests(std::vector<int> &sizesToTest);
+void test(int size);
+
 template <typename T>
 T prompt(const char label[]);
 
@@ -25,13 +28,27 @@ int main() {
 
 	while (true) {
 		auto sizesToTest = getSizesToTest();
-		printArr(sizesToTest);
+		runTests(sizesToTest);
 
 		if (askIfExit()) break;
 		std::cout << "\n- - - - - - - -\n\n";
 	}
 
 	return 0;
+}
+
+void runTests(std::vector<int>& sizesToTest) {
+	if (sizesToTest.empty()) {
+		std::cout << "No sizes to test\n";
+	}
+
+	for (auto& size : sizesToTest) {
+		test(size);
+	}
+}
+
+void test(int size) {
+	std::cout << "Testing sorting on size = " << size << std::endl;
 }
 
 std::vector<int> getSizesToTest() {
@@ -47,14 +64,6 @@ std::vector<int> getSizesToTest() {
 	}
 
 	return sizes;
-}
-
-void printHello() {
-	std::cout << "* * * Algorithms: Sorting Methods * * *\n\n";
-}
-
-bool askIfExit() {
-	return (prompt<std::string>("\nRepeat? (0 if not): ") == "0");
 }
 
 void quickSort(std::vector<int>& arr, int l, int r) {
@@ -104,6 +113,14 @@ void printArr(std::vector<int>& arr) {
 	}
 
 	std::cout << std::endl;
+}
+
+void printHello() {
+	std::cout << "* * * Algorithms: Sorting Methods * * *\n\n";
+}
+
+bool askIfExit() {
+	return (prompt<std::string>("\nRepeat? (0 if not): ") == "0");
 }
 
 template <typename T>
