@@ -60,7 +60,7 @@ int main() {
 }
 
 void run() {
-	double eps = prompt<double>("Epsilon (if 0 default - 0.00001): ");
+	double eps = prompt<double>("Epsilon (if 0 default - 0.00001): ") / 10;
 	if (eps <= 0) eps = DEF_EPSILON;
 
 	std::cout << "Enter [a, b]:" << std::endl;
