@@ -43,13 +43,33 @@ void runTests(std::vector<int>& sizesToTest) {
 		std::cout << "No sizes to test\n";
 	}
 
+	std::cout << std::endl;
+
 	for (auto& size : sizesToTest) {
 		test(size);
 	}
 }
 
 void test(int size) {
+	std::cout << "Testing for " << size << " elements:\n";
+
+	std::vector<int> arr(size);
+	writeVector(arr);
 	
+	std::cout << "Generated array: ";
+	printArr(arr);
+
+	std::cout << "Selection Sort: ";
+	std::vector<int> arrToSelectionSort(arr);
+	selectionSort(arrToSelectionSort);
+	printArr(arrToSelectionSort);
+
+	std::cout << "Quick Sort: ";
+	std::vector<int> arrToQuickSort(arr);
+	quickSort(arrToQuickSort, 0, arrToQuickSort.size() - 1);
+	printArr(arrToQuickSort);
+
+	std::cout << "- - - - -\n";
 }
 
 std::vector<int> getSizesToTest() {
@@ -109,7 +129,7 @@ void writeVector(std::vector<int>& arr) {
 }
 
 void printArr(std::vector<int>& arr) {
-	const int MAX_ELEMENTS_TO_PRINT = 2000;
+	const int MAX_ELEMENTS_TO_PRINT = 500;
 	int size = std::min((int)arr.size(), MAX_ELEMENTS_TO_PRINT);
 
 	for (int i = 0; i < size; i++) {
