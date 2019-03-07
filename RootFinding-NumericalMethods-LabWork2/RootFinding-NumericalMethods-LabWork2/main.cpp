@@ -5,14 +5,17 @@
 const double DEF_EPSILON = 0.00001;
 int iterativeCounter = 0;
 
+// ?????????? ???????? ??????? ? ????? ?
 double getF(double x) {
 	return log10(x) - 7 / (2 * x + 6);
 }
 
+// ?????????? ???????? ??????????? ? ????? ?
 double getFPrime(double x) {
 	return 1 / (x * log(10)) + 14 / ((2 * x + 6) * (2 * x + 6));
 }
 
+// ??????????????? ??????? F ??? ?????? ????????
 double getG(double x) {
 	return x - 4.13 * getF(x);
 }
@@ -100,19 +103,19 @@ void printHello() {
 double bisection(double l, double r, double eps) {
 	checkRoots(l, r);
 
-	double m, mVal;
+	double m, my;
 
 	while (true) {
 		iterativeCounter++;
 
 		m = (l + r) / 2;
-		mVal = getF(m);
+		my = getF(m);
 
-		if (abs(mVal) <= eps || abs(r - l) < eps) {
+		if (abs(my) <= eps || abs(r - l) < eps) {
 			break;
 		}
 
-		if (mVal * getF(l) < 0) r = m;
+		if (my * getF(l) < 0) r = m;
 		else l = m;
 	}
 
@@ -124,11 +127,11 @@ double bisection_recursive(double l, double r, double eps) {
 	iterativeCounter++;
 
 	double m = (l + r) / 2;
-	double ym = getF(m);
+	double my = getF(m);
 
-	if (abs(ym) < eps || abs(r - l) < eps) return m;
+	if (abs(my) < eps || abs(r - l) < eps) return m;
 
-	if (ym * getF(l) < 0) return bisection_recursive(l, m);
+	if (my * getF(l) < 0) return bisection_recursive(l, m);
 	else return bisection_recursive(m, r);
 }
 
