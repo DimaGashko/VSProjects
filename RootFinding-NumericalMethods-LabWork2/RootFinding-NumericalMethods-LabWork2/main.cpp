@@ -31,8 +31,6 @@ void checkRoots(double l, double r);
 
 int main() {
 
-	//std::cout << getFPrime(3) << " " << getFPrime(3.5) << " " << getFPrime(4) << std::endl;
-
 	while (true) {
 
 		double l, r, res;
