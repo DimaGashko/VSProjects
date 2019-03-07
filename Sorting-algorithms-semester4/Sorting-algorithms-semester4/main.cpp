@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <intrin.h>
 #include <vector>
 #include <string>
 #include <ctime>
@@ -8,7 +9,7 @@
 void selectionSort(std::vector<int>& arr);
 void quickSort(std::vector<int>& arr, int l, int r);
 
-void printArr(std::vector<int>& arr);
+void printArr(std::vector<int>& arr, int maxElementsToPrint = 500);
 void writeVector(std::vector<int>& arr);
 
 std::vector<int> getSizesToTest();
@@ -19,8 +20,13 @@ bool askIfExit();
 void runTests(std::vector<int> &sizesToTest);
 void test(int size);
 
+void printTestRes(std::vector<int> sortedArr, long long timeToSort);
+
 template <typename T>
 T prompt(const char label[]);
+
+template<typename F>
+unsigned long long measure(F&& f, const int n = 1);
 
 int main() {
 	srand((int)time(0));
@@ -57,19 +63,36 @@ void test(int size) {
 	writeVector(arr);
 	
 	std::cout << "Generated array: ";
-	printArr(arr);
+	printArr(arr, 20);
 
+	// Selection Sort
 	std::cout << "Selection Sort: ";
-	std::vector<int> arrToSelectionSort(arr);
-	selectionSort(arrToSelectionSort);
-	printArr(arrToSelectionSort);
+	std::vector<int> arrToSelectionSort;
 
+	auto timeToSelectionSort = measure([&arr, &arrToSelectionSort] {
+		arrToSelectionSort = std::vector<int>(arr);
+		selectionSort(arrToSelectionSort);
+	});
+
+	printTestRes(arrToSelectionSort, timeToSelectionSort);
+
+	// Quick Sort
 	std::cout << "Quick Sort: ";
 	std::vector<int> arrToQuickSort(arr);
-	quickSort(arrToQuickSort, 0, arrToQuickSort.size() - 1);
-	printArr(arrToQuickSort);
+
+	auto timeToQuickSort = measure([&arr, &arrToQuickSort] {
+		arrToQuickSort = std::vector<int>(arr);
+		selectionSort(arrToQuickSort);
+	});
+
+	printTestRes(arrToQuickSort, timeToQuickSort);
 
 	std::cout << "- - - - -\n";
+}
+
+void printTestRes(std::vector<int> sortedArr, long long timeToSort) {
+	printArr(sortedArr, 20);
+	std::cout << " time: " << timeToSort << std::endl;
 }
 
 std::vector<int> getSizesToTest() {
@@ -128,15 +151,14 @@ void writeVector(std::vector<int>& arr) {
 	}
 }
 
-void printArr(std::vector<int>& arr) {
-	const int MAX_ELEMENTS_TO_PRINT = 500;
-	int size = std::min((int)arr.size(), MAX_ELEMENTS_TO_PRINT);
+void printArr(std::vector<int>& arr, int maxElementsToPrint) {
+	int size = std::min((int)arr.size(), maxElementsToPrint);
 
 	for (int i = 0; i < size; i++) {
 		std::cout << arr[i] << " ";
 	}
 
-	if (arr.size() > size) {
+	if ((int)arr.size() > size) {
 		std::cout << "(...)";
 	}
 
@@ -171,4 +193,21 @@ T prompt(const char label[]) {
 
 	}
 
+}
+
+template<typename F>
+unsigned long long measure(F&& f, const int n) {
+	unsigned long long res = UINT64_MAX;
+
+	for (int i = 0; i < n; i++) {
+		auto start = __rdtsc();
+
+		f();
+
+		auto time = __rdtsc() - start;
+
+		if (time < res) res = time;
+	}
+
+	return res;
 }
