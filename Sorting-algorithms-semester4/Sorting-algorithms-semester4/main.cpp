@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <ctime>
@@ -48,7 +49,7 @@ void runTests(std::vector<int>& sizesToTest) {
 }
 
 void test(int size) {
-	std::cout << "Testing sorting on size = " << size << std::endl;
+	
 }
 
 std::vector<int> getSizesToTest() {
@@ -108,8 +109,15 @@ void writeVector(std::vector<int>& arr) {
 }
 
 void printArr(std::vector<int>& arr) {
-	for (auto item : arr) {
-		std::cout << item << " ";
+	const int MAX_ELEMENTS_TO_PRINT = 2000;
+	int size = std::min((int)arr.size(), MAX_ELEMENTS_TO_PRINT);
+
+	for (int i = 0; i < size; i++) {
+		std::cout << arr[i] << " ";
+	}
+
+	if (arr.size() > size) {
+		std::cout << "(...)";
 	}
 
 	std::cout << std::endl;
