@@ -29,7 +29,7 @@ double newtonRaphson_recursive(double l, double r, double eps = DEF_EPSILON);
 double iterative(double x0, double eps = DEF_EPSILON);
 double iterative_recursive(double x0, double eps = DEF_EPSILON);
 
-void printResult(std::string method, double res);
+void processRes(std::string method, double res);
 void checkRoots(double l, double r);
 void clearIterativeCounter();
 void run();
@@ -58,31 +58,26 @@ void run() {
 	try {
 		checkRoots(l, r);
 
-		printResult("Bisection Method (iterative)", bisection(l, r));
-		clearIterativeCounter();
+		processRes("Bisection Method (iterative)", bisection(l, r));
+		processRes("Bisection Method (recursive)", bisection_recursive(l, r));
 
-		printResult("Bisection Method (recursive)", bisection_recursive(l, r));
-		clearIterativeCounter();
+		processRes("False-Position Method (iterative)", falsePosition(l, r));
+		processRes("False-Position Method (recursive)", falsePosition_recursive(l, r));
 
-		printResult("False-Position Method (iterative)", falsePosition(l, r));
-		clearIterativeCounter();
+		processRes("NewtonRaphson Method (iterative)", newtonRaphson(l, r));
+		processRes("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r));
 
-		printResult("False-Position Method (recursive)", falsePosition_recursive(l, r));
-		clearIterativeCounter();
-
-		printResult("NewtonRaphson Method (iterative)", newtonRaphson(l, r));
-		clearIterativeCounter();
-
-		printResult("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r));
-		clearIterativeCounter();
+		processRes("Iterative Method (iterative)", iterative(l, r));
+		processRes("Iterative Method (recursive)", iterative_recursive(l, r));
 	}
 	catch (std::runtime_error err) {
 		std::cout << err.what() << std::endl;
 	}
 }
 
-void printResult(std::string method, double res) {
-	std::cout << method << ": " << res << "; Iterative Counter: " << iterativeCounter << std::endl;
+void processRes(std::string method, double res) {
+	std::cout << method << ": " << res << "; Iterative Counter: \t\t\t" << iterativeCounter << std::endl;
+	clearIterativeCounter();
 }
 
 double bisection(double l, double r, double eps) {
