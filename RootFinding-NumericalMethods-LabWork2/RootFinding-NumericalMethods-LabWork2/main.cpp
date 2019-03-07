@@ -23,8 +23,8 @@ double bisection_recursive(double l, double r, double eps = DEF_EPSILON);
 double falsePosition(double l, double r, double eps = DEF_EPSILON);
 double falsePosition_recursive(double l, double r, double eps = DEF_EPSILON);
 
-double newtonRaphsan(double l, double r, double eps = DEF_EPSILON);
-double newtonRaphsan_recursive(double l, double r, double eps = DEF_EPSILON);
+double newtonRaphson(double l, double r, double eps = DEF_EPSILON);
+double newtonRaphson_recursive(double l, double r, double eps = DEF_EPSILON);
 
 double iterative(double x0, double eps = DEF_EPSILON);
 double iterative_recursive(double x0, double eps = DEF_EPSILON);
@@ -58,10 +58,22 @@ void run() {
 	try {
 		checkRoots(l, r);
 
-		printResult("Bisection Method", bisection(l, r));
+		printResult("Bisection Method (iterative)", bisection(l, r));
 		clearIterativeCounter();
 
-		printResult("Bisection Method", bisection(l, r));
+		printResult("Bisection Method (recursive)", bisection_recursive(l, r));
+		clearIterativeCounter();
+
+		printResult("False-Position Method (iterative)", falsePosition(l, r));
+		clearIterativeCounter();
+
+		printResult("False-Position Method (recursive)", falsePosition_recursive(l, r));
+		clearIterativeCounter();
+
+		printResult("NewtonRaphson Method (iterative)", newtonRaphson(l, r));
+		clearIterativeCounter();
+
+		printResult("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r));
 		clearIterativeCounter();
 	}
 	catch (std::runtime_error err) {
@@ -74,19 +86,6 @@ void printResult(std::string method, double res) {
 }
 
 double bisection(double l, double r, double eps) {
-	checkRoots(l, r);
-	iterativeCounter++;
-
-	double m = (l + r) / 2;
-	double ym = getF(m);
-
-	if (abs(ym) < eps || abs(r - l) < eps) return m;
-
-	if (ym * getF(l) < 0) return bisection(l, m);
-	else return bisection(m, r);
-}
-
-double bisection_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double m, mVal;
@@ -108,25 +107,20 @@ double bisection_iterative(double l, double r, double eps) {
 	return m;
 }
 
-double falsePosition(double l, double r, double eps) {
+double bisection_recursive(double l, double r, double eps) {
 	checkRoots(l, r);
+	iterativeCounter++;
 
-	double ly = getF(l);
-	double ry = getF(r);
+	double m = (l + r) / 2;
+	double ym = getF(m);
 
-	double mx = l - ly * (r - l) / (ry - ly);
-	double my = getF(mx);
+	if (abs(ym) < eps || abs(r - l) < eps) return m;
 
-	if (abs(my) <= eps || abs(r - l) < eps) {
-		return mx;
-	}
-
-	if (ly * my < 0) return falsePosition(l, mx);
-	else return falsePosition(mx, r);
+	if (ym * getF(l) < 0) return bisection_recursive(l, m);
+	else return bisection_recursive(m, r);
 }
 
-
-double falsePosition_iterative(double l, double r, double eps) {
+double falsePosition(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double ly, ry, mx, my;
@@ -149,17 +143,24 @@ double falsePosition_iterative(double l, double r, double eps) {
 	return mx;
 }
 
-double newtonRaphsan(double l, double r, double eps) {
-	if (abs(r - l) < eps) return (l + r) / 2;
+double falsePosition_recursive(double l, double r, double eps) {
+	checkRoots(l, r);
 
-	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
-	double x = l - getF(l) / getFPrime(l);
+	double ly = getF(l);
+	double ry = getF(r);
 
-	if (abs(x - l) < eps) return x;
-	return newtonRaphsan(x, r, eps);
+	double mx = l - ly * (r - l) / (ry - ly);
+	double my = getF(mx);
+
+	if (abs(my) <= eps || abs(r - l) < eps) {
+		return mx;
+	}
+
+	if (ly * my < 0) return falsePosition_recursive(l, mx);
+	else return falsePosition_recursive(mx, r);
 }
 
-double newtonRaphsan_iterative(double l, double r, double eps) {
+double newtonRaphson(double l, double r, double eps) {
 	checkRoots(l, r);
 	double x;
 
@@ -179,14 +180,17 @@ double newtonRaphsan_iterative(double l, double r, double eps) {
 	return x;
 }
 
-double iterative(double x0, double eps) {
-	double x1 = getG(x0);
-	if (abs(x1 - x0) <= eps) return x0;
+double newtonRaphson_recursive(double l, double r, double eps) {
+	if (abs(r - l) < eps) return (l + r) / 2;
 
-	return iterative(x1);
+	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
+	double x = l - getF(l) / getFPrime(l);
+
+	if (abs(x - l) < eps) return x;
+	return newtonRaphson_recursive(x, r, eps);
 }
 
-double iterative_iterative(double x0, double eps) {
+double iterative(double x0, double eps) {
 	while (true) {
 		double x1 = getG(x0);
 		if (abs(x1 - x0) <= eps) break;
@@ -195,6 +199,13 @@ double iterative_iterative(double x0, double eps) {
 	}
 
 	return x0;
+}
+
+double iterative_recursive(double x0, double eps) {
+	double x1 = getG(x0);
+	if (abs(x1 - x0) <= eps) return x0;
+
+	return iterative_recursive(x1);
 }
 
 void checkRoots(double l, double r) {
