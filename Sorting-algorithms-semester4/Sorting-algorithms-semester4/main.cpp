@@ -9,34 +9,44 @@ void quickSort(std::vector<int>& arr, int l, int r);
 void printArr(std::vector<int>& arr);
 void writeVector(std::vector<int>& arr);
 
+std::vector<int> getSizesToTest();
+
+void printHello();
+
+template <typename T>
+T prompt(const char label[]);
+
 int main() {
 	srand((int)time(0));
 
-	std::vector<int> arr(9);
+	printHello();
 
-	arr[0] = 3;
-	arr[1] = 4;
-	arr[2] = 5;
-	arr[3] = 3;
-	arr[4] = 8;
-	arr[5] = 6;
-	arr[6] = 4;
-	arr[7] = 3;
-	arr[8] = 2;
+	while (true) {
 
-	//writeVector(arr);
-	printArr(arr);
+		auto sizesToTest = getSizesToTest();
+		printArr(sizesToTest);
+	}
 
-	std::vector<int> arrSel(arr);
-	selectionSort(arrSel);
-	printArr(arrSel);
-
-	std::vector<int> arrQuick(arr);
-	quickSort(arrQuick, 0, arrQuick.size() - 1);
-	printArr(arrQuick);
-
-	system("pause");
 	return 0;
+}
+
+std::vector<int> getSizesToTest() {
+	std::vector<int> sizes;
+
+	std::cout << "Enter sizes to test (non-positive to complete):\n";
+
+	while (true) {
+		int size = prompt<int>("> ");
+		if (size <= 0) break;
+
+		sizes.push_back(size);
+	}
+
+	return sizes;
+}
+
+void printHello() {
+	std::cout << "* * * Algorithms: Sorting Methods * * *\n\n";
 }
 
 void quickSort(std::vector<int>& arr, int l, int r) {
@@ -86,4 +96,26 @@ void printArr(std::vector<int>& arr) {
 	}
 
 	std::cout << std::endl;
+}
+
+template <typename T>
+T prompt(const char label[]) {
+	std::cout << label;
+
+	while (true) {
+		T val;
+		std::cin >> val;
+
+		if (std::cin.fail()) {
+			std::cin.clear();
+			std::cin.ignore(32767, '\n');
+			std::cout << "Wrong. Try again: ";
+		}
+		else {
+			std::cin.ignore(32767, '\n');
+			return val;
+		}
+
+	}
+
 }
