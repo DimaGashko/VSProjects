@@ -39,48 +39,56 @@ template <typename T>
 T prompt(const char label[]);
 
 int main() {
-
 	printHello();
 
 	while (true) {
-		run();
+		try {
+			run();
+		} 
+		catch (std::runtime_error err) {
+			std::cout << err.what() << std::endl;
+		}
 
 		if (prompt<std::string>("Repeat (0 - no): ") == "0") {
 			break;
 		}
+
+		std::cout << "\n- - - - - - - - - - - - - - - -\n\n";
 	}
 
 	return 0;
 }
 
 void run() {
+	double eps = prompt<double>("Epsilon: ");
+
 	std::cout << "Enter [a, b]:" << std::endl;
 	double l = prompt<double>("a: ");
 	double r = prompt<double>("b: ");
-	double eps = prompt<double>("Epsilon: ");
+	
+	checkRoots(l, r);
 
-	try {
-		checkRoots(l, r);
+	std::cout << "Results: " << std::endl << std::endl;
 
-		processRes("Bisection Method (iterative)", bisection(l, r, eps));
-		processRes("Bisection Method (recursive)", bisection_recursive(l, r, eps));
+	processRes("Bisection Method (iterative)", bisection(l, r, eps));
+	processRes("Bisection Method (recursive)", bisection_recursive(l, r, eps));
+	std::cout << std::endl;
 
-		processRes("False-Position Method (iterative)", falsePosition(l, r, eps));
-		processRes("False-Position Method (recursive)", falsePosition_recursive(l, r, eps));
+	processRes("False-Position Method (iterative)", falsePosition(l, r, eps));
+	processRes("False-Position Method (recursive)", falsePosition_recursive(l, r, eps));
+	std::cout << std::endl;
 
-		processRes("NewtonRaphson Method (iterative)", newtonRaphson(l, r, eps));
-		processRes("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r, eps));
+	processRes("NewtonRaphson Method (iterative)", newtonRaphson(l, r, eps));
+	processRes("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r, eps));
+	std::cout << std::endl;
 
-		processRes("Iterative Method (iterative)", iterative((l + r) / 2, eps));
-		processRes("Iterative Method (recursive)", iterative_recursive((l + r) / 2, eps));
-	}
-	catch (std::runtime_error err) {
-		std::cout << err.what() << std::endl;
-	}
+	processRes("Iterative Method (iterative)", iterative((l + r) / 2, eps));
+	processRes("Iterative Method (recursive)", iterative_recursive((l + r) / 2, eps));
+	std::cout << std::endl;
 }
 
 void processRes(std::string method, double res) {
-	std::cout << method << ": " << res << "; Iterative Counter: \t\t\t" << iterativeCounter << std::endl;
+	std::cout << method << ": " << res << "; Iterative Counter: " << iterativeCounter << std::endl;
 	clearIterativeCounter();
 }
 
