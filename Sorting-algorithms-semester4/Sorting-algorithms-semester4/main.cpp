@@ -12,33 +12,65 @@ void writeVector(std::vector<int>& arr);
 int main() {
 	srand((int)time(0));
 
-	std::vector<int> arr(100000000);
+	std::vector<int> arr(9);
 
-	writeVector(arr);
-	//printArr(arr);
+	arr[0] = 3;
+	arr[1] = 4;
+	arr[2] = 5;
+	arr[3] = 3;
+	arr[4] = 8;
+	arr[5] = 6;
+	arr[6] = 4;
+	arr[7] = 3;
+	arr[8] = 2;
 
-	//selectionSort(arr);
-	//printArr(arr);
+	//writeVector(arr);
+	printArr(arr);
 
-	quickSort(arr, 0, arr.size() - 1);
-	//printArr(arr);
+	std::vector<int> arrSel(arr);
+	selectionSort(arrSel);
+	printArr(arrSel);
+
+	std::vector<int> arrQuick(arr);
+	quickSort(arrQuick, 0, arrQuick.size() - 1);
+	printArr(arrQuick);
 
 	system("pause");
 	return 0;
 }
-
+/*
 void quickSort(std::vector<int>& arr, int l, int r) {
 	int i = l, j = r;
-	int middle = arr[(i + j) / 2];
+	int pivot = arr[(i + j) / 2];
 
 	while (i < j) {
-		while (arr[i] < middle) i++;
-		while (arr[j] > middle) j--;
-		if (i > j) break;
+		while (arr[i] < pivot) i++;
+		while (arr[j] > pivot) j--;
 
 		std::swap(arr[i], arr[j]);
 		i++; j--;
 	}
+
+	if (i < r) quickSort(arr, i, r);
+	if (j > l) quickSort(arr, l, j);
+}*/
+
+void quickSort(std::vector<int>& arr, int l, int r) {
+	int i = l, j = r, middle = arr[(i + j) / 2];
+	asdf;
+	do {
+		while (middle > arr[i]) i++;
+		while (middle < arr[j]) j--;
+
+		if (i <= j) {
+			int tmp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = tmp;
+
+			i++; j--;
+		}
+
+	} while (i < j);
 
 	if (i < r) quickSort(arr, i, r);
 	if (j > l) quickSort(arr, l, j);
