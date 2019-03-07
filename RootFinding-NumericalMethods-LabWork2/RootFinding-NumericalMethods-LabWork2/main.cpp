@@ -60,7 +60,8 @@ int main() {
 }
 
 void run() {
-	double eps = prompt<double>("Epsilon: ");
+	double eps = prompt<double>("Epsilon (if 0 default - 0.00001): ");
+	if (eps <= 0) eps = DEF_EPSILON;
 
 	std::cout << "Enter [a, b]:" << std::endl;
 	double l = prompt<double>("a: ");
@@ -88,7 +89,7 @@ void run() {
 }
 
 void processRes(std::string method, double res) {
-	std::cout << method << ": " << res << "; Iterative Counter: " << iterativeCounter << std::endl;
+	std::cout << method << ": " << res << "; Iterations: " << iterativeCounter << std::endl;
 	clearIterativeCounter();
 }
 
