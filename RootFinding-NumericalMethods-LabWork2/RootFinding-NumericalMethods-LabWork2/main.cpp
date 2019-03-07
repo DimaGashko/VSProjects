@@ -2,6 +2,7 @@
 #include <cmath>
 
 const double DEF_EPSILON = 0.00001;
+int iterativeCounter = 0;
 
 double getF(double x) {
 	return log10(x) - 7 / (2 * x + 6);
@@ -15,36 +16,28 @@ double getG(double x) {
 	return x - 4.13 * getF(x);
 }
 
-double bisection(double l, double r, int& k, double eps = DEF_EPSILON);
-double bisection_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
+double bisection(double l, double r, double eps = DEF_EPSILON);
+double bisection_iterative(double l, double r, double eps = DEF_EPSILON);
 
-double falsePosition(double l, double r, int& k, double eps = DEF_EPSILON);
-double falsePosition_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
+double falsePosition(double l, double r, double eps = DEF_EPSILON);
+double falsePosition_iterative(double l, double r, double eps = DEF_EPSILON);
 
-double newtonRaphsan(double l, double r, int& k, double eps = DEF_EPSILON);
-double newtonRaphsan_iterative(double l, double r, int& k, double eps = DEF_EPSILON);
+double newtonRaphsan(double l, double r, double eps = DEF_EPSILON);
+double newtonRaphsan_iterative(double l, double r, double eps = DEF_EPSILON);
 
-double iterative(double x0, int& k, double eps = DEF_EPSILON);
-double iterative_iterative(double x0, int& k, double eps = DEF_EPSILON);
+double iterative(double x0, double eps = DEF_EPSILON);
+double iterative_iterative(double x0, double eps = DEF_EPSILON);
 
 void checkRoots(double l, double r);
+void clearIterativeCounter();
 
 int main() {
 
 	while (true) {
 
-		int k;
-		double l, r, res;
-		std::cin >> l >> r;
+		
 
-		try {
-			//res = falsePosition(l, r);
-			res = iterative_iterative((l + r) / 2, k);
-			std::cout << res << std::endl;
-		}
-		catch (std::runtime_error err) {
-			std::cout << err.what() << std::endl;
-		}
+
 
 	}
 
@@ -52,24 +45,44 @@ int main() {
 	return 0;
 }
 
-double bisection(double l, double r, int& k, double eps) {
+void run() {
+	double l, r, resBisection;
+	std::cin >> l >> r;
+
+	try {
+		checkRoots(l, r);
+
+		clearIterativeCounter();
+		resBisection = bisection(l, r);
+
+		clearIterativeCounter();
+	}
+	catch (std::runtime_error err) {
+		std::cout << err.what() << std::endl;
+	}
+}
+
+double bisection(double l, double r, double eps) {
 	checkRoots(l, r);
+	iterativeCounter++;
 
 	double m = (l + r) / 2;
 	double ym = getF(m);
 
 	if (abs(ym) < eps || abs(r - l) < eps) return m;
 
-	if (ym * getF(l) < 0) return bisection(l, m, k);
-	else return bisection(m, r, k);
+	if (ym * getF(l) < 0) return bisection(l, m);
+	else return bisection(m, r);
 }
 
-double bisection_iterative(double l, double r, int& k, double eps) {
+double bisection_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double m, mVal;
 
 	while (true) {
+		iterativeCounter++;
+
 		m = (l + r) / 2;
 		mVal = getF(m);
 
@@ -84,7 +97,7 @@ double bisection_iterative(double l, double r, int& k, double eps) {
 	return m;
 }
 
-double falsePosition(double l, double r, int& k, double eps) {
+double falsePosition(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double ly = getF(l);
@@ -97,12 +110,12 @@ double falsePosition(double l, double r, int& k, double eps) {
 		return mx;
 	}
 
-	if (ly * my < 0) return falsePosition(l, mx, k);
-	else return falsePosition(mx, r, k);
+	if (ly * my < 0) return falsePosition(l, mx);
+	else return falsePosition(mx, r);
 }
 
 
-double falsePosition_iterative(double l, double r, int& k, double eps) {
+double falsePosition_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 
 	double ly, ry, mx, my;
@@ -125,17 +138,17 @@ double falsePosition_iterative(double l, double r, int& k, double eps) {
 	return mx;
 }
 
-double newtonRaphsan(double l, double r, int& k, double eps) {
+double newtonRaphsan(double l, double r, double eps) {
 	if (abs(r - l) < eps) return (l + r) / 2;
 
 	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
 	double x = l - getF(l) / getFPrime(l);
 
 	if (abs(x - l) < eps) return x;
-	return newtonRaphsan(x, r, k, eps);
+	return newtonRaphsan(x, r, eps);
 }
 
-double newtonRaphsan_iterative(double l, double r, int& k, double eps) {
+double newtonRaphsan_iterative(double l, double r, double eps) {
 	checkRoots(l, r);
 	double x;
 
@@ -155,14 +168,14 @@ double newtonRaphsan_iterative(double l, double r, int& k, double eps) {
 	return x;
 }
 
-double iterative(double x0, int& k, double eps) {
+double iterative(double x0, double eps) {
 	double x1 = getG(x0);
 	if (abs(x1 - x0) <= eps) return x0;
 
-	return iterative(x1, k);
+	return iterative(x1);
 }
 
-double iterative_iterative(double x0, int& k, double eps) {
+double iterative_iterative(double x0, double eps) {
 	while (true) {
 		double x1 = getG(x0);
 		if (abs(x1 - x0) <= eps) break;
@@ -177,4 +190,8 @@ void checkRoots(double l, double r) {
 	if (getF(l) * getF(r) < 0) return;
 
 	throw std::runtime_error("No roots on this range");
+}
+
+void clearIterativeCounter() {
+	iterativeCounter = 0;
 }
