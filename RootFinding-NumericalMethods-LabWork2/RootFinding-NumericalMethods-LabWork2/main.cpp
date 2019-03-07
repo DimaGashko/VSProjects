@@ -32,12 +32,15 @@ double iterative_recursive(double x0, double eps = DEF_EPSILON);
 void processRes(std::string method, double res);
 void checkRoots(double l, double r);
 void clearIterativeCounter();
+void printHello();
 void run();
 
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
+
+	printHello();
 
 	while (true) {
 		run();
@@ -54,21 +57,22 @@ void run() {
 	std::cout << "Enter [a, b]:" << std::endl;
 	double l = prompt<double>("a: ");
 	double r = prompt<double>("b: ");
+	double eps = prompt<double>("Epsilon: ");
 
 	try {
 		checkRoots(l, r);
 
-		processRes("Bisection Method (iterative)", bisection(l, r));
-		processRes("Bisection Method (recursive)", bisection_recursive(l, r));
+		processRes("Bisection Method (iterative)", bisection(l, r, eps));
+		processRes("Bisection Method (recursive)", bisection_recursive(l, r, eps));
 
-		processRes("False-Position Method (iterative)", falsePosition(l, r));
-		processRes("False-Position Method (recursive)", falsePosition_recursive(l, r));
+		processRes("False-Position Method (iterative)", falsePosition(l, r, eps));
+		processRes("False-Position Method (recursive)", falsePosition_recursive(l, r, eps));
 
-		processRes("NewtonRaphson Method (iterative)", newtonRaphson(l, r));
-		processRes("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r));
+		processRes("NewtonRaphson Method (iterative)", newtonRaphson(l, r, eps));
+		processRes("NewtonRaphson Method (recursive)", newtonRaphson_recursive(l, r, eps));
 
-		processRes("Iterative Method (iterative)", iterative(l, r));
-		processRes("Iterative Method (recursive)", iterative_recursive(l, r));
+		processRes("Iterative Method (iterative)", iterative((l + r) / 2, eps));
+		processRes("Iterative Method (recursive)", iterative_recursive((l + r) / 2, eps));
 	}
 	catch (std::runtime_error err) {
 		std::cout << err.what() << std::endl;
@@ -78,6 +82,10 @@ void run() {
 void processRes(std::string method, double res) {
 	std::cout << method << ": " << res << "; Iterative Counter: \t\t\t" << iterativeCounter << std::endl;
 	clearIterativeCounter();
+}
+
+void printHello() {
+	std::cout << " * * * Numerical Methods - Root Finding * * * " << std::endl << std::endl;
 }
 
 double bisection(double l, double r, double eps) {
