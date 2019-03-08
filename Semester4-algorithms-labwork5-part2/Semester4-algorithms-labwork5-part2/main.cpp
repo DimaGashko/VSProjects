@@ -94,7 +94,7 @@ void printItemsOnLevel(dg::Tree::Node* node, int level, int curLevel) {
 	if (hasNext) printItemsOnLevel(node->right, level, curLevel + 1);
 }
 
-void inOrder(dg::Tree::Node* node, std::vector<int>& way) {
+void inOrder(dg::Tree::Node * node, std::vector<int> & way) {
 	if (!node) return;
 
 	inOrder(node->left, way);
