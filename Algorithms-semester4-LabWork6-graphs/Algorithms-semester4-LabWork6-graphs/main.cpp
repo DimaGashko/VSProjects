@@ -34,9 +34,10 @@ int main() {
 }
 
 std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount, int vertex) {
-	std::vector<int> a;
+	std::vector<int> distances(verticesCount);
+	std::vector<bool> doneVertices(verticesCount);
 
-	return a;
+	return distances;
 }
 
 void run() {
@@ -56,10 +57,10 @@ void run() {
 
 	auto minDistances = Dijkstra(edges, verticesCount, findingVertex);
 
-	std::cout << "\nResults (vectex: minimal distance):\n";
+	std::cout << "\nResults:\n";
 
 	for (int i = 0; i < minDistances.size(); i++) {
-		std::cout << i + 1 << ": " << minDistances[i] << std::endl;
+		std::cout << "To vertex " << i + 1 << ": " << minDistances[i] << std::endl;
 	}
 }
 
