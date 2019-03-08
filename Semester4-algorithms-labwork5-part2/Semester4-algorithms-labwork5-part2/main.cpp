@@ -7,25 +7,45 @@
 template <typename T>
 T prompt(const char label[]);
 
-void preOrder(dg::Tree::Node* node, std::vector<int>& way);
+void inOrder(dg::Tree::Node* node, std::vector<int>& way);
 void printArr(std::vector<int> arr);
 void printHello();
+void run();
+
+std::vector<int> getNumberToSort();
 
 int main() {
 	printHello();
-
-	
+	run();
 
 	system("pause");
 	return 0;
 }
 
-void preOrder(dg::Tree::Node * node, std::vector<int> & way) {
+void run() {
+	dg::Tree tree;
+	
+	auto numbers = getNumberToSort();
+}
+
+std::vector<int> getNumberToSort() {
+	auto size = prompt<int>("Enter number of a number to sort");
+	std::vector<int> numbers(size);
+
+	for (auto& num : numbers) {
+		std::cin >> num;
+	}
+
+	return numbers;
+}
+
+void inOrder(dg::Tree::Node * node, std::vector<int> & way) {
 	if (!node) return;
+
+	inOrder(node->left, way);
 	way.push_back(node->value);
 
-	preOrder(node->left, way);
-	preOrder(node->right, way);
+	inOrder(node->right, way);
 }
 
 void printArr(std::vector<int> arr) {
