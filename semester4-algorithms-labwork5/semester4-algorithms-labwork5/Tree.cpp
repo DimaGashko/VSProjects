@@ -2,13 +2,11 @@
 
 namespace dg {
 
-	Tree::Tree(): 
-		m_root(new Node())
-	{
+	Tree::Tree() {
 
 	}
 
-	Tree::Node* Tree::getRoot() {
+	Tree::Node Tree::getRoot() {
 		return m_root;
 	}
 

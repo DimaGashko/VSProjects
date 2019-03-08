@@ -11,7 +11,21 @@ int main() {
 	
 	dg::Tree tree;
 
-	
+	auto root = tree.getRoot();
+	dg::Tree::Node v1, v2, v3, v4, v5, v6, v7, v8;
+
+	v1 = dg::Tree::Node(2);
+	v2 = dg::Tree::Node(4);
+	v3 = dg::Tree::Node(6);
+	v4 = dg::Tree::Node(8);
+	v5 = dg::Tree::Node(10);
+	v6 = dg::Tree::Node(12);
+	v7 = dg::Tree::Node(14);
+	v8 = dg::Tree::Node(16);
+
+	root.value = 2;
+
+	root.left
 
 	return 0;
 }
