@@ -11,20 +11,32 @@ void preOrderSearch(dg::Tree::Node* node, int item, std::vector<int>& way);
 void preOrder(dg::Tree::Node* node, std::vector<int>& way);
 void getTree(dg::Tree& tree);
 void printArr(std::vector<int> arr);
+void printHello();
 
 int main() {
+	printHello();
 	
 	dg::Tree tree;
-	std::vector<int> items, wayToNum;
 
 	getTree(tree);
+	
+	std::vector<int> items;
 	preOrder(tree.getRoot(), items);
-	preOrderSearch(tree.getRoot(), 7, wayToNum);
 
+	std::cout << "Items of the tree (pre-order):\n";
 	printArr(items);
-	printArr(wayToNum);
 
+	std::cout << std::endl;
 
+	while (true) {
+		int num = prompt<int>("Enter the number to search: ");
+		std::vector<int> wayToNum;
+
+		preOrderSearch(tree.getRoot(), num, wayToNum);
+		printArr(wayToNum);
+
+		std::cout << "\n- - - - - -\n\n";
+	}
 
 	system("pause");
 	return 0;
@@ -79,6 +91,10 @@ void printArr(std::vector<int> arr) {
 	}
 
 	std::cout << std::endl;
+}
+
+void printHello() {
+	std::cout << "* * * Algorithms: Trees (part 1) * * *\n\n";
 }
 
 template <typename T>
