@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <intrin.h>
 #include <vector>
 #include <string>
 #include <ctime>
@@ -20,13 +19,11 @@ bool askIfExit();
 void runTests(std::vector<int> &sizesToTest);
 void test(int size);
 
-void printTestRes(std::vector<int> sortedArr, long long timeToSort);
-
 template <typename T>
 T prompt(const char label[]);
 
 template<typename F>
-long long measure(F&& f, const int n = 1);
+long long measure(F&& f);
 
 int main() {
 	srand((int)time(0));
@@ -61,9 +58,17 @@ void test(int size) {
 
 	std::vector<int> arr(size);
 	writeVector(arr);
-	
-	std::cout << "Generated array: ";
-	printArr(arr, 20);
+
+	// Quick Sort
+	std::cout << "Quick Sort: ";
+	std::vector<int> arrToQuickSort(arr);
+
+	auto timeToQuickSort = measure([&arr, &arrToQuickSort] {
+		arrToQuickSort = std::vector<int>(arr);
+		quickSort(arrToQuickSort, 0, arrToQuickSort.size() - 1);
+	});
+
+	std::cout << timeToQuickSort << std::endl;
 
 	// Selection Sort
 	std::cout << "Selection Sort: ";
@@ -74,25 +79,9 @@ void test(int size) {
 		selectionSort(arrToSelectionSort);
 	});
 
-	printTestRes(arrToSelectionSort, timeToSelectionSort);
-
-	// Quick Sort
-	std::cout << "Quick Sort: ";
-	std::vector<int> arrToQuickSort(arr);
-
-	auto timeToQuickSort = measure([&arr, &arrToQuickSort] {
-		arrToQuickSort = std::vector<int>(arr);
-		selectionSort(arrToQuickSort);
-	});
-
-	printTestRes(arrToQuickSort, timeToQuickSort);
+	std::cout << timeToSelectionSort << std::endl;
 
 	std::cout << "- - - - -\n";
-}
-
-void printTestRes(std::vector<int> sortedArr, long long timeToSort) {
-	printArr(sortedArr, 20);
-	std::cout << " time: " << timeToSort << std::endl;
 }
 
 std::vector<int> getSizesToTest() {
@@ -196,18 +185,12 @@ T prompt(const char label[]) {
 }
 
 template<typename F>
-long long measure(F&& f, const int n) {
-	long long res = UINT64_MAX;
+long long measure(F&& f) {
+	auto start = std::clock();
 
-	for (int i = 0; i < n; i++) {
-		auto start = std::clock();
+	f();
 
-		f();
+	auto time = std::clock() - start;
 
-		auto time = (long long)(std::clock() - start) / CLOCKS_PER_SEC * 1000;
-
-		if (time < res) res = time;
-	}
-
-	return res;
+	return (long long)time;
 }
