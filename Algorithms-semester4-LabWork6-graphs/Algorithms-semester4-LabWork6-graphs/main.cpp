@@ -11,6 +11,8 @@ void run();
 void printHello();
 std::list<Edge> getEdges();
 
+std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount);
+
 template <typename T>
 T prompt(const char label[]);
 
@@ -30,11 +32,22 @@ int main() {
 	return 0;
 }
 
-void run() {
-	auto edges = getEdges();
+std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount) {
+	std::vector<int> a;
 
-	for (auto e : edges) {
-		std::cout << e.a << " " << e.b << " " << e.w << std::endl;
+	return a;
+}
+
+void run() {
+	int verticesCount = prompt<int>("Enter the number of vertices: ");
+
+	auto edges = getEdges();
+	auto minDistances = Dijkstra(edges, verticesCount);
+
+	std::cout << "\nResults (vectex: minimal distance):\n";
+
+	for (int i = 0; i < minDistances.size(); i++) {
+		std::cout << i + 1 << ": " << minDistances[i] << std::endl;
 	}
 }
 
@@ -46,10 +59,10 @@ std::list<Edge> getEdges() {
 		std::cout << "- Edge " << i + 1 << std::endl;
 		
 		Edge edge;
-		edge.a = prompt<int>("From: ");
-		edge.b = prompt<int>("To: ");
+		edge.a = prompt<int>("From: ") - 1;
+		edge.b = prompt<int>("To: ") - 1;
 		edge.w = prompt<int>("Weight: ");
-
+		//
 		edges.push_back(edge);
 	}
 
