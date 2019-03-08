@@ -3,7 +3,13 @@
 #include <string>
 #include <list>
 
+struct Edge {
+	int a, b, w;
+};
+
+void run();
 void printHello();
+std::list<Edge> getEdges();
 
 template <typename T>
 T prompt(const char label[]);
@@ -12,7 +18,7 @@ int main() {
 	printHello();
 
 	while (true) {
-		std::cout << "App" << std::endl;
+		run();
 
 		if (prompt<std::string>("\nRepeat? (0 to exit): ") == "0") {
 			break;
@@ -22,6 +28,32 @@ int main() {
 	}
 
 	return 0;
+}
+
+void run() {
+	auto edges = getEdges();
+
+	for (auto e : edges) {
+		std::cout << e.a << " " << e.b << " " << e.w << std::endl;
+	}
+}
+
+std::list<Edge> getEdges() {
+	int size = prompt<unsigned short>("Enter the number of edges: ");
+	std::list<Edge> edges;
+
+	for (int i = 0; i < size; i++) {
+		std::cout << "- Edge " << i + 1 << std::endl;
+		
+		Edge edge;
+		edge.a = prompt<int>("From: ");
+		edge.b = prompt<int>("To: ");
+		edge.w = prompt<int>("Weight: ");
+
+		edges.push_back(edge);
+	}
+
+	return edges;
 }
 
 void printHello() {
