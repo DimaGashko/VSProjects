@@ -14,6 +14,7 @@ void run();
 
 std::vector<int> getNumberToSort();
 void addNumbersToSearchTree(dg::Tree& tree, int num);
+void printItemsOnLevel(dg::Tree::Node* node, int level, int curLevel = 0);
 
 int main() {
 	printHello();
@@ -36,6 +37,14 @@ void run() {
 
 	std::cout << "Sorted items:\n";
 	printArr(sortedNumbers);
+
+	while (true) {
+		int level = prompt<int>("Enter a level: ") - 1;
+		std::cout << "Elements on level " << level << ":\n";
+
+		printItemsOnLevel(tree.getRoot(), level);
+		std::cout << std::endl;
+	}
 }
 
 std::vector<int> getNumberToSort() {
@@ -75,12 +84,20 @@ void addNumbersToSearchTree(dg::Tree& tree, int num) {
 	}
 }
 
+void printItemsOnLevel(dg::Tree::Node* node, int level, int curLevel) {
+	if (!node) return;
+	bool hasNext = curLevel < level;
+
+	if (hasNext) printItemsOnLevel(node->left, level, curLevel + 1);
+	if (!hasNext) std::cout << node->value << " ";
+	if (hasNext) printItemsOnLevel(node->right, level, curLevel + 1);
+}
+
 void inOrder(dg::Tree::Node* node, std::vector<int>& way) {
 	if (!node) return;
 
 	inOrder(node->left, way);
 	way.push_back(node->value);
-
 	inOrder(node->right, way);
 }
 
