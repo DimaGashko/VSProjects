@@ -2,16 +2,14 @@
 
 namespace dg {
 
-	Tree::Tree() {
+	Tree::Tree(): 
+		m_root(new Node())
+	{
 
 	}
 
-	Tree::Node* Tree::getLeft() {
-		return m_left;
-	}
-
-	Tree::Node* Tree::getRight() {
-		return m_right;
+	Tree::Node* Tree::getRoot() {
+		return m_root;
 	}
 
 	Tree::~Tree() {

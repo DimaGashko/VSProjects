@@ -2,12 +2,16 @@
 #include <vector>
 #include <string>
 
+#include "Tree.hpp"
+
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
 	
+	dg::Tree tree;
 
+	
 
 	return 0;
 }
