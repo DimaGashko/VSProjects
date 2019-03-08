@@ -13,6 +13,7 @@ void printHello();
 void run();
 
 std::vector<int> getNumberToSort();
+void addNumbersToSearchTree(dg::Tree& tree, int num);
 
 int main() {
 	printHello();
@@ -24,10 +25,17 @@ int main() {
 
 void run() {
 	dg::Tree tree;
-	
 	auto numbers = getNumberToSort();
 
-	printArr(numbers);
+	for (auto& num : numbers) {
+		addNumbersToSearchTree(tree, num);
+	}
+	
+	std::vector<int> sortedNumbers;
+	inOrder(tree.getRoot(), sortedNumbers);
+
+	std::cout << "Sorted items:\n";
+	printArr(sortedNumbers);
 }
 
 std::vector<int> getNumberToSort() {
@@ -41,6 +49,24 @@ std::vector<int> getNumberToSort() {
 	}
 
 	return numbers;
+}
+
+void addNumbersToSearchTree(dg::Tree &tree, int num) {
+	auto newNode = new dg::Tree::Node(num);
+	auto next = tree.getRoot();
+	dg::Tree::Node* prev = next;
+
+	while (next) {
+		prev = next;
+		next = (num < next->value) ? next->left : next->right;
+	}
+
+	if (num < prev->value) {
+		prev->left = newNode;
+	}
+	else {
+		prev->right = newNode;
+	}
 }
 
 void inOrder(dg::Tree::Node * node, std::vector<int> & way) {
