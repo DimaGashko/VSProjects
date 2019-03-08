@@ -11,7 +11,8 @@ void run();
 void printHello();
 std::list<Edge> getEdges(int verticesCount);
 bool isCorrectEgde(Edge& edge, int verticesCount);
-std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount);
+
+std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount, int vertex);
 
 template <typename T>
 T prompt(const char label[]);
@@ -32,7 +33,7 @@ int main() {
 	return 0;
 }
 
-std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount) {
+std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount, int vertex) {
 	std::vector<int> a;
 
 	return a;
@@ -40,9 +41,20 @@ std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount) {
 
 void run() {
 	int verticesCount = prompt<int>("Enter the number of vertices: ");
-
 	auto edges = getEdges(verticesCount);
-	auto minDistances = Dijkstra(edges, verticesCount);
+	int findingVertex = -1;
+
+	while (true) {
+		findingVertex = prompt<int>("\nEnter the number of finding vertex: ") - 1;
+
+		if (findingVertex >= 0 && findingVertex < verticesCount) {
+			break;
+		}
+
+		std::cout << "Wrong vertex number:\n";
+	}
+
+	auto minDistances = Dijkstra(edges, verticesCount, findingVertex);
 
 	std::cout << "\nResults (vectex: minimal distance):\n";
 
