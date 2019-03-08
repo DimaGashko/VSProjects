@@ -9,8 +9,8 @@ struct Edge {
 
 void run();
 void printHello();
-std::list<Edge> getEdges();
-
+std::list<Edge> getEdges(int verticesCount);
+bool isCorrectEgde(Edge& edge, int verticesCount);
 std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount);
 
 template <typename T>
@@ -41,7 +41,7 @@ std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount) {
 void run() {
 	int verticesCount = prompt<int>("Enter the number of vertices: ");
 
-	auto edges = getEdges();
+	auto edges = getEdges(verticesCount);
 	auto minDistances = Dijkstra(edges, verticesCount);
 
 	std::cout << "\nResults (vectex: minimal distance):\n";
@@ -51,22 +51,35 @@ void run() {
 	}
 }
 
-std::list<Edge> getEdges() {
+std::list<Edge> getEdges(int verticesCount) {
 	int size = prompt<unsigned short>("Enter the number of edges: ");
 	std::list<Edge> edges;
 
 	for (int i = 0; i < size; i++) {
 		std::cout << "- Edge " << i + 1 << std::endl;
-		
+
 		Edge edge;
 		edge.a = prompt<int>("From: ") - 1;
 		edge.b = prompt<int>("To: ") - 1;
 		edge.w = prompt<int>("Weight: ");
-		//
+		
+		if (!isCorrectEgde(edge, verticesCount)) {
+			std::cout << "Wrong egde data. Try again:\n";
+			i--;
+
+			continue;
+		}
+
 		edges.push_back(edge);
-	}
+	} 
 
 	return edges;
+}
+
+bool isCorrectEgde(Edge &edge, int verticesCount) {
+	return edge.a >= 0 && edge.b >= 0 &&
+		edge.a < verticesCount && edge.b < verticesCount &&
+		edge.a != edge.b;
 }
 
 void printHello() {
