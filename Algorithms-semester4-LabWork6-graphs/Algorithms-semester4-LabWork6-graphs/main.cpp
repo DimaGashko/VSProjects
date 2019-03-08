@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <list>
 
 struct Edge {
 	int a, b, w;
@@ -9,10 +8,10 @@ struct Edge {
 
 void run();
 void printHello();
-std::list<Edge> getEdges(int verticesCount);
+std::vector<Edge> getEdges(int verticesCount);
 bool isCorrectEgde(Edge& edge, int verticesCount);
 
-std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount, int vertex);
+std::vector<int> Dijkstra(std::vector<Edge> edges, int verticesCount, int vertex);
 
 template <typename T>
 T prompt(const char label[]);
@@ -33,9 +32,26 @@ int main() {
 	return 0;
 }
 
-std::vector<int> Dijkstra(std::list<Edge> edges, int verticesCount, int vertex) {
+std::vector<int> Dijkstra(std::vector<Edge> edges, int verticesCount, int vertex) {
 	std::vector<int> distances(verticesCount);
 	std::vector<bool> doneVertices(verticesCount);
+	int inf = 2'000'000'000;
+	int current = vertex;
+
+	doneVertices[vertex] = true;
+
+	for (int i = 0; i < verticesCount; i++) {
+		if (doneVertices[i]) continue;
+
+		distances[i] = inf;
+
+		for (auto& e : edges) {
+			if (e.a != current || e.b != i) continue;
+
+			distances[i] = e.w;
+			break;
+		}
+	}
 
 	return distances;
 }
@@ -64,9 +80,9 @@ void run() {
 	}
 }
 
-std::list<Edge> getEdges(int verticesCount) {
+std::vector<Edge> getEdges(int verticesCount) {
 	int size = prompt<unsigned short>("Enter the number of edges: ");
-	std::list<Edge> edges;
+	std::vector<Edge> edges;
 
 	for (int i = 0; i < size; i++) {
 		std::cout << "- Edge " << i + 1 << std::endl;
