@@ -26,11 +26,15 @@ void run() {
 	dg::Tree tree;
 	
 	auto numbers = getNumberToSort();
+
+	printArr(numbers);
 }
 
 std::vector<int> getNumberToSort() {
-	auto size = prompt<int>("Enter number of a number to sort");
+	auto size = prompt<int>("Enter the number of a numbers to sort: ");
 	std::vector<int> numbers(size);
+
+	std::cout << "Enter numbers to sort:\n";
 
 	for (auto& num : numbers) {
 		std::cin >> num;
