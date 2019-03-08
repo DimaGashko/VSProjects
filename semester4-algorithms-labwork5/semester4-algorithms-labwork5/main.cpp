@@ -7,6 +7,8 @@
 template <typename T>
 T prompt(const char label[]);
 
+void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way);
+
 int main() {
 	
 	dg::Tree tree;
@@ -36,8 +38,24 @@ int main() {
 
 	v7->left = v1;
 	v7->right = v4;
+
+	std::vector<int> way;
+	preOrder(&root, 4, way);
+
+	for (auto& item : way) {
+		std::cout << item << " ";
+	}
+
 	system("pause");
 	return 0;
+}
+
+void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way) {
+	if (!node || (!way.empty() && way.back() == item)) return;
+	way.push_back(node->value);
+
+	preOrder(node->left, item, way);
+	preOrder(node->right, item, way);
 }
 
 template <typename T>
