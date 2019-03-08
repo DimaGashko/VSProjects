@@ -7,31 +7,43 @@
 template <typename T>
 T prompt(const char label[]);
 
-void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way);
+void preOrderSearch(dg::Tree::Node* node, int item, std::vector<int>& way);
+void preOrder(dg::Tree::Node* node, std::vector<int>& way);
 void getTree(dg::Tree& tree);
+void printArr(std::vector<int> arr);
 
 int main() {
 	
 	dg::Tree tree;
+	std::vector<int> items, wayToNum;
+
 	getTree(tree);
+	preOrder(tree.getRoot(), items);
+	preOrderSearch(tree.getRoot(), 7, wayToNum);
 
-	std::vector<int> way;
-	preOrder(tree.getRoot(), 7, way);
+	printArr(items);
+	printArr(wayToNum);
 
-	for (auto& item : way) {
-		std::cout << item << " ";
-	}
+
 
 	system("pause");
 	return 0;
 }
 
-void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way) {
+void preOrderSearch(dg::Tree::Node* node, int item, std::vector<int>& way) {
 	if (!node || (!way.empty() && way.back() == item)) return;
 	way.push_back(node->value);
 
-	preOrder(node->left, item, way);
-	preOrder(node->right, item, way);
+	preOrderSearch(node->left, item, way);
+	preOrderSearch(node->right, item, way);
+}
+
+void preOrder(dg::Tree::Node* node, std::vector<int>& way) {
+	if (!node) return;
+	way.push_back(node->value);
+
+	preOrder(node->left, way);
+	preOrder(node->right, way);
 }
 
 void getTree(dg::Tree& tree) {
@@ -59,6 +71,14 @@ void getTree(dg::Tree& tree) {
 
 	v7->left = v1;
 	v7->right = v4;
+}
+
+void printArr(std::vector<int> arr) {
+	for (auto &item : arr) {
+		std::cout << item << " ";
+	}
+
+	std::cout << std::endl;
 }
 
 template <typename T>
