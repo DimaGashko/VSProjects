@@ -102,7 +102,10 @@ void run() {
 	std::cout << "\nResults:\n";
 
 	for (int i = 0; i < (int)minDistances.size(); i++) {
-		std::cout << "To vertex " << i + 1 << ": " << minDistances[i] << std::endl;
+		std::string distance = (minDistances[i] < INF) ?
+			std::to_string(minDistances[i]) : "Impossible";
+
+		std::cout << "To vertex " << i + 1 << ": " << distance << std::endl;
 	}
 }
 
