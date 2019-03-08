@@ -83,7 +83,7 @@ int getNextCurrect(std::vector<int> &distances, std::vector<bool> &doneVertices)
 }
 
 void run() {
-	/*int verticesCount = prompt<int>("Enter the number of vertices: ");
+	int verticesCount = prompt<int>("Enter the number of vertices: ");
 	auto edges = getEdges(verticesCount);
 	int findingVertex = -1;
 
@@ -95,20 +95,10 @@ void run() {
 		}
 
 		std::cout << "Wrong vertex number:\n";
-	}*/
+	}
 
-	//auto minDistances = Dijkstra(edges, verticesCount, findingVertex);
-	std::vector<Edge> edges(8);
-	edges[0] = { 1 - 1, 2 - 1, 2 };
-	edges[1] = { 1 - 1, 3 - 1, 4 };
-	edges[2] = { 2 - 1, 3 - 1, 1 };
-	edges[3] = { 2 - 1, 4 - 1, 7 };
-	edges[4] = { 3 - 1, 5 - 1, 3 };
-	edges[5] = { 4 - 1, 6 - 1, 1 };
-	edges[6] = { 5 - 1, 4 - 1, 2 };
-	edges[7] = { 5 - 1, 6 - 1, 5 };
+	auto minDistances = Dijkstra(edges, verticesCount, findingVertex);
 
-	auto minDistances = Dijkstra(edges, 6, 0);
 	std::cout << "\nResults:\n";
 
 	for (int i = 0; i < (int)minDistances.size(); i++) {
