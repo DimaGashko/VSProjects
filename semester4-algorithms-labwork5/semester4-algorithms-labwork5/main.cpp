@@ -8,39 +8,15 @@ template <typename T>
 T prompt(const char label[]);
 
 void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way);
+void getTree(dg::Tree& tree);
 
 int main() {
 	
 	dg::Tree tree;
-
-	auto root = tree.getRoot();
-	dg::Tree::Node *v1, *v2, *v3, *v4, *v5, *v6, *v7, *v8;
-
-	v1 = new dg::Tree::Node(2);
-	v2 = new dg::Tree::Node(4);
-	v3 = new dg::Tree::Node(6);
-	v4 = new dg::Tree::Node(8);
-	v5 = new dg::Tree::Node(10);
-	v6 = new dg::Tree::Node(12);
-	v7 = new dg::Tree::Node(14);
-	v8 = new dg::Tree::Node(16);
-
-	root.value = 99;
-
-	root.left = v2;
-	root.right = v5;
-
-	v2->left = v3;
-	v2->right = v8;
-
-	v5->left = v6;
-	v5->right = v7;
-
-	v7->left = v1;
-	v7->right = v4;
+	getTree(tree);
 
 	std::vector<int> way;
-	preOrder(&root, 4, way);
+	preOrder(tree.getRoot(), 7, way);
 
 	for (auto& item : way) {
 		std::cout << item << " ";
@@ -56,6 +32,33 @@ void preOrder(dg::Tree::Node* node, int item, std::vector<int>& way) {
 
 	preOrder(node->left, item, way);
 	preOrder(node->right, item, way);
+}
+
+void getTree(dg::Tree& tree) {
+	auto root = tree.getRoot();
+
+	auto* v1 = new dg::Tree::Node(1);
+	auto* v2 = new dg::Tree::Node(2);
+	auto* v3 = new dg::Tree::Node(3);
+	auto* v4 = new dg::Tree::Node(4);
+	auto* v5 = new dg::Tree::Node(5);
+	auto* v6 = new dg::Tree::Node(6);
+	auto* v7 = new dg::Tree::Node(7);
+	auto* v8 = new dg::Tree::Node(8);
+
+	root->value = 10;
+
+	root->left = v2;
+	root->right = v5;
+
+	v2->left = v3;
+	v2->right = v8;
+
+	v5->left = v6;
+	v5->right = v7;
+
+	v7->left = v1;
+	v7->right = v4;
 }
 
 template <typename T>

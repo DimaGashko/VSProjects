@@ -15,7 +15,7 @@ namespace dg {
 
 		Tree();
 
-		Node getRoot();
+		Node* getRoot();
 
 		~Tree();
 

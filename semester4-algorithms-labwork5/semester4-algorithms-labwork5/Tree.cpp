@@ -6,8 +6,8 @@ namespace dg {
 
 	}
 
-	Tree::Node Tree::getRoot() {
-		return m_root;
+	Tree::Node* Tree::getRoot() {
+		return &m_root;
 	}
 
 	Tree::~Tree() {
