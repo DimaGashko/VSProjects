@@ -16,14 +16,18 @@ namespace dg {
 		Tree() {};
 
 		Node* getRoot() {
-			return &m_root;
+			return m_root;
+		}
+
+		void setRoot(Node* node) {
+			m_root = node;
 		}
 
 		~Tree() {};
 
 	private:
 
-		Node m_root;
+		Node* m_root = nullptr;
 
 	};
 
