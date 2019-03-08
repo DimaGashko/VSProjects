@@ -39,8 +39,9 @@ void run() {
 	printArr(sortedNumbers);
 
 	while (true) {
+		std::cout << std::endl;
 		int level = prompt<int>("Enter a level: ") - 1;
-		std::cout << "Elements on level " << level << ":\n";
+		std::cout << "Elements on level " << level + 1 << ": ";
 
 		printItemsOnLevel(tree.getRoot(), level);
 		std::cout << std::endl;
