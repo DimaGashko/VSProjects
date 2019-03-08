@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 
+int const INF = 2'000'000'000;
+
 struct Edge {
 	int a, b, w;
 };
@@ -12,6 +14,7 @@ std::vector<Edge> getEdges(int verticesCount);
 bool isCorrectEgde(Edge& edge, int verticesCount);
 
 std::vector<int> Dijkstra(std::vector<Edge> edges, int verticesCount, int vertex);
+int getNextCurrect(std::vector<int>& distances, std::vector<bool>& doneVertices);
 
 template <typename T>
 T prompt(const char label[]);
@@ -35,25 +38,46 @@ int main() {
 std::vector<int> Dijkstra(std::vector<Edge> edges, int verticesCount, int vertex) {
 	std::vector<int> distances(verticesCount);
 	std::vector<bool> doneVertices(verticesCount);
-	int inf = 2'000'000'000;
 	int current = vertex;
 
-	doneVertices[vertex] = true;
+	for (auto &item : distances) {
+		item = INF;
+	}
 
-	for (int i = 0; i < verticesCount; i++) {
-		if (doneVertices[i]) continue;
+	distances[current] = 0;
 
-		distances[i] = inf;
+	while (current != -1) {
+		doneVertices[current] = true;
 
-		for (auto& e : edges) {
-			if (e.a != current || e.b != i) continue;
+		for (int i = 0; i < verticesCount; i++) {
+			if (doneVertices[i]) continue;
 
-			distances[i] = e.w;
-			break;
+			for (auto& e : edges) {
+				if (e.a != current || e.b != i) continue;
+				if (e.w >= distances[i]) continue;
+					
+				distances[i] = e.w;
+				break;
+			}
 		}
+
+		current = getNextCurrect(distances, doneVertices);
 	}
 
 	return distances;
+}
+
+int getNextCurrect(std::vector<int> &distances, std::vector<bool> &doneVertices) {
+	int min = INF;
+
+	for (int i = 0; i < (int)distances.size(); i++) {
+		if (doneVertices[i]) continue;
+		if (distances[i] >= min) continue;
+
+		min = distances[i];
+	}
+
+	return (min < INF) ? min : -1;
 }
 
 void run() {
@@ -75,7 +99,7 @@ void run() {
 
 	std::cout << "\nResults:\n";
 
-	for (int i = 0; i < minDistances.size(); i++) {
+	for (int i = 0; i < (int)minDistances.size(); i++) {
 		std::cout << "To vertex " << i + 1 << ": " << minDistances[i] << std::endl;
 	}
 }
