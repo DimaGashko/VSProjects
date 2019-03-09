@@ -6,6 +6,7 @@
 #include <regex>
 
 void readWordsFromFile(std::vector<std::string> &words, const std::string url);
+std::map<std::string, int> getMapOfWords(std::vector<std::string> &words);
 
 template <typename T>
 T prompt(const char label[]);
@@ -14,15 +15,20 @@ int main() {
 	std::vector<std::string> words(2000);
 	readWordsFromFile(words, "loremText2000.txt");
 
-	
-	for (auto &word : words) {
-		std::cout << word << " ";
-	}
-
-	std::cout << std::endl;
+	auto mapOfWords = getMapOfWords(words);
 
 	system("pause");
 	return  0;
+}
+
+std::map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
+	std::map<std::string, int> mapOfWords;
+
+	for (auto& word : words) {
+		mapOfWords[word] = mapOfWords[word] + 1;
+	}
+
+	return mapOfWords;
 }
 
 void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
