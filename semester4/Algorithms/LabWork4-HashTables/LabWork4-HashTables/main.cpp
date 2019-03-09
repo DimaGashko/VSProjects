@@ -10,17 +10,26 @@ std::vector<std::string> readWordsFromFile(const std::string url, int count);
 std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string> &words);
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string>& words);
 
+void printTopOfWords(std::vector<std::string> &words, int wordsInTop = 20);
+
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
 	auto words = readWordsFromFile("loremText2000.txt", 2000);
-	auto frequency = getWordsFrequency(words);
-
-	printTopWords();
+	printTopOfWords(words, words.size() - 1);
 
 	system("pause");
 	return  0;
+}
+
+void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
+	const auto frequency = getWordsFrequency(words);
+	const auto topSize = std::min(wordsInTop, static_cast<int>(frequency.size()));
+
+	for (int i = 0; i < topSize; i++) {
+		std::cout << frequency[i].first << ": " << frequency[i].second << std::endl;
+	}
 }
 
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
