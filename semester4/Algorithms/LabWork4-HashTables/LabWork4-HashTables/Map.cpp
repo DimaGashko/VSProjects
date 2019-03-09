@@ -16,14 +16,23 @@ namespace dg {
 	}
 
 	void Map::set(std::string &key, int val) {
-		m_map[key] = val;
+		auto &item = m_slots[hash(key)];
+
+		if (item.first.empty()) {
+			m_size++;
+		}
+
+		item.first = key;
+		item.second = val;
 	}
 
 	int Map::get(std::string &key) {
-		return m_map[key];
+		const auto &item = m_slots[hash(key)];
+
+		return item.second;
 	}
 
-	int Map::getHash(std::string& key) const {
+	int Map::hash(std::string& key) const {
 		int hash = 0;
 
 		for (auto c : key) { 
@@ -35,8 +44,15 @@ namespace dg {
 		return hash;
 	}
 
-	std::vector<std::pair<std::string, int>> Map::toVector()	{
-		std::vector<std::pair<std::string, int>> vec(m_map.begin(), m_map.end());
+	std::vector<Map::Slot> Map::toVector()	{
+		std::vector<Slot> vec(m_size);
+		int index = 0;
+
+		for (auto &slot : m_slots) {
+			if (slot.first.empty()) continue;
+
+			vec[index++] = slot;
+		}
 
 		return vec;
 	}

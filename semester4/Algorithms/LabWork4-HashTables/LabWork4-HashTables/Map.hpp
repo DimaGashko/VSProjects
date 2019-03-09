@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <string>
 #include <vector>
 
@@ -8,24 +7,26 @@ namespace dg {
 
 	class Map {
 	public:
+
+		typedef std::pair<std::string, int> Slot;
+
 		Map();
 		Map(int capacity);
 
 		void set(std::string &key, int val);
 		int get(std::string &key);
 
-		std::vector<std::pair<std::string, int>> toVector();
+		std::vector<Slot> toVector();
 
 		~Map();
 
 	private:
 		int m_capacity;
+		int m_size = 0;
 
-		std::vector<std::pair<std::string, int>> m_slots;
+		std::vector<Slot> m_slots;
 
-		std::map<std::string, int> m_map;
-
-		int getHash(std::string &key) const;
+		int hash(std::string &key) const;
 	};
 
 }; 
