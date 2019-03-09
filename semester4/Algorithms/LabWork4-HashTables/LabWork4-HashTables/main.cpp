@@ -4,11 +4,12 @@
 #include <vector>
 #include <string>
 #include <regex>
-#include <unordered_map>
 #include <sstream>
 
+#include "Map.hpp"
+
 std::vector<std::string> readWordsFromFile(const std::string url, int count);
-std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string> &words);
+dg::Map getMapOfWords(std::vector<std::string> &words);
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string>& words);
 
 void printTopOfWords(std::vector<std::string> &words, int wordsInTop = 20);
@@ -49,10 +50,7 @@ void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
 
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
 	auto mapOfWords = getMapOfWords(words);
-	
-	std::vector<std::pair<std::string, int>> frequency(
-		mapOfWords.begin(), mapOfWords.end()
-	);
+	auto frequency = mapOfWords.toVector();
 	
 	static auto comparator = [](
 		const std::pair<std::string, int> &a, 
@@ -66,11 +64,11 @@ std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::stri
 	return frequency;
 }
 
-std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
-	std::unordered_map<std::string, int> mapOfWords;
+dg::Map getMapOfWords(std::vector<std::string>& words) {
+	dg::Map mapOfWords;
 
 	for (auto& word : words) {
-		mapOfWords[word] = mapOfWords[word] + 1;
+		mapOfWords.set(word, mapOfWords.get(word) + 1);
 	}
 
 	return mapOfWords;
