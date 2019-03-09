@@ -16,10 +16,16 @@ int main() {
 	std::vector<std::string> words(2000);
 	readWordsFromFile(words, "loremText2000.txt");
 
-	auto mapOfWords = getMapOfWords(words);
-
 	system("pause");
 	return  0;
+}
+
+std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
+	auto mapOfWords = getMapOfWords(words);
+	std::vector<std::pair<std::string, int>> frequency(mapOfWords.begin(), mapOfWords.end());
+
+
+
 }
 
 std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
