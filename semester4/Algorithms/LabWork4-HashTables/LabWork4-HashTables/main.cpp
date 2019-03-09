@@ -13,8 +13,8 @@ template <typename T>
 T prompt(const char label[]);
 
 int main() {
-	std::vector<std::string> words(100000);
-	readWordsFromFile(words, "loremText100000.txt");
+	std::vector<std::string> words(2000);
+	readWordsFromFile(words, "loremText2000.txt");
 
 	auto mapOfWords = getMapOfWords(words);
 
@@ -44,7 +44,7 @@ void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 
 	for (auto& word : words) {
 		if (!(fin >> next)) break;
-		//std::transform(next.begin(), next.end(), next.begin(), ::tolower);
+		std::transform(next.begin(), next.end(), next.begin(), ::tolower);
 
 		word = std::regex_replace(next, wordRegex, "");
 	}
