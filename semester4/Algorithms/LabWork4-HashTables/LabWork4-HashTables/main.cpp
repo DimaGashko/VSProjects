@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <map>
@@ -39,11 +40,14 @@ void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 		throw std::runtime_error("Can't open the file");
 	}
 
-	std::string nextWord;
+	std::string next;
 
 	for (auto& word : words) {
-		if (!(fin >> nextWord)) break;
-		word = std::regex_replace(nextWord, wordRegex, "");
+		if (!(fin >> next)) break;
+		next = std::regex_replace(next, wordRegex, "");
+		std::transform(next.begin(), next.end(), next.begin(), ::tolower);
+
+		word = next;
 	}
 
 	fin.close();
