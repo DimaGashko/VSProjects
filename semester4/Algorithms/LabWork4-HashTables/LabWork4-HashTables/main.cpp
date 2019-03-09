@@ -13,17 +13,27 @@ std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::stri
 
 void printTopOfWords(std::vector<std::string> &words, int wordsInTop = 20);
 
+void printHello();
+void run();
+
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
-	auto words = readWordsFromFile("loremText100000.txt", 100000);
-
-	std::cout << "Most common words in the text:\n";
-	printTopOfWords(words, 20);
+	printHello();
+	run();
 
 	system("pause");
 	return  0;
+}
+
+void run() {
+	auto words = readWordsFromFile("loremText2000.txt", 2000);
+
+	const int wordsInTop = prompt<unsigned short>("Enter the number of words in the TOP: ");
+	std::cout << "The most common words in the text: \n";
+
+	printTopOfWords(words, wordsInTop);
 }
 
 void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
@@ -31,19 +41,19 @@ void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
 	const auto topSize = std::min(wordsInTop, static_cast<int>(frequency.size()));
 
 	for (int i = 0; i < topSize; i++) {
-		std::cout << "- " << frequency[i].first << ": " << frequency[i].second << std::endl;
+		std::cout << " - " << frequency[i].first << ": " << frequency[i].second << std::endl;
 	}
 
-	
+	std::cout << std::endl;
 }
 
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
 	auto mapOfWords = getMapOfWords(words);
-
+	
 	std::vector<std::pair<std::string, int>> frequency(
 		mapOfWords.begin(), mapOfWords.end()
 	);
-
+	
 	static auto comparator = [](
 		const std::pair<std::string, int> &a, 
 		const std::pair<std::string, int> b
@@ -67,7 +77,7 @@ std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& wor
 }
 
 std::vector<std::string> readWordsFromFile(const std::string url, int count) {
-	static const std::regex wordRegex("[.,;-\?]");
+	static const std::regex wordRegex("[.,;-\?!]");
 	std::vector<std::string> words(count);
 	std::ifstream fin(url);
 	
@@ -95,6 +105,11 @@ std::vector<std::string> readWordsFromFile(const std::string url, int count) {
 	fin.close();
 	return words;
 }
+
+void printHello() {
+	std::cout << "* * * Algorithms: Hash Tables * * *\n\n";
+}
+
 
 template <typename T>
 T prompt(const char label[]) {
