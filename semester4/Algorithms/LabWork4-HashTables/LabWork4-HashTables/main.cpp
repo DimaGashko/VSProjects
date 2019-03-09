@@ -3,18 +3,18 @@
 #include <algorithm>
 #include <vector>
 #include <string>
-#include <map>
 #include <regex>
+#include <unordered_map>
 
 void readWordsFromFile(std::vector<std::string> &words, const std::string url);
-std::map<std::string, int> getMapOfWords(std::vector<std::string> &words);
+std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string> &words);
 
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
-	std::vector<std::string> words(2000);
-	readWordsFromFile(words, "loremText2000.txt");
+	std::vector<std::string> words(100000);
+	readWordsFromFile(words, "loremText100000.txt");
 
 	auto mapOfWords = getMapOfWords(words);
 
@@ -22,8 +22,8 @@ int main() {
 	return  0;
 }
 
-std::map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
-	std::map<std::string, int> mapOfWords;
+std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
+	std::unordered_map<std::string, int> mapOfWords;
 
 	for (auto& word : words) {
 		mapOfWords[word] = mapOfWords[word] + 1;
@@ -44,10 +44,9 @@ void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 
 	for (auto& word : words) {
 		if (!(fin >> next)) break;
-		next = std::regex_replace(next, wordRegex, "");
-		std::transform(next.begin(), next.end(), next.begin(), ::tolower);
+		//std::transform(next.begin(), next.end(), next.begin(), ::tolower);
 
-		word = next;
+		word = std::regex_replace(next, wordRegex, "");
 	}
 
 	fin.close();
