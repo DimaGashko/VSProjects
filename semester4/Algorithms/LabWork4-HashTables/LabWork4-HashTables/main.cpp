@@ -31,7 +31,7 @@ int main() {
 void run() {
 	auto words = readWordsFromFile("loremText2000.txt", 2000);
 
-	const int wordsInTop = prompt<unsigned short>("Enter the number of words in the TOP: ");
+	const int wordsInTop = words.size();//prompt<unsigned short>("Enter the number of words in the TOP: ");
 	std::cout << "The most common words in the text: \n";
 
 	printTopOfWords(words, wordsInTop);
