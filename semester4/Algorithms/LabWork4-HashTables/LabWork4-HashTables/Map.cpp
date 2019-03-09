@@ -23,6 +23,18 @@ namespace dg {
 		return m_map[key];
 	}
 
+	int Map::getHash(std::string& key) const {
+		int hash = 0;
+
+		for (auto c : key) { 
+			hash += static_cast<int>(c);
+		}
+
+		hash = hash % m_capacity;
+
+		return hash;
+	}
+
 	std::vector<std::pair<std::string, int>> Map::toVector()	{
 		std::vector<std::pair<std::string, int>> vec(m_map.begin(), m_map.end());
 
