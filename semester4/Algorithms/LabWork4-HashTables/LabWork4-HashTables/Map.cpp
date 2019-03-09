@@ -19,10 +19,8 @@ namespace dg {
 	void Map::set(std::string &key, int val) {
 		checkKey(key);
 
-		int index = hash(key);
-
 		for (int i = 0; i < m_capacity; i++) {
-			auto& item = m_slots[index];
+			auto& item = m_slots[hash(key, i)];
 
 			if (item.first == key || item.first.empty()) {
 				item.first = key;
@@ -31,7 +29,6 @@ namespace dg {
 				return;
 			}
 
-			index = (index + 1) % m_capacity;
 		}
 
 		throw std::runtime_error("Map is full");
@@ -40,22 +37,18 @@ namespace dg {
 	int Map::get(std::string &key) {
 		checkKey(key);
 
-		int index = hash(key);
-
 		for (int i = 0; i < m_capacity; i++) {
-			const auto& item = m_slots[index];
+			const auto& item = m_slots[hash(key, i)];
 
 			if (item.first == key || item.first.empty()) {
 				return item.second;
 			}
-
-			index = (index + 1) % m_capacity;
 		}
 
 		return 0;
 	}
 
-	int Map::hash(std::string& key) const {
+	int Map::hash(std::string& key, int i) const {
 		static int d = 256;
 		int hash = 0;
 
@@ -65,7 +58,7 @@ namespace dg {
 
 		hash = hash % m_capacity;
 
-		return hash;
+		return (hash + i) % m_capacity;
 	}
 
 	std::vector<Map::Slot> Map::toVector()	{

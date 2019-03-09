@@ -25,7 +25,7 @@ namespace dg {
 
 		std::vector<Slot> m_slots;
 
-		int hash(std::string &key) const;
+		int hash(std::string &key, int i) const;
 
 		static void checkKey(std::string &key);
 	};
