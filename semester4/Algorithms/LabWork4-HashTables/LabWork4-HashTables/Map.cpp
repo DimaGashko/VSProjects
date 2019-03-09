@@ -27,11 +27,14 @@ namespace dg {
 			if (item.first == key || item.first.empty()) {
 				item.first = key;
 				item.second = val;
+
+				return;
 			}
 
 			index = (index + 1) % m_capacity;
 		}
 
+		throw std::runtime_error("Map is full");
 	}
 
 	int Map::get(std::string &key) {
