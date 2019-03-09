@@ -1,4 +1,5 @@
 #include "Map.hpp"
+#include <stdexcept>
 
 namespace dg {
 
@@ -16,6 +17,8 @@ namespace dg {
 	}
 
 	void Map::set(std::string &key, int val) {
+		checkKey(key);
+
 		auto &item = m_slots[hash(key)];
 
 		if (item.first.empty()) {
@@ -27,7 +30,10 @@ namespace dg {
 	}
 
 	int Map::get(std::string &key) {
+		checkKey(key);
+
 		const auto &item = m_slots[hash(key)];
+		
 
 		return item.second;
 	}
@@ -55,6 +61,10 @@ namespace dg {
 		}
 
 		return vec;
+	}
+
+	void Map::checkKey(std::string& key) {
+		if (key.empty()) throw std::runtime_error("The key can't be empty");
 	}
 
 	Map::~Map() = default;
