@@ -22,11 +22,12 @@ namespace dg {
 
 	private:
 		int m_capacity;
-		int m_size = 0;
 
 		std::vector<Slot> m_slots;
 
 		int hash(std::string &key) const;
+
+		static void checkKey(std::string &key);
 	};
 
 }; 

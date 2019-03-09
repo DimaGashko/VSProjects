@@ -19,10 +19,19 @@ namespace dg {
 	void Map::set(std::string &key, int val) {
 		checkKey(key);
 
-		auto &item = m_slots[hash(key)];
+		int index = hash(key);
 
-		item.first = key;
-		item.second = val;
+		for (int i = 0; i < m_capacity; i++) {
+			auto& item = m_slots[index];
+
+			if (item.first == key || item.first.empty()) {
+				item.first = key;
+				item.second = val;
+			}
+
+			index = (index + 1) % m_capacity;
+		}
+
 	}
 
 	int Map::get(std::string &key) {
