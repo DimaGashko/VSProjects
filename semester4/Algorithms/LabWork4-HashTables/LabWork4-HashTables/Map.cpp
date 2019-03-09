@@ -21,10 +21,6 @@ namespace dg {
 
 		auto &item = m_slots[hash(key)];
 
-		if (item.first.empty()) {
-			m_size++;
-		}
-
 		item.first = key;
 		item.second = val;
 	}
@@ -32,10 +28,19 @@ namespace dg {
 	int Map::get(std::string &key) {
 		checkKey(key);
 
-		const auto &item = m_slots[hash(key)];
-		
+		int index = hash(key);
 
-		return item.second;
+		for (int i = 0; i < m_capacity; i++) {
+			const auto& item = m_slots[index];
+
+			if (item.first == key) {
+				return item.second;
+			}
+
+			index = (index + 1) % m_capacity;
+		}
+
+		return 0;
 	}
 
 	int Map::hash(std::string& key) const {
@@ -51,13 +56,12 @@ namespace dg {
 	}
 
 	std::vector<Map::Slot> Map::toVector()	{
-		std::vector<Slot> vec(m_size);
-		int index = 0;
+		std::vector<Slot> vec;
 
 		for (auto &slot : m_slots) {
 			if (slot.first.empty()) continue;
 
-			vec[index++] = slot;
+			vec.push_back(slot);
 		}
 
 		return vec;
