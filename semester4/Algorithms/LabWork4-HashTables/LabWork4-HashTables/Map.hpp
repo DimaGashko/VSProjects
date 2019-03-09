@@ -21,6 +21,8 @@ namespace dg {
 	private:
 		int m_capacity;
 
+		std::vector<std::pair<std::string, int>> m_slots;
+
 		std::map<std::string, int> m_map;
 	};
 

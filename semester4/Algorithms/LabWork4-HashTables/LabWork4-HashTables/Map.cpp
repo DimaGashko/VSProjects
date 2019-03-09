@@ -3,13 +3,14 @@
 namespace dg {
 
 	Map::Map() : 
-		m_capacity(1000)
+		Map(1000)
 	{
-		
+
 	}
 
 	Map::Map(int capacity) :
-		m_capacity(capacity)
+		m_capacity(capacity),
+		m_slots(m_capacity)
 	{
 
 	}
