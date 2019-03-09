@@ -11,7 +11,7 @@ T prompt(const char label[]);
 
 int main() {
 	std::vector<std::string> words(2000);
-	readWordsFromFile(words, "loremText2000.txt");
+	readWordsFromFile(words, "loremText10000.txt");
 
 	std::cout << words.size() << std::endl;
 
@@ -21,8 +21,8 @@ int main() {
 
 void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 	std::ifstream fin(url);
-
-	if (!fin) {
+	
+	if (!fin.is_open()) {
 		throw std::runtime_error("Can't open the file");
 	}
 
