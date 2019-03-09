@@ -17,15 +17,23 @@ int main() {
 	auto words = readWordsFromFile("loremText2000.txt", 2000);
 	auto frequency = getWordsFrequency(words);
 
+	printTopWords();
+
 	system("pause");
 	return  0;
 }
 
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
 	auto mapOfWords = getMapOfWords(words);
-	std::vector<std::pair<std::string, int>> frequency(mapOfWords.begin(), mapOfWords.end());
 
-	static auto comparator = [](std::pair<std::string, int> a, std::pair<std::string, int> b) {
+	std::vector<std::pair<std::string, int>> frequency(
+		mapOfWords.begin(), mapOfWords.end()
+	);
+
+	static auto comparator = [](
+		const std::pair<std::string, int> &a, 
+		const std::pair<std::string, int> b
+	) {
 		return a.second > b.second;
 	};
 
