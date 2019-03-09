@@ -6,15 +6,16 @@
 #include <regex>
 #include <unordered_map>
 
-void readWordsFromFile(std::vector<std::string> &words, const std::string url);
+std::vector<std::string> readWordsFromFile(const std::string url, int count);
 std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string> &words);
+std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string>& words);
 
 template <typename T>
 T prompt(const char label[]);
 
 int main() {
-	std::vector<std::string> words(2000);
-	readWordsFromFile(words, "loremText2000.txt");
+	auto words = readWordsFromFile("loremText2000.txt", 2000);
+	auto frequency = getWordsFrequency(words);
 
 	system("pause");
 	return  0;
@@ -24,8 +25,13 @@ std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::stri
 	auto mapOfWords = getMapOfWords(words);
 	std::vector<std::pair<std::string, int>> frequency(mapOfWords.begin(), mapOfWords.end());
 
+	static auto comparator = [](std::pair<std::string, int> a, std::pair<std::string, int> b) {
+		return a.second > b.second;
+	};
 
+	std::sort(frequency.begin(), frequency.end(), comparator);
 
+	return frequency;
 }
 
 std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& words) {
@@ -38,8 +44,9 @@ std::unordered_map<std::string, int> getMapOfWords(std::vector<std::string>& wor
 	return mapOfWords;
 }
 
-void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
+std::vector<std::string> readWordsFromFile(const std::string url, int count) {
 	static const std::regex wordRegex("[^a-zA-Z0-9_]+");
+	std::vector<std::string> words(count);
 	std::ifstream fin(url);
 	
 	if (!fin.is_open()) {
@@ -56,6 +63,7 @@ void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 	}
 
 	fin.close();
+	return words;
 }
 
 template <typename T>
