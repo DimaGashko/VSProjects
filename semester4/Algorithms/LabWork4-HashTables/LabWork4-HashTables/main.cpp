@@ -16,8 +16,10 @@ template <typename T>
 T prompt(const char label[]);
 
 int main() {
-	auto words = readWordsFromFile("loremText2000.txt", 2000);
-	printTopOfWords(words, words.size() - 1);
+	auto words = readWordsFromFile("loremText100000.txt", 100000);
+
+	std::cout << "Most common words in the text:\n";
+	printTopOfWords(words, 20);
 
 	system("pause");
 	return  0;
@@ -28,7 +30,7 @@ void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
 	const auto topSize = std::min(wordsInTop, static_cast<int>(frequency.size()));
 
 	for (int i = 0; i < topSize; i++) {
-		std::cout << frequency[i].first << ": " << frequency[i].second << std::endl;
+		std::cout << "- " << frequency[i].first << ": " << frequency[i].second << std::endl;
 	}
 }
 
@@ -74,9 +76,9 @@ std::vector<std::string> readWordsFromFile(const std::string url, int count) {
 
 	for (auto& word : words) {
 		if (!(fin >> next)) break;
-		std::transform(next.begin(), next.end(), next.begin(), ::tolower);
 
 		word = std::regex_replace(next, wordRegex, "");
+		std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 	}
 
 	fin.close();
