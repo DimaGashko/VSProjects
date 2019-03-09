@@ -4,7 +4,7 @@
 namespace dg {
 
 	Map::Map() : 
-		Map(1000)
+		Map(1579)
 	{
 
 	}
@@ -45,7 +45,7 @@ namespace dg {
 		for (int i = 0; i < m_capacity; i++) {
 			const auto& item = m_slots[index];
 
-			if (item.first == key) {
+			if (item.first == key || item.first.empty()) {
 				return item.second;
 			}
 
@@ -56,10 +56,11 @@ namespace dg {
 	}
 
 	int Map::hash(std::string& key) const {
+		static int d = 256;
 		int hash = 0;
 
 		for (auto c : key) { 
-			hash += static_cast<int>(c);
+			hash += c * d;
 		}
 
 		hash = hash % m_capacity;
