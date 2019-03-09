@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <regex>
 
 void readWordsFromFile(std::vector<std::string> &words, const std::string url);
 
@@ -11,15 +12,21 @@ T prompt(const char label[]);
 
 int main() {
 	std::vector<std::string> words(2000);
-	readWordsFromFile(words, "loremText10000.txt");
+	readWordsFromFile(words, "loremText2000.txt");
 
-	std::cout << words.size() << std::endl;
+	
+	for (auto &word : words) {
+		std::cout << word << " ";
+	}
+
+	std::cout << std::endl;
 
 	system("pause");
 	return  0;
 }
 
 void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
+	static const std::regex wordRegex("[^a-zA-Z0-9_]+");
 	std::ifstream fin(url);
 	
 	if (!fin.is_open()) {
@@ -30,7 +37,7 @@ void readWordsFromFile(std::vector<std::string>& words, const std::string url) {
 
 	for (auto& word : words) {
 		if (!(fin >> nextWord)) break;
-		word = nextWord;
+		word = std::regex_replace(nextWord, wordRegex, "");
 	}
 
 	fin.close();
