@@ -33,8 +33,6 @@ void printTopOfWords(std::vector<std::string>& words, int wordsInTop) {
 	for (int i = 0; i < topSize; i++) {
 		std::cout << "- " << frequency[i].first << ": " << frequency[i].second << std::endl;
 	}
-
-	
 }
 
 std::vector<std::pair<std::string, int>> getWordsFrequency(std::vector<std::string> &words) {
