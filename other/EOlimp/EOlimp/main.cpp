@@ -1,71 +1,41 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
-int swapCount = 0;
-string swaps = "";
+ifstream fin("input.txt");
+ofstream fout("output.txt");
 
-void counting_sort(vector<int>& elems, int min, int max) {
-	vector<unsigned> counts(max - min + 1);
-
-	for (int elem : elems)	{
-		++counts[elem - min];
-	}
-
-	auto elemsIt = elems.begin(); //current position to write result
-	for (int i = min; i <= max; ++i) {
-		// write counts[i - min] copies of i into elems
-		fill_n(elemsIt, counts[i - min], i);
-		elemsIt += counts[i - min];
-	}
-}
-
-void quick_sort(vector<int> &arr, int l, int r) {
-	int i = l, j = r;
-	int pivot = arr[(i + j) / 2];
-
-	while (i < j) {
-		while (arr[i] < pivot) i++;
-		while (arr[j] > pivot) j--;
-		if (i > j) break;
-
-		if (arr[i] != arr[j]) {
-			swapCount++;
-			//swaps += to_string(i) + " " + to_string(j) + "\n";
-
-			int arrI = arr[i];
-			arr[i] = arr[j];
-			arr[j] = arrI;
-		}
-
-		i++; j--;
-	}
-
-	if (i < r) quick_sort(arr, i, r);
-	if (j > l) quick_sort(arr, l, j);
-}
+struct Point {
+	double x, y;
+};
 
 int main() {
-	int n;
-	cin >> n;
+	vector<Point> coords;
 
-	vector<int> arr(1000000);
+	Point tmp;
 
-	for (auto& item : arr) {
-		//cin >> item;
-		item = rand() % 1000;
+	while (fin >> tmp.x && fin >> tmp.y) {
+		coords.push_back(Point(tmp));
 	}
 
-	counting_sort(arr, 0, arr.size());
+	sort(coords.begin(), coords.end(), [](Point a, Point b) {
+		double aw = a.x + a.y;
+		double bw = b.x + b.y;
 
-	/*for (auto& item : arr) {
-		cout << item << " ";
-	}*/
+		if (aw == bw) {
+			return a.x < b.x;
+		}
 
-	//cout << swapCount << endl << swaps << endl;
+		return aw < bw;
+	});
 
-	system("pause");
+	for (auto& coord : coords) {
+		fout << coord.x << " " << coord.y << endl;
+	}
+
 	return 0;
 }
