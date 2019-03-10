@@ -8,15 +8,22 @@ int main() {
 	cin >> num;
 
 	int max = 0;
+	int count = 0;
 
 	while (num) {
 		int d = num % 10;
-		if (d > max) max = d;
+		if (d > max) {
+			max = d;
+			count = 1;
+		}
+		else if (d == max) {
+			count++;
+		}
 
 		num /= 10;
 	}
 
-	cout << max << endl;
+	cout << count << endl;
 
 	system("pause");
 	return 0;
