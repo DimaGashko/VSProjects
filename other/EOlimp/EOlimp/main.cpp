@@ -1,27 +1,25 @@
 ﻿#include <iostream>
-#include <vector>
 #include <string>
-#include <algorithm>
+#include <map>
 
 using namespace std;
 
 int main() {
-	string sNum;
-	cin >> sNum;
+	string str;
+	cin >> str;
 
-	vector<int> digits(sNum.size());
+	int b1 = 0;
+	int b2 = 0;
 
-	transform(sNum.begin(), sNum.end(), digits.begin(), [](char c) {
-		return c - '0';
-		});
+	for (auto& c : str) {
+		if (c == '(') b1++;
+		else if (c == ')') b1--;
 
-	digits.erase(std::min_element(digits.begin(), digits.end()));
-
-	for (auto& d : digits) {
-		cout << d;
+		if (c == '[') b1++;
+		else if (c == ']') b1--;
 	}
 
-	cout << endl;
+	cout << ((b1 == 0 && b2 == 0) ? "Yes" : "No") << endl;
 
 	system("pause");
 	return 0;
