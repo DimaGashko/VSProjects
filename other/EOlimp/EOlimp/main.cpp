@@ -1,25 +1,22 @@
 ﻿#include <iostream>
 #include <string>
-#include <map>
 
 using namespace std;
 
 int main() {
-	string str;
-	cin >> str;
+	long long num;
+	cin >> num;
 
-	int b1 = 0;
-	int b2 = 0;
+	int max = 0;
 
-	for (auto& c : str) {
-		if (c == '(') b1++;
-		else if (c == ')') b1--;
+	while (num) {
+		int d = num % 10;
+		if (d > max) max = d;
 
-		if (c == '[') b1++;
-		else if (c == ']') b1--;
+		num /= 10;
 	}
 
-	cout << ((b1 == 0 && b2 == 0) ? "Yes" : "No") << endl;
+	cout << max << endl;
 
 	system("pause");
 	return 0;
