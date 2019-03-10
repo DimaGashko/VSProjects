@@ -4,19 +4,16 @@
 
 using namespace std;
 
+int func(int n) {
+	if (n = 0) return 0;
+	return func(n - 1) + n;
+}
+
 int main() {
-	string s;
-	cin >> s;
+	int n = 0;
+	cin >> n;
 
-	int a = s[0] - '0';
-	int b = s[1] - '0';
-	int c = s[2] - '0';
-	int d = s[3] - '0';
-	int e = s[4] - '0';
-
-	bool res = a < b && b < c && c < d && d < e;
-
-	cout << (res ? "YES" : "NO") << endl;
+	cout << func(n) << endl;
 
 	system("pause");
 	return 0;
