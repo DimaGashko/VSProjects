@@ -1,29 +1,22 @@
 ﻿#include <iostream>
+#include <algorithm>
 #include <string>
 
 using namespace std;
 
 int main() {
-	long long num;
-	cin >> num;
+	string s;
+	cin >> s;
 
-	int max = 0;
-	int count = 0;
+	int a = s[0] - '0';
+	int b = s[1] - '0';
+	int c = s[2] - '0';
+	int d = s[3] - '0';
+	int e = s[4] - '0';
 
-	while (num) {
-		int d = num % 10;
-		if (d > max) {
-			max = d;
-			count = 1;
-		}
-		else if (d == max) {
-			count++;
-		}
+	bool res = a < b && b < c && c < d && d < e;
 
-		num /= 10;
-	}
-
-	cout << count << endl;
+	cout << (res ? "YES" : "NO") << endl;
 
 	system("pause");
 	return 0;
