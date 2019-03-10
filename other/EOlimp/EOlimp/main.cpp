@@ -1,8 +1,7 @@
 ﻿#include <iostream>
 #include <fstream>
-#include <vector>
-#include <string>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -15,27 +14,22 @@ struct Point {
 
 int main() {
 	vector<Point> coords;
+	Point p;
 
-	Point tmp;
-
-	while (fin >> tmp.x && fin >> tmp.y) {
-		coords.push_back(Point(tmp));
+	while (fin >> p.x && fin >> p.y) {
+		Point point = p;
+		coords.push_back(point);
 	}
 
 	sort(coords.begin(), coords.end(), [](Point a, Point b) {
-		double aw = a.x + a.y;
-		double bw = b.x + b.y;
-
-		if (aw == bw) {
-			return a.x < b.x;
-		}
-
-		return aw < bw;
+		if (a.x != b.x) return a.x < b.x;
+		else return a.y > b.y;
 	});
 
 	for (auto& coord : coords) {
 		fout << coord.x << " " << coord.y << endl;
 	}
 
+	system("pause");
 	return 0;
 }
