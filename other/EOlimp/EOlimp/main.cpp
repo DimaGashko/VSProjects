@@ -1,16 +1,26 @@
 ﻿#include <iostream>
+#include <vector>
+#include <cmath>
 
 using namespace std;
 
+int getSumOfDigits(long long num) {
+	int sum = 0;
+
+	while (num) {
+		sum += num % 10;
+		num /= 10;
+	}
+
+	return sum;
+}
+
 int main() {
-	int t;
-	cin >> t;
+	while (true) {
+		long long num;
+		cin >> num;
 
-	for (int i = 0; i < t; i++) {
-		int p, d1, d2, d3;
-		cin >> p >> d1 >> d2 >> d3;
-
-		printf("%.2f\n", ((d1 * 5 + d2 * 3 + d3) / (double)p));
+		cout << getSumOfDigits(num) << endl;
 	}
 
 	system("pause");
