@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <vector>
+#include <ctime>
 
 using namespace std;
 
@@ -41,21 +42,23 @@ void printResult() {
 	for (int m = 0; m < n; m++) {
 
 		for (auto& tasks : res[m]) {
-			cout << m << " ";
+			cout << (m + 1) << " ";
 
 			for (auto& task : tasks) {
-				cout << task << " ";
+				cout << (task + 1) << " ";
 			}
+
+			cout << endl;
 		}
 	}
-
-	cout << endl;
 }
 
 int main() {
 	init();
+	auto start = clock();
 	run();
-	printResult();
+	cout << clock() - start << endl;
+	//printResult();
 		
 	system("pause");
 	return 0;
