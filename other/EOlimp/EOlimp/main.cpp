@@ -13,27 +13,28 @@ num getMinOfMatches(num n) {
 	num res = ((a + 1) * (a + 1) * a * 3);
 	if (n == 0) return res;
 
-	num fullSquares = min(n / (a * a), (num)2);
-	res += (3 * a * a + 4 * a + 1) * fullSquares;
-	n -= a * a * fullSquares;
+	num squares12 = min(n / (a * a), (num)2);
+	res += (3 * a * a + 4 * a + 1) * squares12;
+	n -= a * a * squares12;
 	if (n == 0) return res;
 
-	if (fullSquares > 1) {
+	if (squares12 > 1) {
 		num p = min(n, a);
 		res += (p - 1) * 3 + 5;
 		n -= p;
 		if (n == 0) return res;
 	}
 
-	num fullSquares2 = min(n / (a * a), (num)1);
-	res += (3 * a * a + 4 * a + 1) * fullSquares2;
-	n -= a * a * fullSquares2;
+	num squares3 = min(n / (a * a), (num)1);
+	res += (3 * a * a + 4 * a + 1) * squares3;
+	n -= a * a * squares3;
 	if (n == 0) return res;
 
-	if (fullSquares + fullSquares2 < 3) {
+	if (squares12 + squares3 < 3) {
 		num b = (num)sqrt(n);
 		n -= b * b;
 		res += 3 * b * b + 4 * b + 1;
+		if (n == 0) return res;
 
 		num twos = (n - 1) / b + 1;
 		res += (n - twos) * 3 + twos * 5;
