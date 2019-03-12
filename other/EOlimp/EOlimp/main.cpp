@@ -11,50 +11,21 @@ num getMinOfMatches(num n) {
 	n -= a * a * a;
 
 	num res = ((a + 1) * (a + 1) * a * 3) + (n * 12);
-	num twos, p;
-
-	// Stage 1
 	if (n == 0) return res;
-	p = min(n, a);
-	res -= (p - 1) * 7 + 4;
-	n -= p;
 
-	// Stage 2
-	if (n == 0) return res;
-	if (a != 1) {
-		p = min(n, a * (a - 1));
-		twos = (p - 1) / a + 1;
-		res -= (p - twos) * 9 + twos * 7;
-		n -= p;
+	if (n >= a * a * 3) {
+		// Нужно только замкнуть куб
+		return;
+	}
+	
+	for (int i = 0; i < 3; i++) {
+		if (n < a * a) break;
+
+		res -= (a + 1) * (a + 1) * 2 * a;
+		n -= a * a;
 	}
 
-	// Stage 1
-	if (n == 0) return res;
-	p = min(n, a + 1);
-	res -= (p - 1) * 7 + 4;
-	n -= p;
-
-	// Stage 2
-	if (n == 0) return res;
-	if (a != 1) {
-		p = min(n, (a + 1) * (a - 1));
-		twos = (p - 1) / (a + 1) + 1;
-		res -= (p - twos) * 9 + twos * 7;
-		n -= p;
-	}
-
-	// Stage 1
-	if (n == 0) return res;
-	p = min(n, a + 1);
-	res -= (p - 1) * 7 + 4;
-	n -= p;
-
-	// Stage 2
-	if (n == 0) return res;
-	p = min(n, (a + 1) * (a));
-	twos = (p - 1) / (a + 1) + 1;
-	res -= (p - twos) * 9 + twos * 7;
-	n -= p;
+	// Нужно замкнуть квадрат
 
 	return res;
 }
