@@ -1,57 +1,38 @@
 ﻿#include <iostream>
 #include <algorithm>
+#include <vector>
 #include <cmath>
+#include <map>
 
 using namespace std;
 
-typedef long long num;
+vector<int> getDivs(int n) {
+	vector<int> divs;
+	if (n == 0) return divs;
 
-num getMinOfMatches(num n) {
-	num a = (num)cbrt(n);
-	n -= a * a * a;
+	divs.push_back(1);
+	if (n == 1) return divs;
 
-	num res = ((a + 1) * (a + 1) * a * 3);
-	if (n == 0) return res;
+	divs.push_back(n);
+	if (n == 2) return divs;
 
-	num squares12 = min(n / (a * a), (num)2);
-	res += (3 * a * a + 4 * a + 1) * squares12;
-	n -= a * a * squares12;
-	if (n == 0) return res;
+	for (int i = 2; i <= sqrt(n); i++) {
+		if (n % i != 0) continue;
 
-	if (squares12 > 1) {
-		num p = min(n, a);
-		res += (p - 1) * 3 + 5;
-		n -= p;
-		if (n == 0) return res;
+		divs.push_back(i);
+		if (n / i != i) divs.push_back(n / i);
 	}
 
-	num squares3 = min(n / (a * a), (num)1);
-	res += (3 * a * a + 4 * a + 1) * squares3;
-	n -= a * a * squares3;
-	if (n == 0) return res;
-
-	if (squares12 + squares3 < 3) {
-		num b = (num)sqrt(n);
-		n -= b * b;
-		res += 3 * b * b + 4 * b + 1;
-		if (n == 0) return res;
-
-		num twos = (n - 1) / b + 1;
-		res += (n - twos) * 3 + twos * 5;
-	}
-	else {
-		num twos = (n - 1) / a + 1;
-		res += (n - twos) * 3 + twos * 5;
-	} 
-
-	return res;
+	sort(divs.begin(), divs.end());
+	return divs;
 }
 
 int main() {
-	while (true) {
-		num n;
-		cin >> n;
-		cout << getMinOfMatches(n) << endl;
+	for (int i = 0; i < 1000; i++) {
+		for (auto& div : getDivs(i)) {
+			cout << div << " ";
+		}
+		cout << endl;
 	}
 
 	system("pause");
