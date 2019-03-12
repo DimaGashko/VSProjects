@@ -20,16 +20,50 @@ vector<int> getDivs(int n) {
 		if (n / i != i) divs.push_back(n / i);
 	}
 
-	sort(divs.begin(), divs.end());
 	return divs;
 }
 
+int getDivsCount(int n) {
+	if (n == 1) return 1;
+	int divs = 2;
+
+	for (int i = 2; i <= sqrt(n); i++) {
+		if (n % i != 0) continue;
+
+		divs++;
+		if (n / i != i) divs++;
+	}
+
+	return divs;
+}
+
+int getMinN(int k, int s) {
+	if (k == 19) return 786432;
+	if (k == 26) return 61440;
+	if (k == 29) return 2359296;
+	/*if (k == 31) return ;
+	
+	if (k == ) return ;
+	if (k == ) return ;
+	if (k == ) return ;*/
+
+	for (int i = s; true; i++) {
+		if (i % 1000000 == 0) cout << "<<<" << i << endl;
+		if (ceil(getDivsCount(i) / 2.0) == k) return i;
+	}
+}
+
 int main() {
-	for (int i = 0; i < 1000; i++) {
-		for (auto& div : getDivs(i)) {
-			cout << div << " ";
-		}
-		cout << endl;
+
+	/*for (int i = 31; i <= 50; i++) {
+		cout << i << ": " << getMinN(i) << endl;
+	}*/
+
+
+	while (true) {
+	int k, s;
+	cin >> k >> s;
+		cout << getMinN(k, s) << endl;
 	}
 
 	system("pause");
