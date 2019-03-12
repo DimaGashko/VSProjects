@@ -13,29 +13,33 @@ num getMinOfMatches(num n) {
 	num res = ((a + 1) * (a + 1) * a * 3) + (n * 12);
 	if (n == 0) return res;
 
-	if (n >= a * a * 3) {
-		// Нужно только замкнуть куб
-		return;
-	}
-	
-	for (int i = 0; i < 3; i++) {
-		if (n < a * a) break;
+	int fullSquares = n / (a * a);
+	res -= ((a + 1) * (a + 1) * 2 * a) * fullSquares;
+	n -= a * a * fullSquares;
+	if (n == 0) return res;
 
-		res -= (a + 1) * (a + 1) * 2 * a;
-		n -= a * a;
-	}
+	if (fullSquares < 3) {
+		num b = (num)sqrt(n);
+		n -= b * b;
+		res -= ((b + 1) * (b + 1) * 2 * b) + (n * 12);
 
-	// Нужно замкнуть квадрат
+		int twos = (n - 1) / b + 1;
+		res -= (n - twos) * 9 + twos * 7;
+	}
+	else {
+		int twos = (n - 1) / a + 1;
+		res -= (n - twos) * 9 + twos * 7;
+	}
 
 	return res;
 }
 
 int main() {
-	//while (true) {
+	while (true) {
 		num n;
 		cin >> n;
 		cout << getMinOfMatches(n) << endl;
-	//}
+	}
 
 	system("pause");
 	return 0;
