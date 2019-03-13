@@ -30,15 +30,15 @@ bool validate(string str) {
 }
 
 int main() {
+	string str;
 	int t;
 	cin >> t;
 
-	for (int i = 0; i < t; i++) {
-		string str;
-		cin >> str;
+	getline(cin, str);
 
-		if (str.empty()) cout << "Yes" << endl;
-		else cout << (validate(str) ? "Yes" : "No") << endl;
+	for (int i = 0; i < t; i++) {
+		getline(cin, str);
+		cout << (validate(str) ? "Yes" : "No") << endl;
 	}
 	
 	system("pause");
