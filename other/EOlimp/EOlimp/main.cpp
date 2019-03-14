@@ -1,46 +1,37 @@
 ﻿#include <iostream>
+#include <algorithm>
 #include <string>
-#include <stack>
-#include <map>
+#include <stdlib.h>
 
 using namespace std;
 
-map<char, char> coBrackets { 
-	{'(', ')'},
-	{'[', ']'},
-	{'{', '}'},
-};
+string rev(string &str) {
+	string rev = str;
+	reverse(rev.begin(), rev.end());
+	long long n = atoll(rev.c_str());
 
-bool validate(string str) {
-	stack<char> seq;
+	return to_string(n);
+}
 
-	for (auto& c : str) {
-		if (c == '(' || c == '[' || c == '{') {
-			seq.push(c);
+int getLevel(long long n) {
+	for (long long level = 0; ; level++) {
+		string s = to_string(n);
+		string sRev = rev(s);
+
+		if (sRev == s) {
+			return level;
 		}
 
-		else if (c == ')' || c == ']' || c == '}') {
-			if (seq.empty()) return 0;
-			if (coBrackets[seq.top()] != c) return 0;
-			seq.pop();
-		}
+		n = n + atoll(sRev.c_str());
 	}
-
-	return seq.empty();
 }
 
 int main() {
-	string str;
-	int t;
-	cin >> t;
+	long long n;
+	cin >> n;
 
-	getline(cin, str);
+	cout << getLevel(n) << endl;
 
-	for (int i = 0; i < t; i++) {
-		getline(cin, str);
-		cout << (validate(str) ? "Yes" : "No") << endl;
-	}
-	
 	system("pause");
 	return 0;
 }

@@ -44,8 +44,6 @@ T prompt(const char label[]);
 int main() {
 	printHello();
 
-	std::cout << getF(3) << " " << getF(4) << std::endl;
-
 	while (true) {
 		try {
 			run();
