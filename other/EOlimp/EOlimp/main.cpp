@@ -1,54 +1,211 @@
 ﻿#include <iostream>
 #include <algorithm>
-#include <stdlib.h>
+#include <vector>
 #include <string>
-#include <cmath>
 
-struct Time {
-	int h, m;
+namespace dg {
+
+	class Map {
+	public:
+
+		typedef std::pair<std::string, int> Slot;
+
+		Map();
+		Map(int capacity);
+
+		void set(std::string& key, int val);
+		int get(std::string& key);
+
+		std::vector<Slot> toVector();
+
+		~Map();
+
+	private:
+		int m_capacity;
+
+		std::vector<Slot> m_slots;
+
+		int hash(std::string& key, int i) const;
+
+		static void checkKey(std::string& key);
+	};
+
 };
 
-double getAngleOfClockHands(Time time);
-Time parseTime(std::string strTime);
+std::string toStandardForm(std::string number);
+void printFrequency(std::map<std::string, int>& frequencyMap);
+
+void runTest();
 
 int main() {
-	while (true) {
-		std::string strTime;
-		std::cin >> strTime;
+	int numberOfTests;
+	std::cin >> numberOfTests;
 
-		if (strTime == "0:00") {
-			break;
+	for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
+		runTest();
+
+		if (testIndex != numberOfTests - 1) {
+			std::cout << std::endl;
 		}
-
-		auto time = parseTime(strTime);
-		double angle = getAngleOfClockHands(time);
-
-		printf("%.3f\n", angle);
 	}
 
 	system("pause");
 	return 0;
 }
 
-double getAngleOfClockHands(Time time) {
-	double hAngle = (360 / 12) * (time.h % 12) +
-		(360.f / 12 / 60) * time.m;
+void runTest() {
+	int numsCount;
+	std::cin >> numsCount;
 
-	double mAngle = (360 / 60) * (time.m % 60);
+	std::map<std::string, int> frequencyOfWords;
 
-	double angle = abs(hAngle - mAngle);
-	if (angle > 180) angle = 360 - angle;
+	for (int i = 0; i < numsCount; i++) {
+		std::string number;
+		std::cin >> number;
 
-	return angle;
+		std::string standardNum = toStandardForm(number, baseAssociationMap);
+		frequencyOfWords[standardNum]++;
+	}
+
+	printFrequency(frequencyOfWords);
 }
 
-Time parseTime(std::string strTime) {
-	Time time;
+std::string toStandardForm(std::string number) {
+	std::string resNum = number;
 
-	auto delimiter = std::find(strTime.begin(), strTime.end(), ':');
+	resNum.erase(
+		std::remove_if(resNum.begin(), resNum.end(), [](char c) {return c == '-'; }),
+		resNum.end()
+	);
 
-	time.h = atoi(std::string(strTime.begin(), delimiter).c_str());
-	time.m = atoi(std::string(delimiter + 1, strTime.end()).c_str());
+	std::transform(resNum.begin(), resNum.end(), resNum.begin(), ::tolower);
+	resNum.insert(resNum.begin() + 3, '-');
 
-	return time;
+	for (auto& c : resNum) {
+		if (c == 'a' || c == 'b' || c == 'c') c = '2';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '2';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '3';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '4';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '5';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '6';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '7';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '8';
+		else if (c == 'a' || c == 'b' || c == 'c') c = '9';
+	}
+
+	return resNum;
+}
+
+
+std::map<char, char> baseAssociationMap{
+	{'a', '2'}, {'b', '2'}, {'c', '2'},
+	{'d', '3'}, {'e', '3'}, {'f', '3'},
+	{'g', '4'}, {'h', '4'}, {'i', '4'},
+	{'j', '5'}, {'k', '5'}, {'l', '5'},
+	{'m', '6'}, {'n', '6'}, {'o', '6'},
+	{'p', '7'}, {'r', '7'}, {'s', '7'},
+	{'t', '8'}, {'u', '8'}, {'v', '8'},
+	{'w', '9'}, {'x', '9'}, {'y', '9'}
+};
+
+void printFrequency(std::map<std::string, int>& frequencyMap) {
+	std::vector<std::pair<std::string, int>> frequency(frequencyMap.begin(), frequencyMap.end());
+
+	frequency.erase(
+		std::remove_if(frequency.begin(), frequency.end(), [](std::pair<std::string, int> item) {
+			return item.second <= 1;
+			}), frequency.end());
+
+	if (frequency.empty()) {
+		std::cout << "No duplicates." << std::endl;
+		return;
+	}
+
+	std::sort(frequency.begin(), frequency.end());
+
+	for (auto& item : frequency) {
+		std::cout << item.first << " " << item.second << std::endl;
+	}
+}
+
+// dg::Map
+#include <stdexcept>
+
+namespace dg {
+
+	Map::Map() :
+		Map(98317)
+	{
+
+	}
+
+	Map::Map(int capacity) :
+		m_capacity(capacity),
+		m_slots(m_capacity)
+	{
+
+	}
+
+	void Map::set(std::string& key, int val) {
+		checkKey(key);
+
+		for (int i = 0; i < m_capacity; i++) {
+			auto& item = m_slots[hash(key, i)];
+
+			if (item.first == key || item.first.empty()) {
+				item.first = key;
+				item.second = val;
+
+				return;
+			}
+
+		}
+
+		throw std::runtime_error("Map is full");
+	}
+
+	int Map::get(std::string& key) {
+		checkKey(key);
+
+		for (int i = 0; i < m_capacity; i++) {
+			const auto& item = m_slots[hash(key, i)];
+
+			if (item.first == key || item.first.empty()) {
+				return item.second;
+			}
+		}
+
+		return 0;
+	}
+
+	int Map::hash(std::string& key, int i) const {
+		static int d = 256;
+		int hash = 0;
+
+		for (auto c : key) {
+			hash += c * d;
+		}
+
+		hash = hash % m_capacity;
+
+		return (hash + i) % m_capacity;
+	}
+
+	std::vector<Map::Slot> Map::toVector() {
+		std::vector<Slot> vec;
+
+		for (auto& slot : m_slots) {
+			if (slot.first.empty()) continue;
+
+			vec.push_back(slot);
+		}
+
+		return vec;
+	}
+
+	void Map::checkKey(std::string & key) {
+		if (key.empty()) throw std::runtime_error("The key can't be empty");
+	}
+
+	Map::~Map() = default;
 }
