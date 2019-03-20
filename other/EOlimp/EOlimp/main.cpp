@@ -21,9 +21,9 @@ int main() {
 		}
 
 		auto time = parseTime(strTime);
-		auto angle = getClockHandsAngle(time);
+		double angle = getClockHandsAngle(time);
 
-		std::cout << 
+		printf("%.3f\n", angle);
 	}
 
 	system("pause");
