@@ -23,7 +23,26 @@ int main() {
 }
 
 std::vector<std::string> fillMinesMap(std::vector<std::string>& emptyMap) {
-	
+	if (emptyMap.empty()) return std::vector<std::string>(0);
+	int iSize = emptyMap.size();
+	int jSize = emptyMap[0].size();
+
+	std::vector<std::vector<int>> minesMap(iSize, std::vector<int>(jSize));
+
+	for (int i = 0; i < iSize; i++) {
+		for (int j = 0; j < jSize; j++) {
+			if (emptyMap[i][j] != '*') continue;
+
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+			incrementMapCell(minesMap, i, j);
+		}
+	}
 }
 
 void incrementMapCell(std::vector<std::vector<int>>& map, int i, int j) {
