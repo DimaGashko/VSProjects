@@ -33,7 +33,7 @@ namespace dg {
 };
 
 std::string toStandardForm(std::string number);
-void printFrequency(std::map<std::string, int>& frequencyMap);
+void printFrequency(dg::Map& frequencyMap);
 
 void runTest();
 
@@ -57,14 +57,14 @@ void runTest() {
 	int numsCount;
 	std::cin >> numsCount;
 
-	std::map<std::string, int> frequencyOfWords;
+	dg::Map frequencyOfWords;
 
 	for (int i = 0; i < numsCount; i++) {
 		std::string number;
 		std::cin >> number;
 
-		std::string standardNum = toStandardForm(number, baseAssociationMap);
-		frequencyOfWords[standardNum]++;
+		std::string standardNum = toStandardForm(number);
+		frequencyOfWords.set(standardNum, frequencyOfWords.get(standardNum) + 1);
 	}
 
 	printFrequency(frequencyOfWords);
@@ -84,32 +84,20 @@ std::string toStandardForm(std::string number) {
 	for (auto& c : resNum) {
 		if (c == 'a' || c == 'b' || c == 'c') c = '2';
 		else if (c == 'a' || c == 'b' || c == 'c') c = '2';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '3';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '4';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '5';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '6';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '7';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '8';
-		else if (c == 'a' || c == 'b' || c == 'c') c = '9';
+		else if (c == 'd' || c == 'e' || c == 'f') c = '3';
+		else if (c == 'g' || c == 'h' || c == 'i') c = '4';
+		else if (c == 'j' || c == 'k' || c == 'l') c = '5';
+		else if (c == 'm' || c == 'n' || c == 'o') c = '6';
+		else if (c == 'p' || c == 'r' || c == 's') c = '7';
+		else if (c == 't' || c == 'u' || c == 'v') c = '8';
+		else if (c == 'w' || c == 'x' || c == 'y') c = '9';
 	}
 
 	return resNum;
 }
 
-
-std::map<char, char> baseAssociationMap{
-	{'a', '2'}, {'b', '2'}, {'c', '2'},
-	{'d', '3'}, {'e', '3'}, {'f', '3'},
-	{'g', '4'}, {'h', '4'}, {'i', '4'},
-	{'j', '5'}, {'k', '5'}, {'l', '5'},
-	{'m', '6'}, {'n', '6'}, {'o', '6'},
-	{'p', '7'}, {'r', '7'}, {'s', '7'},
-	{'t', '8'}, {'u', '8'}, {'v', '8'},
-	{'w', '9'}, {'x', '9'}, {'y', '9'}
-};
-
-void printFrequency(std::map<std::string, int>& frequencyMap) {
-	std::vector<std::pair<std::string, int>> frequency(frequencyMap.begin(), frequencyMap.end());
+void printFrequency(dg::Map& frequencyMap) {
+	auto frequency = frequencyMap.toVector();
 
 	frequency.erase(
 		std::remove_if(frequency.begin(), frequency.end(), [](std::pair<std::string, int> item) {
@@ -134,7 +122,7 @@ void printFrequency(std::map<std::string, int>& frequencyMap) {
 namespace dg {
 
 	Map::Map() :
-		Map(98317)
+		Map(100003) // простое, далекое от степеней двойки
 	{
 
 	}
