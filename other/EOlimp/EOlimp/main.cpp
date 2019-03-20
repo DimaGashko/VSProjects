@@ -16,12 +16,37 @@ std::map<char, char> baseAssociationMap{
 };
 
 std::string toStandardForm(std::string number, std::map<char, char> associationMap);
+void printFrequency(std::map<std::string, int> &frequencyOfNumbers);
+
+void runTest();
 
 int main() {
-	std::cout << toStandardForm("TUT-GLOP", baseAssociationMap) << std::endl;
+	int numberOfTests;
+	std::cin >> numberOfTests;
+
+	for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
+		runTest();
+	}
 
 	system("pause");
 	return 0;
+}
+
+void runTest() {
+	int numsCount;
+	std::cin >> numsCount;
+
+	std::map<std::string, int> frequencyOfWords;
+
+	for (int i = 0; i < numsCount; i++) {
+		std::string number;
+		std::cin >> number;
+
+		std::string standardNum = toStandardForm(number, baseAssociationMap);
+		frequencyOfWords[standardNum]++;
+	}
+
+	printFrequency();
 }
 
 std::string toStandardForm(std::string number, std::map<char, char> associationMap) {
@@ -41,4 +66,8 @@ std::string toStandardForm(std::string number, std::map<char, char> associationM
 	}
 
 	return resNum;
+}
+
+void printFrequency(std::map<std::string, int> &frequencyOfNumbers) {
+
 }
