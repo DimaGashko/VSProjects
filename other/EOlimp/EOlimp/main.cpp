@@ -3,7 +3,7 @@
 #include <string>
 
 std::vector<std::string> fillMinesMap(std::vector<std::string>& emptyMap);
-void incrementMinesMapCell(std::vector<std::vector<int>>& minesMap, int i, int j);
+void incrementMapCell(std::vector<std::vector<int>>& map, int i, int j);
 
 void printMinesMap(std::vector<std::string> minesMap);
 
@@ -26,14 +26,14 @@ std::vector<std::string> fillMinesMap(std::vector<std::string>& emptyMap) {
 	
 }
 
-void incrementMinesMapCell(std::vector<std::vector<int>>& minesMap, int i, int j) {
-	if (minesMap.empty()) return;
+void incrementMapCell(std::vector<std::vector<int>>& map, int i, int j) {
+	if (map.empty()) return;
 
-	if (i < 0 || j < 0 || i >= minesMap.size() || j >= minesMap[0].size()) {
+	if (i < 0 || j < 0 || i >= map.size() || j >= map[0].size()) {
 		return;
 	}
 
-	minesMap[i][j]++;
+	map[i][j]++;
 }
 
 void printMinesMap(std::vector<std::string> minesMap) {
