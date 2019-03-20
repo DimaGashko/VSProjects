@@ -16,7 +16,7 @@ std::map<char, char> baseAssociationMap{
 };
 
 std::string toStandardForm(std::string number, std::map<char, char> associationMap);
-void printFrequency(std::map<std::string, int> &frequencyOfNumbers);
+void printFrequency(std::map<std::string, int> & frequencyMap);
 
 void runTest();
 
@@ -26,6 +26,10 @@ int main() {
 
 	for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
 		runTest();
+
+		if (testIndex != numberOfTests - 1) {
+			std::cout << std::endl;
+		}
 	}
 
 	system("pause");
@@ -46,7 +50,7 @@ void runTest() {
 		frequencyOfWords[standardNum]++;
 	}
 
-	printFrequency();
+	printFrequency(frequencyOfWords);
 }
 
 std::string toStandardForm(std::string number, std::map<char, char> associationMap) {
@@ -68,6 +72,22 @@ std::string toStandardForm(std::string number, std::map<char, char> associationM
 	return resNum;
 }
 
-void printFrequency(std::map<std::string, int> &frequencyOfNumbers) {
+void printFrequency(std::map<std::string, int> &frequencyMap) {
+	std::vector<std::pair<std::string, int>> frequency(frequencyMap.begin(), frequencyMap.end());
 
+	frequency.erase(
+		std::remove_if(frequency.begin(), frequency.end(), [](std::pair<std::string, int> item) {
+		return item.second <= 1;
+	}), frequency.end());
+
+	if (frequency.empty()) {
+		std::cout << "No duplicates." << std::endl;
+		return;
+	}
+
+	std::sort(frequency.begin(), frequency.end());
+
+	for (auto& item : frequency) {
+		std::cout << item.first << " " << item.second << std::endl;
+	}
 }
