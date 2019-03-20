@@ -1,6 +1,10 @@
 ﻿#include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+
+std::ifstream fin("input.txt");
+std::ofstream fout("output.txt");
 
 void fillMinesMap(std::vector<std::string>& minesMap);
 void incrementMapCell(std::vector<std::vector<int>>& map, int i, int j);
@@ -12,7 +16,7 @@ int main() {
 	for (int fieldNumber = 1; true; fieldNumber++) {
 		int n, m;
 
-		std::cin >> n >> m;
+		fin >> n >> m;
 		if (n == 0 && m == 0) break;
 
 		std::vector<std::string> minesMap;
@@ -20,13 +24,12 @@ int main() {
 		writeMinesMap(minesMap, n, m);
 		fillMinesMap(minesMap);
 		
-		std::cout << "Field #" << fieldNumber << ":" << std::endl;
+		if (fieldNumber != 1) fout << std::endl;
+		fout << "Field #" << fieldNumber << ":" << std::endl;
 		printMinesMap(minesMap);
-
-		std::cout << std::endl;
 	}
 
-	system("pause");
+	//system("pause");
 	return 0;
 }
 
@@ -75,12 +78,12 @@ void writeMinesMap(std::vector<std::string>& minesMap, int n, int m) {
 	minesMap = std::vector<std::string>(n);
 
 	for (int i = 0; i < n; i++) {
-		std::cin >> minesMap[i];
+		fin >> minesMap[i];
 	}
 }
 
 void printMinesMap(std::vector<std::string> &minesMap) {
 	for (auto& row : minesMap) {
-		std::cout << row << std::endl;
+		fout << row << std::endl;
 	}
 }
