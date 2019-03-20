@@ -1,37 +1,34 @@
 ﻿#include <iostream>
-#include <algorithm>
+#include <vector>
 #include <string>
-#include <stdlib.h>
 
-using namespace std;
+std::vector<std::string> fillMinesMap(std::vector<std::string>& emptyMap);
 
-string rev(string &str) {
-	string rev = str;
-	reverse(rev.begin(), rev.end());
-	long long n = atoll(rev.c_str());
-
-	return to_string(n);
-}
-
-int getLevel(long long n) {
-	for (long long level = 0; ; level++) {
-		string s = to_string(n);
-		string sRev = rev(s);
-
-		if (sRev == s) {
-			return level;
-		}
-
-		n = n + atoll(sRev.c_str());
-	}
-}
+void printMinesMap(std::vector<std::string> minesMap);
 
 int main() {
-	long long n;
-	cin >> n;
+	std::vector<std::string> testMap = {
+		"*...",
+		"....",
+		".*..",
+		"...."
+	};
 
-	cout << getLevel(n) << endl;
+	std::vector<std::string> resMap = fillMinesMap(testMap);
+	printMinesMap(resMap);
 
 	system("pause");
 	return 0;
+}
+
+std::vector<std::string> fillMinesMap(std::vector<std::string>& emptyMap) {
+	return std::vector<std::string>(emptyMap);
+}
+
+void printMinesMap(std::vector<std::string> minesMap) {
+	for (auto& row : minesMap) {
+		std::cout << row << std::endl;
+	}
+
+	std::cout << std::endl;
 }
