@@ -4,11 +4,10 @@
 #include <cmath>
 
 struct Time {
-	int h;
-	int m;
+	int h, m;
 };
 
-double getClockHandsAngle(Time time);
+double getAngleOfClockHands(Time time);
 Time parseTime(std::string strTime);
 
 int main() {
@@ -21,7 +20,7 @@ int main() {
 		}
 
 		auto time = parseTime(strTime);
-		double angle = getClockHandsAngle(time);
+		double angle = getAngleOfClockHands(time);
 
 		printf("%.3f\n", angle);
 	}
@@ -30,10 +29,11 @@ int main() {
 	return 0;
 }
 
-double getClockHandsAngle(Time time) {
-	double mAngle = 360 / 60 * (time.m % 60);
-	double hAngle = 360 / 12 * (time.h % 12) +
-		360.f / 12 / 60 * time.m;
+double getAngleOfClockHands(Time time) {
+	double hAngle = (360 / 12) * (time.h % 12) +
+		(360.f / 12 / 60) * time.m;
+
+	double mAngle = (360 / 60) * (time.m % 60);
 
 	double angle = abs(hAngle - mAngle);
 	if (angle > 180) angle = 360 - angle;
