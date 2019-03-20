@@ -8,7 +8,7 @@ struct Time {
 	int m;
 };
 
-int getClockHandsAngle(Time time);
+double getClockHandsAngle(Time time);
 Time parseTime(std::string strTime);
 
 int main() {
@@ -30,13 +30,14 @@ int main() {
 	return 0;
 }
 
-int getClockHandsAngle(Time time) {
-	// hAngle & mAndle are always int if h & m are int
-	// That's why result angle is int too
-	int hAngle = 360 / 12 * (time.h % 12);
-	int mAngle = 360 / 60 * (time.m % 60);
+double getClockHandsAngle(Time time) {
+	double mAngle = 360 / 60 * (time.m % 60);
+	double hAngle = 360 / 12 * (time.h % 12) +
+		360.f / 12 / 60 * time.m;
 
-	int angle = abs(hAngle - mAngle) % 180;
+	double angle = abs(hAngle - mAngle);
+	if (angle > 180) angle = 360 - angle;
+
 	return angle;
 }
 
