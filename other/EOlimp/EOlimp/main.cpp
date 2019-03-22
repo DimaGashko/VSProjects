@@ -1,43 +1,20 @@
 ﻿#include <iostream>
-#include <algorithm>
-#include <stdlib.h>
-#include <string>
-#include <cmath>
 
-double getAngleOfClockHands(int h, int m);
+using namespace std;
 
 int main() {
-	while (true) {
-		std::string strTime;
-		std::cin >> strTime;
+	int n, prev, next, max = 1;
+	cin >> n >> prev;
 
-		if (strTime == "0:00") {
-			break;
-		}
+	for (int i = 1; i < n; i++) {
+		cin >> next;
 
-		auto delimiter = strTime.begin();
-		delimiter += (strTime[1] == ':') ? 1 : 2;
-
-		int h = atoi(std::string(strTime.begin(), delimiter).c_str());
-		int m = atoi(std::string(delimiter + 1, strTime.end()).c_str());
-
-		double angle = getAngleOfClockHands(h, m);
-
-		printf("%.3f\n", angle);
+		max = (prev + 1 == next) ? max + 1 : 1;
+		prev = next;
 	}
+
+	cout << max << endl;
 
 	system("pause");
 	return 0;
-}
-
-double getAngleOfClockHands(int h, int m) {
-	double hAngle = (360 / 12) * (h % 12) +
-		(360.f / 12 / 60) * m;
-
-	double mAngle = (360 / 60) * (m % 60);
-
-	double angle = abs(hAngle - mAngle);
-	if (angle > 180) angle = 360 - angle;
-
-	return angle;
 }
