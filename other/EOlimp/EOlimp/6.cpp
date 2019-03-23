@@ -26,16 +26,19 @@ struct Rect {
 		if (!(fin >> x1 >> y1 >> x2 >> y2)) {
 			return false;
 		}
-		
+		if (x1 > x2) {
+			int _x1 = x1;
+			x1 = x2;
+			x2 = _x1;
+		}
+		else if (y1 > y2) {
+			int _y1 = y1;
+			y1 = y2;
+			y2 = _y1;
+		}
 		return true;
 	}
 	bool check(int x, int y) {
-		if (x1 > x2) {
-			swap(x1, x2);
-		}
-		else if (y1 > y2) {
-			swap(y1, y2);
-		}
 		return x >= x1 && x < x2 && y >= y1 && y < y2;
 	}
 };
@@ -53,8 +56,8 @@ int main() {
 
 	int res = 0;
 
-	for (int x = -1; x <= 1000 + 1; x++) {
-		for (int y = -1; y <= 1000 + 1; y++) {
+	for (int x = 0; x <= 1000 + 1; x++) {
+		for (int y = 0; y <= 1000 + 1; y++) {
 			bool r = false;
 
 			for (auto& a : arr) {
