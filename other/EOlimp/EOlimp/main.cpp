@@ -1,32 +1,24 @@
 ﻿#include <iostream>
-#include <algorithm>
-#include <vector>
 
 using namespace std;
 
-int main() {
-	int n, prev, next, len = 1;
-	cin >> n >> prev;
+// 1327 - реальная задача найти fact(1000)
 
-	vector<int> max{ 1 };
+long long fact(long long n) {
+	long long res = 1;
 
-	for (int i = 1; i < n; i++) {
-		cin >> next;
-
-		if (prev + 1 == next) {
-			len++;
-			max.push_back(len);
-		}
-		else {
-			max.push_back(len);
-			len = 1;
-		}
-
-		prev = next;
+	for (int i = 2; i <= n; i++) {
+		res *= i;
 	}
 
-	sort(max.begin(), max.end());
-	cout << max.back() << endl;
+	return res;
+}
+
+int main() {
+	long long n;
+	cin >> n;
+
+	cout << fact(n) << endl; 
 
 	system("pause");
 	return 0;
