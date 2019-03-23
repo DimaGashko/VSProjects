@@ -12,8 +12,8 @@ using namespace std;
 
 string inp_ = "input.txt";
 string out_ = "output.txt";
-string inp = "numbers.in";
-string out = "numbers.out";
+string inp = "hotel.in";
+string out = "hotel.out";
 
 // - - - - -
 
@@ -21,18 +21,12 @@ ifstream fin(inp);
 ofstream fout(out);
 
 int main() {
-	int a, b, c, d;
-	fin >> a >> b >> c >> d;
+	int n, m;
+	fin >> n >> m;
 
-	vector<int> res{
-		a * b + c * d,
-		a * c + b * d,
-		a * d + b * c,
-	};
+	int res = (n - 1) * m * 2;
 
-	sort(res.begin(), res.end());
-
-	fout << res.back() << endl;
+	fout << res << endl;
 
 	return 0;
 }
