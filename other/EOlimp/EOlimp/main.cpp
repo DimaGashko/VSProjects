@@ -12,25 +12,54 @@ using namespace std;
 
 string inp_ = "input.txt";
 string out_ = "output.txt";
-string inp = "rect.in";
-string out = "rect.out";
+string inp = "ball.in";
+string out = "ball.out";
 
 // - - - - -
 
 ifstream fin(inp);
 ofstream fout(out);
 
+vector<int> getDigits(int n) {
+	vector<int> res;
+
+	while (n) {
+		res.push_back(n % 10);
+		n /= 10;
+	}
+
+	return res;
+}
+
+long long getMul(vector<int> vec) {
+	long long res = 1;
+
+	for (auto& a : vec) {
+		res *= a;
+	}
+
+	return res;
+}
 
 int main() {
-	int k, n;
-	fin >> k >> n;
+	int n;
+	fin >> n;
 
-	double d = sqrt(pow(n - 2 * k + 2, 2) - 4 * (n - k + 1));
+	auto digits = getDigits(n);
+	vector<long long> res;
 
-	double y = (n - 2 * k + 2 + d) / 2;
-	double x = (y + k - 1) / (y - 1);
+	res.push_back(getMul(digits));
+	
+	for (int i = 0; i < digits.size() - 1; i++) {
+		if (digits[i + 1] == 0) continue;
+		digits[i + 1]--;
+		digits[i] = 9;
+		res.push_back(getMul(digits));
+	}
 
-	fout << x << " " << y << endl;
+	sort(res.begin(), res.end());
+
+	fout << res.back() << endl;
 
 	return 0;
 }
