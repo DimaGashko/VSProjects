@@ -11,64 +11,30 @@
 using namespace std;
 
 string inp_ = "input.txt";
-string out_ = "output.txt"; 
-string inp = "rects.in";
-string out = "rects.out";
+string out_ = "output.txt";
+string inp = "rect.in";
+string out = "rect.out";
 
 // - - - - -
 
 ifstream fin(inp);
 ofstream fout(out);
 
-struct Rect {
-	int x1, y1, x2, y2;
-	bool create() {
-		if (!(fin >> x1 >> y1 >> x2 >> y2)) {
-			return false;
-		}
-		
-		return true;
-	}
-	bool check(int x, int y) {
-		if (x1 > x2) {
-			swap(x1, x2);
-		}
-		else if (y1 > y2) {
-			swap(y1, y2);
-		}
-		return x >= x1 && x < x2 && y >= y1 && y < y2;
-	}
-};
 
 int main() {
-	vector<Rect> arr;
+	int k, n;
+	fin >> k >> n;
 
-	while (true) {
-		Rect next;
-		if (next.create()) {
-			arr.push_back(next);
-		}
-		else  break;
-	}
+	double d = pow(n - 2 * k + 2, 2) - 4 * (n - k + 1);
+	double sd = sqrt(d);
 
-	int res = 0;
+	double y1 = (n - 2 * k + 2 + sd) / 2;
+	double y2 = (n - 2 * k + 2 - sd) / 2;
 
-	for (int x = -1; x <= 1000 + 1; x++) {
-		for (int y = -1; y <= 1000 + 1; y++) {
-			bool r = false;
+	double y = (y1 > 0) ? y1 : y2;
+	double x = (y + k - 1) / (y - 1);
 
-			for (auto& a : arr) {
-				if (a.check(x, y)) {
-					r = true;
-					break;
-				}
-			}
-
-			if (r) res++;
-		}
-	}
-
-	fout << res << endl;
+	fout << x << " " << y << endl;
 
 	return 0;
 }
