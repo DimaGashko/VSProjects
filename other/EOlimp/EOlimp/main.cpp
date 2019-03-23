@@ -11,7 +11,7 @@
 using namespace std;
 
 string inp_ = "input.txt";
-string out_ = "output.txt";
+string out_ = "output.txt"; 
 string inp = "rects.in";
 string out = "rects.out";
 
