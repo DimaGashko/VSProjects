@@ -25,13 +25,9 @@ int main() {
 	int k, n;
 	fin >> k >> n;
 
-	double d = pow(n - 2 * k + 2, 2) - 4 * (n - k + 1);
-	double sd = sqrt(d);
+	double d = sqrt(pow(n - 2 * k + 2, 2) - 4 * (n - k + 1));
 
-	double y1 = (n - 2 * k + 2 + sd) / 2;
-	double y2 = (n - 2 * k + 2 - sd) / 2;
-
-	double y = (y1 > 0) ? y1 : y2;
+	double y = (n - 2 * k + 2 + d) / 2;
 	double x = (y + k - 1) / (y - 1);
 
 	fout << x << " " << y << endl;
