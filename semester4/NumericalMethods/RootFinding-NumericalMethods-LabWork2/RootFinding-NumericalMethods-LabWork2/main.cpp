@@ -15,6 +15,12 @@ double getFPrime(double x) {
 	return 1 / (x * log(10)) + 14 / ((2 * x + 6) * (2 * x + 6));
 }
 
+// Возвращает значение производной в точке х
+double getFDoublePrime(double x) {
+	double p = (2 * x + 6);
+	return -1/(x*x*log(10)) - 56 / (p * p * p);
+}
+
 // Преобразованная функция F для метода итераций
 double getG(double x) {
 	return x - 4.13 * getF(x);
@@ -179,32 +185,25 @@ double falsePosition_recursive(double l, double r, double eps) {
 
 double newtonRaphson(double l, double r, double eps) {
 	checkRoots(l, r);
-	double x;
+
+	double x0 = (getF(l) * getFDoublePrime(l) > 0) ? l : r;
 
 	while (true) {
 		iterativeCounter++;
 
-		if (abs(r - l) < eps) {
-			x = (l + r) / 2;
-			break;
-		}
+		double x = x0 - getF(x0) / getFPrime(x0);
+		if (abs(x - x0) < eps) break;
 
-		if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
-		x = l - getF(l) / getFPrime(l);
-
-		if (abs(x - l) < eps) break;
-		l = x;
+		x0 = x;
 	}
 
-	return x;
+	return x0;
 }
 
 double newtonRaphson_recursive(double l, double r, double eps) {
 	iterativeCounter++;
 
-	if (abs(r - l) < eps) return (l + r) / 2;
-
-	if (getF(r) * getFPrime(r) > 0) std::swap(l, r);
+	if (getF(r) * getFDoublePrime(r) > 0) std::swap(l, r);
 	double x = l - getF(l) / getFPrime(l);
 
 	if (abs(x - l) < eps) return x;
