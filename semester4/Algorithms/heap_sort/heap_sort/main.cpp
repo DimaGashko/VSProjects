@@ -23,7 +23,7 @@ void heapSort(std::vector<int>& arr) {
 	}
 
 	for (int i = arr.size() - 1; i >= 0; i--) {
-		//std::swap(arr[0], arr[arr.size() - 1]);
+		std::swap(arr[0], arr[i]);
 		heapify(arr, i, 0);
 	}
 }
