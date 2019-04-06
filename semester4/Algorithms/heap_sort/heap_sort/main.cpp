@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 
 void heapSort(std::vector<int>& arr);
 void heapify(std::vector<int>& arr, int size, int index);
