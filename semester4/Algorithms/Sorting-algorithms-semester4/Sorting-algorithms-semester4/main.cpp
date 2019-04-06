@@ -8,6 +8,9 @@
 void selectionSort(std::vector<int>& arr);
 void quickSort(std::vector<int>& arr, int l, int r);
 
+void heapSort(std::vector<int>& arr);
+void heapify(std::vector<int>& arr, int size, int index);
+
 void printArr(std::vector<int>& arr, int maxElementsToPrint = 500);
 void writeVector(std::vector<int>& arr);
 
@@ -41,6 +44,30 @@ int main() {
 	return 0;
 }
 
+void heapSort(std::vector<int>& arr) {
+	for (int i = (int)arr.size() / 2 - 1; i >= 0; i--) {
+		heapify(arr, (int)arr.size(), i);
+	}
+
+	for (int i = (int)arr.size() - 1; i >= 0; i--) {
+		std::swap(arr[0], arr[i]);
+		heapify(arr, i, 0);
+	}
+}
+
+void heapify(std::vector<int>& arr, int size, int index) {
+	int l = index * 2 + 1;
+	int r = index * 2 + 2;
+	int max = index;
+
+	if (l < size && arr[l] > arr[max]) max = l;
+	if (r < size && arr[r] > arr[max]) max = r;
+	if (max == index) return;
+
+	std::swap(arr[index], arr[max]);
+	heapify(arr, size, max);
+}
+
 void runTests(std::vector<int>& sizesToTest) {
 	if (sizesToTest.empty()) {
 		std::cout << "No sizes to test\n";
@@ -65,21 +92,21 @@ void test(int size) {
 
 	auto timeToQuickSort = measure([&arr, &arrToQuickSort] {
 		arrToQuickSort = std::vector<int>(arr);
-		quickSort(arrToQuickSort, 0, arrToQuickSort.size() - 1);
+		quickSort(arrToQuickSort, 0, (int)arrToQuickSort.size() - 1);
 	});
 
 	std::cout << timeToQuickSort << std::endl;
 
-	// Selection Sort
-	std::cout << "Selection Sort: ";
-	std::vector<int> arrToSelectionSort;
+	// Heap Sort
+	std::cout << "Heap Sort: ";
+	std::vector<int> arrToHeapSort;
 
-	auto timeToSelectionSort = measure([&arr, &arrToSelectionSort] {
-		arrToSelectionSort = std::vector<int>(arr);
-		selectionSort(arrToSelectionSort);
+	auto timeToHeapSort = measure([&arr, &arrToHeapSort] {
+		arrToHeapSort = std::vector<int>(arr);
+		heapSort(arrToHeapSort);
 	});
 
-	std::cout << timeToSelectionSort << std::endl;
+	std::cout << timeToHeapSort << std::endl;
 
 	std::cout << "- - - - -\n";
 }
@@ -117,7 +144,7 @@ void quickSort(std::vector<int>& arr, int l, int r) {
 }
 
 void selectionSort(std::vector<int>& arr) {
-	int size = arr.size();
+	int size = (int)arr.size();
 
 	for (int i = 0; i < size; i++) {
 		int min = arr[i];
