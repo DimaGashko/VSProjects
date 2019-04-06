@@ -18,15 +18,13 @@ int main() {
 	return 0;
 }
 
-void heapify(std::vector<int>& arr, int index) {
-	int l = index * 2 + 1;
-	int r = index * 2 + 2;
 
-	int max = (arr[l] > arr[r]) ? l : r;
-	if (arr[index] > arr[max]) return;
+void bubbleUp(std::vector<int>& arr, int index) {
+	int rootIndex = (index + 1) / 2;
+}
 
-	std::swap(arr[index], arr[max]);
-	heapify(arr, max);
+void heapify(std::vector<int>& arr) {
+	
 }
 
 void printArr(std::vector<int>& arr) {
