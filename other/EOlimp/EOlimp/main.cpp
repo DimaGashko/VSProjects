@@ -1,97 +1,75 @@
 ﻿#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <map>
-#include <ctime>
-#include <cmath>
-#include <string>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int n, resLen = 0;
-vector<int> arr;
-vector<int> res;
-map<int, int> numMap;
+void getPrimesTo(vector<int>& res, int to) {
+	const int offset = 2;
+	double maxP = sqrt(to);
+	int _to = to - offset;
 
-string correct;
-
-void fInit() {
-	srand((int)time(nullptr));
-
-	n = 5500;
-	arr = vector<int>(n);
-	res = vector<int>(n / 2);
-	vector<int> st(n / 2);
-	vector<int> nw(n / 2);
-
-	for (int i = 0; i < n / 2; i++) {
-		st[i] = 4 * int(((double)rand() / RAND_MAX) * 1000000000 / 4) + 1;
-		arr[i] = st[i];
+	// Если использовать вектор getPrimesTo на 10^6 занимает ~280ms, с массивом - 40
+	bool* primes = new bool[_to];
+	for (int i = 0; i < _to; i++) {
+		primes[i] = true;
 	}
 
-	for (int i = 0; i < n / 2; i++) {
-		nw[i] = int(st[i] * 0.75);
-		arr[n / 2 + i] = nw[i];
+	for (int p = 2; p <= maxP; p++) {
+		for (int i = 2 * p - offset; i <= _to; i += p) {
+			primes[i] = false;
+		}
 	}
 
-	sort(st.begin(), st.end());
-	sort(nw.begin(), nw.end());
-	sort(arr.begin(), arr.end());
-
-	for (auto& a : nw) {
-		correct += to_string(a) + '\n';
-	}
-
-	for (auto& num : arr) {
-		numMap[num]++;
+	res.reserve(_to);
+	for (int i = 0; i < _to; i++) {
+		// push_back почти не влияет на скорость, так как простых чисел максимум 80000
+		if (primes[i]) res.push_back(i + offset);
 	}
 }
 
-void init() {
-	cin >> n;
+void getColumnSizes(vector<int>& nums, vector<int>& colSizes) {
+	int rSize = (int)nums.size();
 
-	arr = vector<int>(n);
-	res = vector<int>(n / 2);
-
-	for (int i = n - 1; i >= 0; i--) {
-		cin >> arr[i];
+	vector<int> rowSizes(rSize);
+	for (int i = 0; i < rSize; i++) {
+		rowSizes[i] = nums[i] / 2;
 	}
 
-	for (auto& num : arr) {
-		numMap[num]++;
-	}
-}
+	int cSize = rowSizes.back();
+	colSizes = vector<int>(cSize);
 
-void run() {
-	for (auto& cur : arr) {
-		if (numMap[cur] <= 0) continue;
+	for (int i = 0; i < rSize; i++) {
+		int cur = rowSizes[i] - 1;
 
-		int newV = int(cur * 0.75);
-		if (numMap[newV] <= 0) continue;
+		if (colSizes[cur] == 0) {
+			colSizes[cur] = rSize - i;
+		}
 
-		res[resLen++] = newV;
-		numMap[newV]--;
-	}
+		if (cur == 0) {
+			continue;
+		}
 
-	sort(res.begin(), res.end());
-}
-
-void printRes() {
-	string r;
-
-	for (auto& num : res) {
-		r += to_string(num) + '\n';
+		for (int prev = cur - 1; colSizes[prev] == 0; prev--) {
+			colSizes[prev] = colSizes[cur];
+		}
 	}
 
-	cout << (r == correct) << endl << endl;
-
-	//cout << r << endl << endl << correct;
 }
 
 int main() {
-	fInit();
-	run();
-	printRes();
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 
+	long long k = 23;
+	//cin >> k;
+
+	vector<int> primes;
+	vector<int> colSizes;
+	getPrimesTo(primes, 18);
+	getColumnSizes(primes, colSizes);
+
+	cout << primes.size() << endl << colSizes.size() << endl;
+
+	cin >> k;
 	return 0;
 }
