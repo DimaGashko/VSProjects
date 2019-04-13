@@ -1,75 +1,60 @@
-﻿#include <iostream>
-#include <bits/stdc++.h>
-
+﻿#include <bits/stdc++.h>
 using namespace std;
 
-void getPrimesTo(vector<int>& res, int to) {
-	const int offset = 2;
-	double maxP = sqrt(to);
-	int _to = to - offset;
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define RFOR(i, b, a) for (int i = (b)-1; i >= (a); --i)
+#define FILL(A, value) memset(A, value, sizeof(A))
 
-	// Если использовать вектор getPrimesTo на 10^6 занимает ~280ms, с массивом - 40
-	bool* primes = new bool[_to];
-	for (int i = 0; i < _to; i++) {
-		primes[i] = true;
+#define ALL(V) V.begin(), V.end()
+#define SZ(V) (int)V.size()
+#define PB push_back
+#define MP make_pair
+
+typedef long long Int;
+typedef unsigned long long UInt;
+typedef vector<int> VI;
+typedef pair<int, int> PII;
+typedef pair<Int, Int> PLL;
+typedef pair<double, double> PDD;
+typedef complex<double> base;
+
+const int INF = 1000000000;
+const int MOD = 998244353;
+const double Pi = acos(-1.);
+
+const int MAX = 1000007;
+
+VI A;
+int res = 6;
+
+void F(Int mask, Int res_mask) {
+	if ((mask & res_mask) == res_mask) {
+		res = min(res, SZ(A));
+		return;
 	}
-
-	for (int p = 2; p <= maxP; p++) {
-		for (int i = 2 * p - offset; i <= _to; i += p) {
-			primes[i] = false;
-		}
-	}
-
-	res.reserve(_to);
-	for (int i = 0; i < _to; i++) {
-		// push_back почти не влияет на скорость, так как простых чисел максимум 80000
-		if (primes[i]) res.push_back(i + offset);
+	if (SZ(A) + 1 >= res)
+		return;
+	int last = 1;
+	if (SZ(A)) last = A.back();
+	FOR(i, last, 51) { 
+		A.push_back(i);
+		F(mask | (mask << i), res_mask);
+		A.pop_back();
 	}
 }
 
-void getColumnSizes(vector<int>& nums, vector<int>& colSizes) {
-	int rSize = (int)nums.size();
+int main(int argc, const char* argv[]) {
 
-	vector<int> rowSizes(rSize);
-	for (int i = 0; i < rSize; i++) {
-		rowSizes[i] = nums[i] / 2;
+	int n;
+	cin >> n;
+	Int mask = 0;
+	FOR(i, 0, n)
+	{
+		int x;
+		cin >> x;
+		mask |= (1LL << x);
 	}
-
-	int cSize = rowSizes.back();
-	colSizes = vector<int>(cSize);
-
-	for (int i = 0; i < rSize; i++) {
-		int cur = rowSizes[i] - 1;
-
-		if (colSizes[cur] == 0) {
-			colSizes[cur] = rSize - i;
-		}
-
-		if (cur == 0) {
-			continue;
-		}
-
-		for (int prev = cur - 1; colSizes[prev] == 0; prev--) {
-			colSizes[prev] = colSizes[cur];
-		}
-	}
-
+	F(1, mask);
+	cout << res << endl;
 }
 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-
-	long long k = 23;
-	//cin >> k;
-
-	vector<int> primes;
-	vector<int> colSizes;
-	getPrimesTo(primes, 18);
-	getColumnSizes(primes, colSizes);
-
-	cout << primes.size() << endl << colSizes.size() << endl;
-
-	cin >> k;
-	return 0;
-}

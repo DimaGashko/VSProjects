@@ -1,4 +1,16 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+#include <string>
+#include <queue>
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
+#include <set>
+#include <bitset>
+
+typedef unsigned int uint;
 
 using namespace std;
 
@@ -6,36 +18,71 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
+    int n, l = -1, r = -1, t = 0;
     cin >> n;
 
-    int sum = 0;
+    vector<int> arr(2 * n);
+    vector<pair<int, int>> pairs;
 
-    int by100 = n / 100;
-    sum += by100 * 100;
-    n -= by100 * 100;
+    for (auto &item : arr) {
+        cin >> item;
+    }
 
-    if (n >= 66) {
-        sum += 100;
-        n = 0;
-    } else if (n < 15) {
-        sum += n * 2;
-        n = 0;
-    } else {
-        int by20 = n / 20;
-        sum += by20 * 30;
-        n -= by20 * 20;
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i - 1] != arr[i]) continue;
 
-        if (n < 15) {
-            sum += n * 2;
-            n = 0;
-        } else {
-            sum += 30;
-            n = 0;
+        if (l == -1) {
+            l = i;
+        }
+        else {
+            r = i - 1;
+            pairs.emplace_back(l, r);
+            t++;
+            l = -1;
+            r = -1;
         }
     }
 
-    cout << sum << "\n";
+    if (r == -1 && l != -1) {
+        t++;
+        if (l < arr.size() - 1){
+            pairs.emplace_back(l, l + 1);
+        } else {
+            pairs.emplace_back(l - 3, l);
+        }
+
+    }
+
+    cout << t << "\n";
+
+    for (auto &item : pairs) {
+        cout << item.first + 1 << " " << item.second + 1 << "\n";
+    }
 
     return 0;
 }
+
+/*
+  // выборы
+  int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k;
+    cin >> n >> k;
+
+    std::vector<int> vec(n, 0);
+    for (int i = 0; i < n; ++i) {
+        int index;
+        cin >> index;
+
+        vec[index - 1]++;
+        if (vec[index - 1] > floor(n / 2.0)) {
+            cout << "YES";
+            return 0;
+        }
+    }
+
+    cout << "NO";
+    return 0;
+}*/
