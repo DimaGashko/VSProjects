@@ -1,14 +1,4 @@
-#include <iostream>
-#include <algorithm>
-#include <cmath>
-#include <vector>
-#include <string>
-#include <queue>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <set>
-#include <bitset>
+#include <bits/stdc++.h>
 
 typedef unsigned int uint;
 
