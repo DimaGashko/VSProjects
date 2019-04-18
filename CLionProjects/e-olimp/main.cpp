@@ -2,43 +2,63 @@
 
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie();
+map<char, int> charsMap{
+        {'A', 0}, {'B', 1}, {'C', 2},
+        {'D', 3}, {'E', 4}, {'F', 5},
+        {'G', 6},
+        {'H', 7}, {'I', 8},
+        {'J', 9},{'K', 10},
+        {'L', 11}, {'M', 12},
+        {'N', 13}, {'O', 14},
+        {'P', 15}, {'Q', 16},
+        {'R', 17}, {'S', 18},
+        {'T', 19},  {'U', 20},  {'V', 21},
+        {'W', 22}, {'X', 23},
+        {'Y', 24}, {'Z', 25},
+};
+
+vector<char> chars{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+
+int find(char a, char b) {
+    int r1 = 0, r2 = 0;
+    int ai = charsMap[a];
+    int ai_ = ai;
+    int bi = charsMap[b];
+
+    while (ai != bi) {
+        if (ai == chars.size() - 1) ai = 0;
+        else ai++;
+        r1++;
+    }
+
+    ai = ai_;
+    while (ai != bi) {
+        if (ai == 0) ai = chars.size() - 1;
+        else ai--;
+        r2++;
+    }
+
+    return min(r1, r2);
+}
+
+int main () {
+
 
     int n;
     cin >> n;
 
-    set<int> nums;
+    string s;
+    cin >> s;
 
-    int tmp;
-    for (int i = 0; i < n; i++) {
-        cin >> tmp;
-        nums.insert(tmp);
+    int res = 100000;
+
+    for (int i = 0; i < n - 3; i++) {
+        int r = find(s[i], 'A') + find(s[i + 1], 'C') + find(s[i + 2], 'T') + find(s[i + 3], 'G');
+        if (r < res) res = r;
     }
 
-    int size = nums.size();
-
-    if (size > 3) {
-        cout << "-1\n";
-        return 0;
-    }
-
-    int res = -1;
-    vector<int> ns(nums.begin(), nums.end());
-
-    if (size == 2) {
-        int d = ns[1] - ns[0];
-
-        res = (d % 2 == 0) ? d / 2 : d;
-
-    } else if (size == 3) {
-        res = (ns[1] - ns[0] == ns[2] - ns[1]) ? ns[1] - ns[0] : -1;
-    } else if (size == 1) {
-        res = 0;
-    }
-
-    cout << (res != -1 ? abs(res) : res) << endl;
+    cout << res << "\n";
 
     return 0;
 }
