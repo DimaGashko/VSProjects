@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
-project(CLionProjects)
+project(e_olimp)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(main main.cpp)
-#add_executable(tmp tmp.cpp)
+add_executable(e_olimp main.cpp)
