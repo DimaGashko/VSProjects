@@ -11,7 +11,7 @@ int main() {
     cin >> n;
 
     vector<int> arr(n);
-    vector<pair<int, int>> res;
+    vector<array<int, 3>> res;
 
     for (auto &item : arr) {
         cin >> item;
@@ -36,23 +36,28 @@ int main() {
     int firstCommon = 0;
     while (arr[firstCommon] != common) firstCommon++;
 
-    cout << firstCommon << endl;
+    for (int i = firstCommon - 1; i >= 0; i--) {
+        if (arr[i] == common) continue;
 
-   /* for (int i = n - 2; i >= 0; i--) {
-        if (arr[i] == arr[i + 1]) continue;
-
-        int d = arr[i + 1] - arr[i];
+        int d = common - arr[i];
         int op = (d > 0) ? 1 : 2;
 
-        arr[i] += d;
+        res.push_back(array<int, 3>{{op, i + 1, i + 2}});
+    }
 
-        res.emplace_back(op, i + 1);
-    }*/
+    for (int i = firstCommon + 1; i < n; i++) {
+        if (arr[i] == common) continue;
+
+        int d = common - arr[i];
+        int op = (d > 0) ? 1 : 2;
+
+        res.push_back(array<int, 3>{{op, i + 1, i}});
+    }
 
     cout << res.size() << "\n";
 
     for (auto &item : res) {
-        cout << item.first << " " << item.second << " " << item.second + 1 << "\n";
+        cout << item[0] << " " << item[1] << " " << item[2] << "\n";
     }
 
     return 0;
