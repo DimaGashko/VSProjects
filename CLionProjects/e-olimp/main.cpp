@@ -2,33 +2,28 @@
 
 using namespace std;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+#define IO_HACK ios_base::sync_with_stdio(false); cin.tie(); cout.tie();
+#define endl "\n"
 
-    int n, res = 0;
+int main() {
+    IO_HACK
+
+    int n, max = 1000000001;
+    long long res = 0;
     cin >> n;
 
-    vector<pair<int, int>> arr(n);
-    vector<bool> visited(n);
+    vector<int> arr(n);
 
-    for (auto &p : arr) {
-        cin >> p.first;
-        cin >>p.second;
+    for (auto &item : arr) {
+        cin >> item;
     }
 
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            for (int k = 0; k < n; k++) {
-                if (k == i || k == j) continue;
-
-                for (int p = 0; p < n; i++) {
-
-                }
-
-            }
-        }
+    for (int i = n - 1; i >= 0 && max != 0; i--) {
+        max = min(max, arr[i]);
+        res += max--;
     }
+
+    cout << res << endl;
 
     return 0;
 }
