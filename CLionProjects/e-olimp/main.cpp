@@ -8,21 +8,17 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
 
-    int n;
-    string s;
-    cin >> n >> s;
+    int n, res = 0;
+    cin >> n;
 
-    int sf = 0;
-    int fs = 0;
+    vector<int> arr{100, 20, 10, 5, 1};
 
-    for (int i = 1; i < n; i++) {
-        if (s[i] == s[i - 1]) continue;
-
-        if (s[i] == 'F') sf++;
-        else fs++;
+    for (auto &item : arr) {
+        res += n / item;
+        n = n % item;
     }
 
-    cout << (sf > fs ? "YES" : "NO") << endl;
+    cout << res << endl;
 
     return 0;
 }
