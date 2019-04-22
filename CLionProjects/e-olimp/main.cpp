@@ -2,32 +2,23 @@
 
 using namespace std;
 
-#define IO_HACK ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
 #define endl "\n"
 
 int main() {
-    IO_HACK
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
 
-    int n, t, s, d;
-    cin >> n >> t;
+    int pos = 0, a;
 
-    vector<pair<int, int>> rests;
-
-    for (int i = 0; i < n; i++) {
-        cin >> s >> d;
-
-        if (t <= s) {
-            rests.emplace_back(s - t, i + 1);
-        } else {
-            rests.emplace_back(d - ((t - s) % d), i + 1);
-        }
+    for (;;pos++) {
+        cin >> a;
+        if (a == 1) break;
     }
 
-    sort(rests.begin(), rests.end(), [](pair<int, int> a, pair<int, int> b){
-        return a.first < b.first;
-    });
+    int x = pos % 5;
+    int y = pos / 5;
 
-    cout << rests[0].second << endl;
+    cout << abs(x - 2) + abs(y - 2) << endl;
 
     return 0;
 }
