@@ -8,19 +8,18 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(); cout.tie();
 
-    int n, p, k;
-    cin >> n >> p >> k;
+    int n, prev, res = 1;
+    cin >> n >> prev;
 
-    string res;
+    for (int i = 1; i < n; i++) {
+        int next;
+        cin >> next;
 
-    if (p - k > 1) res += "<< ";
-
-    for (int i = max(p - k, 1); i <= min(p + k, n); i++) {
-        string cur = (i == p) ? "("+ to_string(i) + ")" : to_string(i);
-        res += cur + " ";
+        if (next != prev) {
+            res++;
+            prev = next;
+        }
     }
-
-    if (p + k < n) res += ">>";
 
     cout << res << endl;
 
