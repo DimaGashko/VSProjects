@@ -6,20 +6,23 @@ using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(nullptr); cout.tie(nullptr);
+    cin.tie(); cout.tie();
 
-    int n, res = 0;
-    cin >> n;
+    int n, p, k;
+    cin >> n >> p >> k;
 
-    vector<int> arr{100, 20, 10, 5, 1};
+    string res;
 
-    for (auto &item : arr) {
-        res += n / item;
-        n = n % item;
+    if (p - k > 1) res += "<< ";
+
+    for (int i = max(p - k, 1); i <= min(p + k, n); i++) {
+        string cur = (i == p) ? "("+ to_string(i) + ")" : to_string(i);
+        res += cur + " ";
     }
+
+    if (p + k < n) res += ">>";
 
     cout << res << endl;
 
     return 0;
 }
-
