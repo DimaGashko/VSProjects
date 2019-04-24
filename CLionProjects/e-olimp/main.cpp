@@ -4,24 +4,23 @@ using namespace std;
 
 #define endl "\n"
 
+bool check(int x) {
+    return ((x + 1) & x) == 0;
+
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(); cout.tie();
 
-    int n, prev, res = 1;
-    cin >> n >> prev;
+    int a, b, k = 0;
+    cin >> a >> b;
 
-    for (int i = 1; i < n; i++) {
-        int next;
-        cin >> next;
-
-        if (next != prev) {
-            res++;
-            prev = next;
-        }
+    while (!((a + k) % 2 == 0 && (b + k) % 2 == 0)) {
+        k++;
     }
 
-    cout << res << endl;
+    cout << k;
 
     return 0;
 }
