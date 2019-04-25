@@ -4,23 +4,51 @@ using namespace std;
 
 #define endl "\n"
 
-bool check(int x) {
-    return ((x + 1) & x) == 0;
-
-}
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(); cout.tie();
 
-    int a, b, k = 0;
-    cin >> a >> b;
+    int n, k, m;
+    cin >> n >> k >> m;
 
-    while (!((a + k) % 2 == 0 && (b + k) % 2 == 0)) {
-        k++;
+    vector<string> vocab(n);
+    vector<int> weights(n);
+    vector<vector<int>> groups(k);
+    std::map<string, int> groupMap;
+
+    for (auto &a : vocab) cin >> a;
+    for (auto &a : weights) cin >> a;
+
+    for (int i = 0; i < k; i++) {
+        int len;
+        cin >> len;
+
+        groups[i] = vector<int>(len);
+
+        for (auto &el : groups[i]) {
+            cin >> el;
+            el--;
+
+            groupMap[vocab[el]] = i;
+        }
     }
 
-    cout << k;
+    for (auto &g : groups) {
+        sort(g.begin(), g.end(), [&weights](int a, int b) {
+            return weights[a] < weights[b];
+        });
+    }
+
+    long long res = 0;
+
+    for (int i = 0; i < m; i++) {
+        string word;
+        cin >> word;
+
+        res += weights[groups[groupMap[word]][0]];
+    }
+
+    cout << res << endl;
 
     return 0;
 }
