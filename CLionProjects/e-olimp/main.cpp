@@ -4,51 +4,55 @@ using namespace std;
 
 #define endl "\n"
 
+int *arr;
+string res;
+string s;
+
+void run(char side, int l, int r, int prev) {
+    int cur = (side == 'L') ? arr[l] : arr[r];
+
+    if (cur > prev && l <= r) {
+        s.push_back(side);
+
+        int newL = (side == 'L') ? l + 1 : l;
+        int newR = (side == 'L') ? r : r - 1;
+
+        if ((arr[l + 1] < arr[r] && arr[l + 1] > arr[l]) || l + 1 > r) {
+            run('L', newL, newR, cur);
+        }
+
+        if ((arr[r] < arr[l + 1]  && arr[r] > arr[l + 1]) || l + 1 > r) {
+            run('R', newL, newR, cur);
+        }
+
+        s.pop_back();
+
+    }
+
+    if (s.length() > res.length()) {
+        res = string(s.begin(), s.end());
+    }
+
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(); cout.tie();
+    cin.tie();
+    cout.tie();
 
-    int n, k, m;
-    cin >> n >> k >> m;
+    int n;
+    cin >> n;
 
-    vector<string> vocab(n);
-    vector<int> weights(n);
-    vector<vector<int>> groups(k);
-    std::map<string, int> groupMap;
+    arr = new int[n];
+    for (int i = 0; i < n; i++) cin >> arr[i];
+    s.reserve(200000);
+    run('L', 0, n - 1, -1);
 
-    for (auto &a : vocab) cin >> a;
-    for (auto &a : weights) cin >> a;
-
-    for (int i = 0; i < k; i++) {
-        int len;
-        cin >> len;
-
-        groups[i] = vector<int>(len);
-
-        for (auto &el : groups[i]) {
-            cin >> el;
-            el--;
-
-            groupMap[vocab[el]] = i;
-        }
+    if (arr[0] >= arr[n - 1]) {
+        run('R', 0, n - 1, -1);
     }
 
-    for (auto &g : groups) {
-        sort(g.begin(), g.end(), [&weights](int a, int b) {
-            return weights[a] < weights[b];
-        });
-    }
-
-    long long res = 0;
-
-    for (int i = 0; i < m; i++) {
-        string word;
-        cin >> word;
-
-        res += weights[groups[groupMap[word]][0]];
-    }
-
-    cout << res << endl;
+    cout << res.length() << endl << res << endl;
 
     return 0;
 }
