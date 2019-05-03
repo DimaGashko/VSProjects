@@ -4,34 +4,24 @@ using namespace std;
 
 #define endl "\n"
 
-int get(int s, int v, int t) {
-    return s * v + t * 2;
-}
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie();
     cout.tie();
 
-    int n;
-    cin >> n;
+    int a, b, c;
+    cin >> a >> b >> c;
 
-    vector<int> arr(n);
-    for (int &a : arr) cin >> a;
+    vector<int> arr {a, b, c};
+    sort(arr.begin(), arr.end());
 
-    std::map<int, int> map;
-
-    for (int a : arr) {
-        map[a] = map[a] + 1;
+    int t = arr[2] - arr[1] - arr[0] + 1;
+    if (t < 0) {
+        cout << 0 << endl;
+        return 0;
     }
 
-    int max = 0;
-
-    for (auto item : map) {
-        if (item.second > max) max = item.second;
-    }
-
-    cout << max << endl;
+    cout << t << endl;
 
     return 0;
 }
