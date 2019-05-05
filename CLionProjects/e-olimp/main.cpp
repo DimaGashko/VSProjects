@@ -4,24 +4,21 @@ using namespace std;
 
 #define endl "\n"
 
+
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie();
-    cout.tie();
+    cin.tie(); cout.tie();
 
-    int a, b, c;
-    cin >> a >> b >> c;
+    int w, h, k, res = 0;
+    cin >> w >> h >> k;
 
-    vector<int> arr {a, b, c};
-    sort(arr.begin(), arr.end());
-
-    int t = arr[2] - arr[1] - arr[0] + 1;
-    if (t < 0) {
-        cout << 0 << endl;
-        return 0;
+    for (int i = 0; i < k; i++) {
+        res += w * 2 + h * 2 - 4;
+        w -= 4;
+        h -= 4;
     }
 
-    cout << t << endl;
+    cout << res << endl;
 
     return 0;
 }
