@@ -4,21 +4,33 @@ using namespace std;
 
 #define endl "\n"
 
-
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(); cout.tie();
+    cin.tie(nullptr); cout.tie(nullptr);
 
-    int w, h, k, res = 0;
-    cin >> w >> h >> k;
+    int n, m, tmp;
+    cin >> n >> m;
 
-    for (int i = 0; i < k; i++) {
-        res += w * 2 + h * 2 - 4;
-        w -= 4;
-        h -= 4;
+    vector<int> arr(n), map(10), res;
+
+    for (int &a : arr) cin >> a;
+    for (int i = 0; i < m; i++) {
+        cin >> tmp;
+        map[tmp] = 1;
     }
 
-    cout << res << endl;
+    for (auto &a : arr) {
+        if (!map[a]) continue;
+
+        res.push_back(a);
+        map[a] = 0;
+    }
+
+    for (int &a : res) {
+        cout << a << " ";
+    }
+
+    cout << endl;
 
     return 0;
 }
