@@ -2,46 +2,31 @@
 
 using namespace std;
 
-#define endl "\n"
+#define endl '\n'
 
-int n, c;
+int getDivs(int n) {
+    int divs = 1;
+    double limit = sqrt(n);
 
-int get(vector<int> &costs, vector<int> &times) {
-    int sum = 0, curTime = 0;
-
-    for (int i = 0; i < n; i++) {
-        curTime += times[i];
-        sum += max(costs[i] - c * curTime, 0);
+    for (int i = 2; i < limit; i++) {
+        if (n % i == 0) divs += 2;
     }
 
-    return sum;
+    if ((int)limit == limit) {
+        divs++;
+    }
+
+    return divs;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
 
-    cin >> n >> c;
+    int n;
+    cin >> n;
 
-    vector<int> costs(n), times(n);
-
-    for (int &a : costs) cin >> a;
-    for (int &a : times) cin >> a;
-
-    int l = get(costs, times);
-
-    reverse(costs.begin(), costs.end());
-    reverse(times.begin(), times.end());
-
-    int r = get(costs, times);
-
-    if (l > r) {
-        cout << "Limak" << endl;
-    } else if (r > l) {
-        cout << "Radewoosh" << endl;
-    } else {
-        cout << "Tie";
-    }
+    cout << getDivs(n) << endl;
 
     return 0;
 }
