@@ -4,29 +4,27 @@ using namespace std;
 
 #define endl '\n'
 
-int getDivs(int n) {
-    int divs = 1;
-    double limit = sqrt(n);
+void run() {
+    int n;
+    string s;
 
-    for (int i = 2; i < limit; i++) {
-        if (n % i == 0) divs += 2;
-    }
+    cin >> n >> s;
 
-    if ((int)limit == limit) {
-        divs++;
-    }
+    int first = find(s.begin(), s.end(), '8') - s.begin();
 
-    return divs;
+    cout << (n - first >= 11 ? "YES" : "NO") << endl;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
 
-    int n;
-    cin >> n;
+    int t;
+    cin >> t;
 
-    cout << getDivs(n) << endl;
+    for (int i = 0; i < t; i++) {
+        run();
+    }
 
     return 0;
 }
