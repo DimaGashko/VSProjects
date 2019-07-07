@@ -4,27 +4,28 @@ using namespace std;
 
 #define endl '\n'
 
-void run() {
-    int n;
-    string s;
-
-    cin >> n >> s;
-
-    int first = find(s.begin(), s.end(), '8') - s.begin();
-
-    cout << (n - first >= 11 ? "YES" : "NO") << endl;
-}
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
 
-    int t;
-    cin >> t;
+    int n, ones = 0;
+    string s;
 
-    for (int i = 0; i < t; i++) {
-        run();
+    cin >> n >> s;
+
+    for (auto &c : s) {
+        if (c == '1') ones++;
     }
+
+    if (n % 2 != 0 || ones != n / 2.0) {
+        cout << 1 << endl << s << endl;
+        return 0;
+    }
+
+    string s2 = string(s.begin() + 1, s.end());
+
+    cout << 2 << endl;
+    cout << s[0] << ' ' << s2 << endl;
 
     return 0;
 }
