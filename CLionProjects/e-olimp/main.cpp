@@ -4,21 +4,21 @@ using namespace std;
 
 #define endl '\n'
 
-char get(int x, int y, int z) {
-    if (x == y && z == 0) return '0';
-    if (x > y + z) return '+';
-    if (y > x + z) return '-';
-
-    return '?';
+string run(int n) {
+    if (n % 4 == 1) return "0 A";
+    if (n % 4 == 3) return "2 A";
+    if (n % 4 == 2) return "1 B";
+    if (n % 4 == 0) return "1 A";
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr); cout.tie(nullptr);
 
-    int x, y, z;
-    cin >> x >> y >> z;
+    int n;
+    cin >> n;
 
-    cout << get(x, y, z) << endl;
+    cout << run(n) << endl;
+
     return 0;
 }
