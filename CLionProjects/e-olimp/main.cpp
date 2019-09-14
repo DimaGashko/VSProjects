@@ -7,8 +7,6 @@ typedef long long ll;
 #define vi vector<int>
 #define mii map<int, int>
 
-// 7:40
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -35,15 +33,10 @@ int main() {
         else if (m[a] - i > m[b] - i + 1) cur = a;
         else cur = b;
 
-        cout << cur << ' ' << (cur == a) << endl;
-
-        if (prev == cur) res++;
-
-        if (realAi == -1) realAi = i;
-
         realAi = (cur == a) ? i + 1 : realAi;
         if (realAi == -1) realAi = i;
 
+        if (prev == cur) res++;
         prev = cur;
     }
 
