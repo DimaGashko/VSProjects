@@ -2,113 +2,52 @@
 
 using namespace std;
 
-int run() {
-    int n;
-    cin >> n;
+typedef long long ll;
 
-    vector<int> arr(n);
+#define vi vector<int>
+#define mii map<int, int>
 
-    for (int &a : arr) {
-        cin >> a;
-    }
-}
+// 7:40
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(nullptr); cout.tie(nullptr);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    int n;
+    int n, res = 0, prev = -1, cur, realAi = -1;
     cin >> n;
+    n *= 2;
+
+    vi v(n);
+    mii m;
 
     for (int i = 0; i < n; i++) {
-        cout << run() << endl;
+        cin >> v[i];
+        m[v[i]] = i;
     }
-
-    return 0;
-}
-
-/*
-// B
-
-int run() {
-    int n, res = 0, minIndex = 0;
-    cin >> n;
-
-    vector<int> arr(n);
-    map<int, int> m;
-
-    for (int &a : arr) {
-        cin >> a;
-        m[a]++;
-    }
-
-    vector<int> sorted(arr.begin(), arr.end());
-    sort(sorted.begin(), sorted.end());
-
-    for (int i = 0; i < n - 1; i++) {
-        m[arr[i]]--;
-
-        while (m[sorted[minIndex]] < 1) {
-            minIndex++;
-        }
-
-        if (arr[i] > sorted[minIndex]) {
-            res++;
-        }
-
-    }
-
-    return res;
-}
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr); cout.tie(nullptr);
-
-    int n;
-    cin >> n;
 
     for (int i = 0; i < n; i++) {
-        cout << run() << endl;
+        int a = (realAi != -1) ? v[realAi] : v[i];
+        int b = v[i + 1];
+
+        if (m[a] == i) cur = a;
+        else if (m[b] == i + 1) cur = b;
+        else if (m[a] - i > m[b] - i + 1) cur = a;
+        else cur = b;
+
+        cout << cur << ' ' << (cur == a) << endl;
+
+        if (prev == cur) res++;
+
+        if (realAi == -1) realAi = i;
+
+        realAi = (cur == a) ? i + 1 : realAi;
+        if (realAi == -1) realAi = i;
+
+        prev = cur;
     }
 
-    return 0;
-}*/
-
-/*
-// A
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr); cout.tie(nullptr);
-
-    int n;
-    cin >> n;
-
-    vector<int> arr(n);
-
-    for (int &a : arr) {
-        cin >> a;
-    }
-
-    vector<int> res;
-
-    for (int &a : arr) {
-        int sum = 0;
-
-        for (int &b : arr) {
-            sum += ((b - a) % 2 != 0) ? 1 : 0;
-        }
-
-        res.push_back(sum);
-    }
-
-    sort(res.begin(), res.end());
-
-    cout << res[0] << endl;
+    cout << endl << res << endl;
 
     return 0;
 }
-
-
- */
