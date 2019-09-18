@@ -15,12 +15,7 @@ int main() {
     char min = s[0];
 
     for (auto c : s) {
-        if (c > min) {
-            cout << "Ann" << endl;
-        } else {
-            cout << "Mike" << endl;
-        }
-
+        cout << (c > min ? "Ann" : "Mike") << endl;
         if (c < min) min = c;
     }
 
