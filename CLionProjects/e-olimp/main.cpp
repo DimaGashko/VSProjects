@@ -4,32 +4,77 @@ using namespace std;
 
 typedef long long ll;
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie();
-    cout.tie();
+int run1() {
+    int c, m, x, res;
+    cin >> c >> m >> x;
 
-    string s;
-    cin >> s;
+    if (c > m) swap(c, m);
 
-    char min = s[0];
+    x += m - c;
 
-    for (auto c : s) {
-        cout << (c > min ? "Ann" : "Mike") << endl;
-        if (c < min) min = c;
+    res = min(c, x);
+
+    if (x != res) {
+        return res;
     }
 
-    return 0;
+    c -= res;
+    m -= res;
+
+    if (c > m) swap(c, m);
+
+    int d = min(c, m / 2);
+    res += d;
+
+    c -= d;
+    m -= d * 2;
+
+    if (c == 0) {
+        return res;
+    }
+
+    if (c > m) swap(c, m);
+
+    int d2 = min(c, m / 2);
+    res += d2;
+
+    return res;
 }
 
-/**
-// B
+int run() {
+    int c, m, x, res = 0;
+    cin >> c >> m >> x;
 
-#include <bits/stdc++.h>
+    int d1 = min(c, min(m, x));
 
-using namespace std;
+    res += d1;
 
-typedef long long ll;
+    c -= d1;
+    m -= d1;
+
+    if (c <= 0 || m <= 0) {
+        return res;
+    }
+
+    if (c > m) swap(c, m);
+
+    int d = min(c, m / 2);
+    res += d;
+
+    c -= d;
+    m -= d * 2;
+
+    if (c == 0) {
+        return res;
+    }
+
+    if (c > m) swap(c, m);
+
+    int d2 = min(c, m / 2);
+    res += d2;
+
+    return res;
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -39,29 +84,67 @@ int main() {
     int n;
     cin >> n;
 
-    vector<vector<ll>> m(n, vector<ll>(n));
-    vector<ll> a(n);
-
-    for (auto &row : m) {
-        for (auto &item : row) {
-            cin >> item;
-        }
+    for (int i = 0; i < n; i++) {
+        cout << run() << endl;
     }
 
-    a[n - 2] = (ll)sqrt((m[n - 3][n - 2] * m[n - 2][n - 1]) / m[n - 3][n - 1]);
-    a[n - 1] = m[n - 2][n - 1] / a[n - 2];
-    a[n - 3] = m[n - 3][n - 2] / a[n - 2];
-
-    for (int i = n - 4; i >= 0; i--) {
-        a[i] = m[i + 1][i] / a[i + 1];
-    }
-
-    for (auto &item : a) {
-        cout << item << ' ';
-    }
-
-    cout << endl;
     return 0;
 }
 
-*/
+
+
+// A
+//#include <bits/stdc++.h>
+//
+//using namespace std;
+//
+//typedef long long ll;
+//
+//map<int, int> m;
+//
+//bool canGet(int n) {
+//    if (m[n] >= 1) {
+//        m[n]--;
+//        return true;
+//
+//    }
+//
+//    if (n == 1) {
+//        return false;
+//    }
+//
+//    return canGet(n / 2) && canGet(n / 2);
+//}
+//
+//string run() {
+//    m.clear();
+//
+//    int n;
+//    cin >> n;
+//
+//    for (int i = 0; i < n; i++) {
+//        int c;
+//        cin >> c;
+//
+//        m[c]++;
+//    }
+//
+//    return (canGet(2048) ? "YES" : "NO");
+//}
+//
+//int main() {
+//    ios_base::sync_with_stdio(false);
+//    cin.tie();
+//    cout.tie();
+//
+//    int n;
+//    cin >> n;
+//
+//    for (int i = 0; i < n; i++) {
+//        cout << run() << endl;
+//    }
+//
+//    return 0;
+//}
+//
+//
