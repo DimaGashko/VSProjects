@@ -1,79 +1,63 @@
+//C
+
 #include <bits/stdc++.h>
 
 using namespace std;
 
 typedef long long ll;
+typedef vector<int> vi;
+typedef pair<int, int> ii;
+typedef vector<ii> vii;
 
-int run1() {
-    int c, m, x, res;
-    cin >> c >> m >> x;
+typedef pair<ii, ii> rect;
 
-    if (c > m) swap(c, m);
+int getIntersect(ii a, ii b) {
+    if (a.first > b.first && a.second < b.second) {
+        return a.second - a.first;
 
-    x += m - c;
+    } else if (a.first < b.first && a.first < b.second && a.second > b.second) {
+        return b.second - b.first;
 
-    res = min(c, x);
+    } else if (a.first >= b.first && a.first <= b.second) {
+        return b.second - a.first;
 
-    if (x != res) {
-        return res;
+    } else if (a.second >= b.first && a.second <= b.second) {
+        return a.second - b.first;
+
     }
 
-    c -= res;
-    m -= res;
-
-    if (c > m) swap(c, m);
-
-    int d = min(c, m / 2);
-    res += d;
-
-    c -= d;
-    m -= d * 2;
-
-    if (c == 0) {
-        return res;
-    }
-
-    if (c > m) swap(c, m);
-
-    int d2 = min(c, m / 2);
-    res += d2;
-
-    return res;
+    return 0;
 }
 
-int run() {
-    int c, m, x, res = 0;
-    cin >> c >> m >> x;
+ll getIntersect(rect &a, rect &b) {
+    ll dx = getIntersect({a.first.first, a.second.first}, {b.first.first, b.second.first});
+    ll dy = getIntersect({a.first.second, a.second.second}, {b.first.second, b.second.second});
 
-    int d1 = min(c, min(m, x));
+    return dx * dy;
+}
 
-    res += d1;
+ll getS(rect &a) {
+    return 1ll * (a.second.first - a.first.first) * (a.second.second - a.first.second);
+}
 
-    c -= d1;
-    m -= d1;
+void cut(rect &a, rect &container) {
+    int minX = container.first.first;
+    int maxX = container.second.first;
+    int minY = container.first.second;
+    int maxY = container.second.second;
 
-    if (c <= 0 || m <= 0) {
-        return res;
-    }
+    a.first.first = max(min(a.first.first, maxX), minX);
+    a.second.first = max(min(a.second.first, maxX), minX);
 
-    if (c > m) swap(c, m);
+    a.first.second = max(min(a.first.second, maxY), minY);
+    a.second.second = max(min(a.second.second, maxY), minY);
+}
 
-    int d = min(c, m / 2);
-    res += d;
-
-    c -= d;
-    m -= d * 2;
-
-    if (c == 0) {
-        return res;
-    }
-
-    if (c > m) swap(c, m);
-
-    int d2 = min(c, m / 2);
-    res += d2;
-
-    return res;
+int writeRect(rect &rect) {
+    cin >> rect.first.first;
+    cin >> rect.first.second;
+    cin >> rect.second.first;
+    cin >> rect.second.second;
 }
 
 int main() {
@@ -81,55 +65,34 @@ int main() {
     cin.tie();
     cout.tie();
 
-    int n;
-    cin >> n;
+    rect w, a, b;
 
-    for (int i = 0; i < n; i++) {
-        cout << run() << endl;
-    }
+    writeRect(w);
+    writeRect(a);
+    writeRect(b);
 
+    cut(a, w);
+    cut(b, w);
+
+    ll rest = getS(w) - getIntersect(w, a) - getIntersect(w, b) + getIntersect(a, b);
+
+    cout << (rest > 0 ? "YES" : "NO") << endl;
     return 0;
 }
 
-
-
-// A
+//B
+//
 //#include <bits/stdc++.h>
 //
 //using namespace std;
 //
 //typedef long long ll;
+//typedef vector<int> vi;
+//typedef pair<int, int> ii;
+//typedef vector<ii> vii;
 //
-//map<int, int> m;
+//int run() {
 //
-//bool canGet(int n) {
-//    if (m[n] >= 1) {
-//        m[n]--;
-//        return true;
-//
-//    }
-//
-//    if (n == 1) {
-//        return false;
-//    }
-//
-//    return canGet(n / 2) && canGet(n / 2);
-//}
-//
-//string run() {
-//    m.clear();
-//
-//    int n;
-//    cin >> n;
-//
-//    for (int i = 0; i < n; i++) {
-//        int c;
-//        cin >> c;
-//
-//        m[c]++;
-//    }
-//
-//    return (canGet(2048) ? "YES" : "NO");
 //}
 //
 //int main() {
@@ -137,14 +100,66 @@ int main() {
 //    cin.tie();
 //    cout.tie();
 //
-//    int n;
+//    int n, res = 0;
 //    cin >> n;
 //
+//    vii v(n);
+//
 //    for (int i = 0; i < n; i++) {
-//        cout << run() << endl;
+//        cin >> v[i].first;
+//        v[i].second = i + 1;
 //    }
 //
-//    return 0;
+//    sort(v.begin(), v.end(), [](ii a, ii b){
+//        return a.first > b.first;
+//    });
+//
+//    for (int i = 0; i < n; i++) {
+//        res += v[i].first * i + 1;
+//    }
+//
+//    cout << res << endl;
+//
+//    for (auto &i : v) cout << i.second << " ";
+//    cout << endl;
+//
+//    return  0;
+//}
+
+
+//A
+//
+//#include <bits/stdc++.h>
+//
+//using namespace std;
+//
+//typedef long long ll;
+//typedef vector<int> vi;
+//typedef pair<int, int> ii;
+//
+//int run() {
+//
 //}
 //
+//int main() {
+//    ios_base::sync_with_stdio(false);
+//    cin.tie();
+//    cout.tie();
 //
+//    int n, res = 0;
+//    string s;
+//
+//    cin >> n >> s;
+//
+//    for (int i = 0; i < n; i += 2) {
+//        if (s[i] != s[i + 1]) continue;
+//
+//        s[i] = (s[i] == 'a') ? 'b' : 'a';
+//        res++;
+//    }
+//
+//    cout << res << endl;
+//    cout << s << endl;
+//
+//    return  0;
+//}
