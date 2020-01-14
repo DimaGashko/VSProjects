@@ -3,4 +3,4 @@ project(e_olimp)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(e_olimp main.cpp)
+add_executable(cpp main.cpp)
